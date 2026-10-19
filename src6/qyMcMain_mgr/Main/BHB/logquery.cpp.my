@@ -1,0 +1,43 @@
+// logquery.cpp : implementation file
+//
+
+#include "stdafx.h"
+#include "..\qymc.h"
+#include "logquery.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+// CLogQuery dialog
+
+
+CLogQuery::CLogQuery(CWnd* pParent /*=NULL*/)
+	: CDialog(CLogQuery::IDD, pParent)
+{
+	//{{AFX_DATA_INIT(CLogQuery)
+		// NOTE: the ClassWizard will add member initialization here
+	//}}AFX_DATA_INIT
+}
+
+
+void CLogQuery::DoDataExchange(CDataExchange* pDX)
+{
+	CDialog::DoDataExchange(pDX);
+	//{{AFX_DATA_MAP(CLogQuery)
+		// NOTE: the ClassWizard will add DDX and DDV calls here
+	//}}AFX_DATA_MAP
+}
+
+
+BEGIN_MESSAGE_MAP(CLogQuery, CDialog)
+	//{{AFX_MSG_MAP(CLogQuery)
+		// NOTE: the ClassWizard will add message map macros here
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+// CLogQuery message handlers

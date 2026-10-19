@@ -1,0 +1,1838 @@
+
+
+#include	"stdafx.h"
+#include	"resource.h"
+#include	"qyCommon.h"
+#include	"qyGuiCommonEx.h"
+#include	"qyWmComm.h"
+#include	"qyPreCustom.h"
+#include	"qyCustom.h"
+#include	"qyCommCommon.h"
+#include	"qyCommProc.h"
+#include	"qnmCommProc.h"
+#include	"qnmCustom.h"
+#include	"qnmCustomGui.h"
+#include	"qnmAllHints.h"
+
+ //  显示在线日志列表
+ QY_COLUMNINFO  CONST_bhbLogSqlColumns[]  =
+{
+	{	6,	_T(  "onlineComputerTab.officeName"  ),			SQL_CHAR,	},		//	6
+	{	0,  _T(  "onlineComputerTab.subOfficeName"  ),		SQL_CHAR,	},		//	0
+	{	1,	_T(  "onlineComputerTab.ip"  ),					SQL_CHAR,	},		//	1
+	{	2,	_T(  "onlineComputerTab.mac"  ),				SQL_CHAR,	},		//  2
+	{	3,	_T(  "onlineComputerTab.compName"  ),			SQL_CHAR,	},		//  3
+	{	4,	_T(  "onlineComputerTab.usrName"  ),			SQL_CHAR,	},		//  4
+	//  {	4,	"onlineComputerTab.is_server"  ),			SQL_CHAR,	},		//  4
+	{	5,	_T(  "onlineComputerTab.firstRecvdTime"  ),		SQL_CHAR,	},		//  5
+	{	-1,	NULL,											},
+};
+
+ QY_COLUMNINFO	 CONST_bhbLogDisplayColumns[]  = 
+{
+	{	CONST_qyColumnDisplayType_str,	_T(  "单位"  ),				SQL_CHAR,		LVCFMT_LEFT, 80,  1, 50,	},	//  1
+	{	CONST_qyColumnDisplayType_str,	_T(  "部门"  ),				SQL_CHAR,		LVCFMT_LEFT, 80,  1, 50,	},	//  2
+	{	CONST_qyColumnDisplayType_str,	_T(  "IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 120, 1, 50,	},	//  0
+	{	CONST_qyColumnDisplayType_str,	_T(  "MAC"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,  1, 50,	},	//  3
+	{	CONST_qyColumnDisplayType_str,	_T(  "主机名"  ),			SQL_CHAR,		LVCFMT_LEFT, 80,  1, 50,	},	//  3
+	{	CONST_qyColumnDisplayType_str,	_T(  "用户名"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,  1, 50,	},	//  3
+	//  {	CONST_qyColumnDisplayType_bool,	_T(  "是否服务器"  ),		SQL_CHAR,		LVCFMT_LEFT, 80,  1, 50,	},	//  3
+	{	CONST_qyColumnDisplayType_time,	_T(  "连通时间"  ),			SQL_CHAR,		LVCFMT_LEFT, 120, 1, 50,	},	//  4
+	{	-1,	NULL,									},
+};
+
+ QNM_QUERY_STRUCT  CONST_bhbLogQueryStruct  =  
+{
+	 CONST_bhbLogSqlColumns,	CONST_bhbLogDisplayColumns,
+};
+
+
+ //  显示离线日志列表
+ QY_COLUMNINFO  CONST_bhbOfflineLogSqlColumns[]  =
+{
+	{	6,	_T(  "offlineComputerLogTab.officeName"  ),			SQL_CHAR,	},		//	6
+	{	0,  _T(  "offlineComputerLogTab.subOfficeName"  ),		SQL_CHAR,	},		//	0
+	{	1,	_T(  "offlineComputerLogTab.ip"  ),					SQL_CHAR,	},		//	1
+	{	2,	_T(  "offlineComputerLogTab.mac"  ),				SQL_CHAR,	},		//  2
+	{	3,	_T(  "offlineComputerLogTab.compName"  ),			SQL_CHAR,	},		//  3
+	{	4,	_T(  "offlineComputerLogTab.usrName"  ),			SQL_CHAR,	},		//  4
+	//  {	4,	_T(  "offlineComputerLogTab.is_server"  ),			SQL_CHAR,	},		//  4
+	{	5,	_T(  "offlineComputerLogTab.firstRecvdTime"  ),		SQL_CHAR,	},		//  5
+	{	5,	_T(  "offlineComputerLogTab.lastRecvdTime"  ),		SQL_CHAR,	},		//  5
+	{	-1,	NULL,											},
+};
+
+ QY_COLUMNINFO	 CONST_bhbOfflineLogDisplayColumns[]  = 
+{
+	{	CONST_qyColumnDisplayType_str,	_T(  "单位"  ),				SQL_CHAR,		LVCFMT_LEFT, 80,  1, 50,	},	//  1
+	{	CONST_qyColumnDisplayType_str,	_T(  "部门"  ),				SQL_CHAR,		LVCFMT_LEFT, 80,  1, 50,	},	//  2
+	{	CONST_qyColumnDisplayType_str,	_T(  "IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 120, 1, 50,	},	//  0
+	{	CONST_qyColumnDisplayType_str,	_T(  "MAC"  ),				SQL_CHAR,		LVCFMT_LEFT, 80,  1, 50,	},	//  3
+	{	CONST_qyColumnDisplayType_str,	_T(  "主机名"  ),			SQL_CHAR,		LVCFMT_LEFT, 80,  1, 50,	},	//  3
+	{	CONST_qyColumnDisplayType_str,	_T(  "用户名"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,  1, 50,	},	//  3
+	//  {	CONST_qyColumnDisplayType_bool,	_T(  "是否服务器"  ),		SQL_CHAR,		LVCFMT_LEFT, 80,  1, 50,	},	//  3
+	{	CONST_qyColumnDisplayType_time,	_T(  "连通时间"  ),			SQL_CHAR,		LVCFMT_LEFT, 120, 1, 50,	},	//  4
+	{	CONST_qyColumnDisplayType_time,	_T(  "断开时间"  ),			SQL_CHAR,		LVCFMT_LEFT, 120, 1, 50,	},	//  4
+	{	-1,	NULL,									},
+};
+
+ QNM_QUERY_STRUCT  CONST_bhbOfflineLogQueryStruct  =  
+{
+	 CONST_bhbOfflineLogSqlColumns,	CONST_bhbOfflineLogDisplayColumns,
+};
+
+
+
+ //  显示ScannedIP列表的结构	//  注：该结构对所有的版本一致，不需要定制
+ QY_COLUMNINFO  CONST_scannedIpListSqlColumns[]  =
+{
+	{	6,	_T(  "qyPcTab.lastCommTime"  ),				SQL_CHAR,	},		//	6
+	{	0,  _T(  "qnmScannedIpTab.ip"  ),				SQL_CHAR,	},		//	0
+	{	1,	_T(  "qnmScannedIpTab.officeName"  ),		SQL_CHAR,	},		//	1
+	{	2,	_T(  "qnmScannedIpTab.subOfficeName"  ),	SQL_CHAR,	},		//  2
+	{	3,	_T(  "qnmScannedIpTab.mac"  ),				SQL_CHAR,	},		//  3
+	{	4,	_T(  "qnmScannedIpTab.firstScannedTime"  ),	SQL_CHAR,	},		//  4
+	{	5,	_T(  "qnmScannedIpTab.lastScannedTime"  ),	SQL_CHAR,	},		//  5
+	{	-1,	NULL,											},
+};
+
+  QY_COLUMNINFO	 CONST_scannedIpListDisplayColumns[]  = 
+{
+	{	CONST_qyColumnDisplayType_time,	_T(  "最近联系时间"  ),		SQL_CHAR,		LVCFMT_LEFT, 120, 1, 50,	},	//  6	
+	{	CONST_qyColumnDisplayType_ip12,	_T(  "IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 100, 1, 50,	},	//  0
+	{	CONST_qyColumnDisplayType_str,	_T(  "单位"  ),				SQL_CHAR,		LVCFMT_LEFT, 60,  1, 50,	},	//  1
+	{	CONST_qyColumnDisplayType_str,	_T(  "部门"  ),				SQL_CHAR,		LVCFMT_LEFT, 60,  1, 50,	},	//  2
+	{	CONST_qyColumnDisplayType_str,	_T(  "MAC"  ),				SQL_CHAR,		LVCFMT_LEFT, 80,  1, 50,	},	//  3
+	{	CONST_qyColumnDisplayType_time,	_T(  "首次扫描时间"  ),		SQL_CHAR,		LVCFMT_LEFT, 120, 1, 50,	},	//  4
+	{	CONST_qyColumnDisplayType_time,	_T(  "最近扫描时间"  ),		SQL_CHAR,		LVCFMT_LEFT, 120, 1, 50,	},	//  5
+	{	-1,	NULL,									},
+};
+
+ QNM_QUERY_STRUCT  CONST_scannedIpListQueryStruct  =  
+{
+	 CONST_scannedIpListSqlColumns,	CONST_scannedIpListDisplayColumns,
+};
+
+QNM_QUERY_STRUCT	*	gpBhbLogQueryStruct			=	&CONST_bhbLogQueryStruct;
+QNM_QUERY_STRUCT	*	gpBhbOfflineLogQueryStruct	=	&CONST_bhbOfflineLogQueryStruct;
+QNM_QUERY_STRUCT	*	gpScannedIpListQueryStruct	=	&CONST_scannedIpListQueryStruct;
+
+//  以下是上海海关的界面显示信息  {
+#if  DEFAULT_qyCustomId  ==  CONST_qyCustomId_shhg
+
+ //  上海海关简单用户信息的结构 
+ QY_COLUMNINFO	CONST_shhgSimpleUsrSqlColumns[]  =  
+{
+	//  {	0,  _T(  "qyPcRegInfoTab.col0"  ),		SQL_CHAR,	},		//	0
+	{	1,  _T(  "qyPcRegInfoTab.col1"  ),		SQL_CHAR,	},		//	1
+	{	2,  _T(  "qyPcRegInfoTab.col2"  ),		SQL_CHAR,	},		//	2
+	{	3,	_T(  "qyPcRegInfoTab.col3"  ),		SQL_CHAR,	},		//	3
+	{	4,	_T(  "qyPcRegInfoTab.col4"  ),		SQL_CHAR,	},		//	4
+	{	-1,											},
+};
+
+ QY_COLUMNINFO	CONST_shhgSimpleUsrDisplayColumns[]  = 
+{
+    //  {	CONST_qyColumnDisplayType_str,	_T(  "用户类型"  ),		SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },	//  0
+	{	CONST_qyColumnDisplayType_str,	_T(  "临时用户单位"  ),	SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50, },	//  1
+	{	CONST_qyColumnDisplayType_str,	_T(  "关(处)名"  ),		SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50, },	//  2
+	{	CONST_qyColumnDisplayType_str,	_T(  "科室"  ),			SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50, },	//  3
+	{	CONST_qyColumnDisplayType_str,	_T(  "用户姓名"  ),		SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50, },	//  4
+	{	-1,																						},
+};
+
+ QNM_QUERY_STRUCT  CONST_shhgSimpleUsrQueryStruct  =  
+{
+	 CONST_shhgSimpleUsrSqlColumns,  CONST_shhgSimpleUsrDisplayColumns,
+};
+
+
+ //  上海海关显示主机列表的结构 
+ QY_COLUMNINFO	CONST_shhgPcListSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcRegInfoTab.auditTime"  ),	SQL_CHAR,	},		//  0
+	//  {	0,  _T(  "qyPcRegInfoTab.col0"  ),		SQL_CHAR,	},		//	0
+	{	1,  _T(  "qyPcRegInfoTab.col1"  ),		SQL_CHAR,	},		//	1
+	{	2,  _T(  "qyPcRegInfoTab.col2"  ),		SQL_CHAR,	},		//	2
+	{	3,	_T(  "qyPcRegInfoTab.col3"  ),		SQL_CHAR,	},		//	3
+	{	4,	_T(  "qyPcRegInfoTab.col4"  ),		SQL_CHAR,	},		//	4
+	{	5,	_T(  "qyPcTab.ip"  ),				SQL_CHAR,	},		//	5
+	{	6,	_T(  "qyPcTab.nMacs"  ),			SQL_CHAR,	},		//	6
+	{	7,	_T(  "qyPcTab.osName"  ),			SQL_CHAR,	},		//	7
+	{	8,	_T(  "qyPcTab.servicePack"  ),		SQL_CHAR,	},		//  8
+	//  {	9,	_T(  "qyPcTab.proxyServer"  ),		SQL_CHAR,	},		//	9
+	{	10,	_T(  "qyPcTab.mac0"  ),				SQL_CHAR,	},		//	10							
+	{	11,	_T(  "qyPcTab.qwmVer"  ),			SQL_CHAR,	},		//  11
+	{	-1,											},
+};
+
+ QY_COLUMNINFO	CONST_shhgPcListDisplayColumns[]  = 
+{
+	{	CONST_qyColumnDisplayType_time,	_T(  "审核时间"  ),		SQL_CHAR,		LVCFMT_LEFT, 130, 1, 50, },	//  0
+	//  {	CONST_qyColumnDisplayType_str,	_T(  "用户类型"  ),		SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },	//  0
+	{	CONST_qyColumnDisplayType_str,	_T(  "临时用户单位"  ),	SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50, },	//  1
+	{	CONST_qyColumnDisplayType_str,	_T(  "关(处)名"  ),		SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50, },	//  2
+	{	CONST_qyColumnDisplayType_str,	_T(  "科室"  ),			SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50, },	//  3
+	{	CONST_qyColumnDisplayType_str,	_T(  "用户姓名"  ),		SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_str,	_T(  "IP"  ),			SQL_CHAR,		LVCFMT_LEFT, 100, 1, 50, },	//  5
+	{	CONST_qyColumnDisplayType_str,	_T(  "网卡数"  ),		SQL_CHAR,		LVCFMT_LEFT, 60, 1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,	_T(  "操作系统"  ),		SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50,	},	//  7
+	{	CONST_qyColumnDisplayType_str,	_T(  "ServicePack"  ),	SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50,	},	//  8
+	//  {	CONST_qyColumnDisplayType_str,	_T(  "代理设置"  ),		SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50,	},	//  9
+	{	CONST_qyColumnDisplayType_str,	_T(  "mac"  ),			SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  10
+	{	CONST_qyColumnDisplayType_str,	_T(  "客户端版本"  ),	SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  11
+	{	-1,															},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_shhgPcListQueryStruct  =  
+{
+	 CONST_shhgPcListSqlColumns,	CONST_shhgPcListDisplayColumns,
+};
+
+
+
+  //  上海海关显示免干扰主机列表的结构 
+ QY_COLUMNINFO	CONST_shhgUnchkedPcListSqlColumns[]  =  
+{
+	//  {	0,  _T(  "qyPcRegInfoTab.col0"  ),		SQL_CHAR,	},		//	0
+	{	1,  _T(  "qyPcRegInfoTab.col1"  ),		SQL_CHAR,	},		//	1
+	{	2,  _T(  "qyPcRegInfoTab.col2"  ),		SQL_CHAR,	},		//	2
+	{	3,	_T(  "qyPcRegInfoTab.col3"  ),		SQL_CHAR,	},		//	3
+	{	4,	_T(  "qyPcRegInfoTab.col4"  ),		SQL_CHAR,	},		//	4
+	{	5,	_T(  "qyPcTab.ip"  ),				SQL_CHAR,	},		//	5
+	{	8,	_T(  "qyPcTab.mac0"  ),				SQL_CHAR,	},		//	8
+	{	-1,											},
+};
+
+ QY_COLUMNINFO	CONST_shhgUnchkedPcListDisplayColumns[]  = 
+{
+	//  {	CONST_qyColumnDisplayType_str,	_T(  "用户类型"  ),		SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },	//  0
+	{	CONST_qyColumnDisplayType_str,	_T(  "临时用户单位"  ),		SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  1
+	{	CONST_qyColumnDisplayType_str,	_T(  "关(处)名"  ),		SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  2
+	{	CONST_qyColumnDisplayType_str,	_T(  "科室"  ),			SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  3
+	{	CONST_qyColumnDisplayType_str,	_T(  "用户姓名"  ),		SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_str,	_T(  "IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_str,	_T(  "mac"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50,	},	//  7
+	{	-1,															},
+};
+
+
+  QNM_QUERY_STRUCT  CONST_shhgUnchkedPcListQueryStruct  =  
+{
+	 CONST_shhgUnchkedPcListSqlColumns,	CONST_shhgUnchkedPcListDisplayColumns,
+};
+
+
+ //  上海海关显示拨号权限列表的结构 
+ QY_COLUMNINFO	CONST_shhgPcRuleListSqlColumns[]  =  
+{
+	//  {   0,	_T(  "qyPcRegInfoTab.col0"  ),			SQL_CHAR,	},		//  0
+	{	1,	_T(  "qyPcRegInfoTab.col1"  ),			SQL_CHAR,	},		//  1
+	{	2,	_T(  "qyPcRegInfoTab.col2"  ),			SQL_CHAR,	},		//	2
+	{	3,	_T(  "qyPcRegInfoTab.col3"  ),			SQL_CHAR,	},		//	3
+	{	4,	_T(  "qyPcRegInfoTab.col4"  ),			SQL_CHAR,	},		//	4
+	{	5,	_T(  "qyPcTab.ip"  ),					SQL_CHAR,	},		//	5
+	{	6,	_T(  "qyPcRuleTab.rasCmd"  ),			SQL_CHAR,	},		//	6							
+	{   7,  _T(  "qyPcRuleTab.stopMon"  ),			SQL_CHAR,	},		//  7
+	{	8,	_T(  "qyPcRuleTab.bUnchked"  ),			SQL_CHAR,	},		//  8
+	{	9,	_T(  "qyPcTab.mac0"  ),					SQL_CHAR,	},		//	9
+	{	-1,									},
+};
+
+ QY_COLUMNINFO	CONST_shhgPcRuleListDisplayColumns[] = 
+{
+	//  {	CONST_qyColumnDisplayType_str,		_T(  "用户类型"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },
+	{	CONST_qyColumnDisplayType_str,		_T(  "临时用户单位"  ),		SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },						   
+	{	CONST_qyColumnDisplayType_str,		_T(  "关(处)名"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },
+	{	CONST_qyColumnDisplayType_str,		_T(  "科室"  ),					SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },
+	{	CONST_qyColumnDisplayType_str,		_T(  "用户姓名"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },
+	{	CONST_qyColumnDisplayType_str,		_T(  "IP"  ),					SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },
+	{	CONST_qyColumnDisplayType_rasCmd,	_T(  "拨号权限"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50,	},					   
+	{	CONST_qyColumnDisplayType_bool,		_T(  "卸载"  ),					SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50, },		
+	{	CONST_qyColumnDisplayType_bool,		_T(  "免检"  ),					SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50, },		
+	{	CONST_qyColumnDisplayType_str,		_T(  "MAC"  ),					SQL_CHAR,		LVCFMT_LEFT, 80, 1,	50,	},
+	{	-1,																	},
+};
+
+ QNM_QUERY_STRUCT  CONST_shhgPcRuleListQueryStruct  =  
+{
+	 CONST_shhgPcRuleListSqlColumns,	CONST_shhgPcRuleListDisplayColumns,
+};
+
+
+  //  上海海关显示用户列表的结构 
+ QY_COLUMNINFO	CONST_shhgPcUsrListSqlColumns[]  =  
+{
+	{   0,	_T(  "qyPcRegInfoTab.col0"  ),			SQL_CHAR,	},		//  0
+	{	1,	_T(  "qyPcRegInfoTab.col1"  ),			SQL_CHAR,	},		//  1
+	{	2,	_T(  "qyPcRegInfoTab.col2"  ),			SQL_CHAR,	},		//	2
+	{	3,	_T(  "qyPcRegInfoTab.col3"  ),			SQL_CHAR,	},		//	3
+	{	4,	_T(  "qyPcRegInfoTab.col4"  ),			SQL_CHAR,	},		//	4
+	{	5,	_T(  "qyPcRegInfoTab.col5"  ),			SQL_CHAR,	},		//	5
+	{	6,	_T(  "qyPcRegInfoTab.col6"  ),			SQL_CHAR,	},		//	6
+	{	7,	_T(  "qyPcRegInfoTab.col7"  ),			SQL_CHAR,	},		//	7
+	{	8,	_T(  "qyPcRegInfoTab.col8"  ),			SQL_CHAR,	},		//	8
+	{	9,	_T(  "qyPcRegInfoTab.col9"  ),			SQL_CHAR,	},		//	9
+	{	10,	_T(  "qyPcRegInfoTab.col10"  ),			SQL_CHAR,	},		//	10
+	{	11,	_T(  "qyPcRegInfoTab.col11"  ),			SQL_CHAR,	},		//	11
+	{	12,	_T(  "qyPcTab.ip"  ),					SQL_CHAR,	},		//	12
+	{	13,	_T(  "qyPcRegInfoTab.mac0"  ),			SQL_CHAR,	},		//	13
+	{	-1,									},
+};
+
+
+ QY_COLUMNINFO	CONST_shhgPcUsrListDisplayColumns[] = 
+{
+	{	CONST_qyColumnDisplayType_str,		_T(  "用户类型"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  0
+	{	CONST_qyColumnDisplayType_str,		_T(  "临时用户单位"  ),		SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  1					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "关(处)名"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  2					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "科室"  ),					SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  3					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "用户姓名"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  4					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "联系电话"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  5					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "设备型号"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  6					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "设备序列号"  ),			SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  7					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "关产编号"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  8					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "使用地点"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  9					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "机器类型"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  10					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "主要用途"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  11					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "IP"  ),					SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  12					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "MAC"  ),					SQL_CHAR,		LVCFMT_LEFT, 80, 1,	50,	},	//  13					   
+	{	-1,																									},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_shhgPcUsrListQueryStruct  =
+{
+	 CONST_shhgPcUsrListSqlColumns,  CONST_shhgPcUsrListDisplayColumns,
+};
+
+
+
+ //  上海海关显示所有事件列表的结构 
+ QY_COLUMNINFO	CONST_shhgPcEventAllSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcEventTab.eventType"  ),		SQL_INTEGER,	},		//	0
+	//  {	1,	_T(  "qyPcEventTab.col0"  ),			SQL_CHAR,		},		//  1
+	{	2,	_T(  "qyPcEventTab.col1"  ),			SQL_CHAR,		},		//  2
+	{	3,	_T(  "qyPcEventTab.col2"  ),			SQL_CHAR,		},		//	3
+	{	4,	_T(  "qyPcEventTab.col3"  ),			SQL_CHAR,		},		//	4
+	{	5,	_T(  "qyPcEventTab.col4"  ),			SQL_CHAR,		},		//	5
+	{	6,	_T(  "qyPcEventTab.ip"  ),				SQL_CHAR,		},		//	6
+	{	7,	_T(  "qyPcEventTab.cntEventTime"  ),	SQL_CHAR,		},		//	7
+	{	8,	_T(  "qyPcEventTab.localEventTime"  ),	SQL_CHAR,		},		//	8
+	{	9,	_T(  "qyPcEventTab.mac0"  ),			SQL_CHAR,		},		//	9
+	{	10,	_T(  "qyPcEventTab.comment0"  ),			SQL_CHAR,		},		//  10
+	{	-1,										},
+};
+ 
+ QY_COLUMNINFO	CONST_shhgPcEventAllDisplayColumns[] = 
+{
+   {	CONST_qyColumnDisplayType_eventType,	_T(  "事件"  ),				SQL_CHAR,		LVCFMT_LEFT, 120, 1, 50, },	//  0
+   //  {	CONST_qyColumnDisplayType_str,			_T(  "用户类型"  ),			SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  1
+   {	CONST_qyColumnDisplayType_str,			_T(  "临时用户单位"  ),		SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  2
+   {	CONST_qyColumnDisplayType_str,			_T(  "关(处)名"  ),			SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  3
+   {	CONST_qyColumnDisplayType_str,			_T(  "科室"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//	4
+   {	CONST_qyColumnDisplayType_str,			_T(  "用户姓名"  ),			SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//	5
+   {	CONST_qyColumnDisplayType_str,			_T(  "IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1,	50,	},	//	6
+   {	CONST_qyColumnDisplayType_time,			_T(  "管理中心时间"  ),		SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50,	},	//	7
+   {	CONST_qyColumnDisplayType_time,			_T(  "本地时间"  ),			SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//	8
+   {	CONST_qyColumnDisplayType_str,			_T(  "MAC"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//	9
+   {	CONST_qyColumnDisplayType_str,			_T(  "备注"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//	10
+   {	-1,																},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_shhgPcEventAllQueryStruct  =  
+{
+	 CONST_shhgPcEventAllSqlColumns,	CONST_shhgPcEventAllDisplayColumns,
+};
+
+
+
+ //  上海海关显示拨号事件列表的结构 
+ QY_COLUMNINFO	CONST_shhgPcRasEventSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcEventTab.eventType"  ),		SQL_INTEGER,	},		//	0
+	//  {	1,	_T(  "qyPcEventTab.col0"  ),			SQL_CHAR,		},		//  1
+	{	2,	_T(  "qyPcEventTab.col1"  ),			SQL_CHAR,		},		//  2
+	{	3,	_T(  "qyPcEventTab.col2"  ),			SQL_CHAR,		},		//	3
+	{	4,	_T(  "qyPcEventTab.col3"  ),			SQL_CHAR,		},		//	4
+	{	5,	_T(  "qyPcEventTab.col4"  ),			SQL_CHAR,		},		//	5
+	{	6,	_T(  "qyPcEventTab.des0"  ),			SQL_CHAR,		},		//  10
+	{	7,	_T(  "qyPcEventTab.des1"  ),			SQL_CHAR,		},		//  11
+	{	8,	_T(  "qyPcEventTab.cntEventTime"  ),	SQL_CHAR,		},		//	7
+	{	9,	_T(  "qyPcEventTab.localEventTime"  ),	SQL_CHAR,		},		//	8
+	{	10,	_T(  "qyPcEventTab.ip"  ),				SQL_CHAR,		},		//	6
+	{	11,	_T(  "qyPcEventTab.mac0"  ),			SQL_CHAR,		},		//	9
+	{	-1,													},
+};
+ 
+ QY_COLUMNINFO	CONST_shhgPcRasEventDisplayColumns[] = 
+{
+   {	CONST_qyColumnDisplayType_eventType,	_T(  "事件"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  0
+   //  {	CONST_qyColumnDisplayType_str,			_T(  "用户类型"  ),			SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  1
+   {	CONST_qyColumnDisplayType_str,			_T(  "临时用户单位"  ),	SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  2
+   {	CONST_qyColumnDisplayType_str,			_T(  "关(处)名"  ),			SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  3
+   {	CONST_qyColumnDisplayType_str,			_T(  "科室"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//	4
+   {	CONST_qyColumnDisplayType_str,			_T(  "用户姓名"  ),			SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//	5
+   {	CONST_qyColumnDisplayType_str,			_T(  "拨号权限"  ),			SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//	9
+   {	CONST_qyColumnDisplayType_str,			_T(  "拨号号码"  ),			SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//	9
+   {	CONST_qyColumnDisplayType_time,			_T(  "管理中心时间"  ),		SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50,	},	//	7
+   {	CONST_qyColumnDisplayType_time,			_T(  "本地时间"  ),			SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//	8
+   {	CONST_qyColumnDisplayType_str,			_T(  "IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1,	50,	},	//	6
+   {	CONST_qyColumnDisplayType_str,			_T(  "MAC"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//	9
+   {	-1,																									},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_shhgPcRasEventQueryStruct  =  
+{
+	 CONST_shhgPcRasEventSqlColumns,	CONST_shhgPcRasEventDisplayColumns,
+};
+
+  //  上海海关显示用户列表的结构 
+ QY_COLUMNINFO	CONST_shhgPcUsrInTab1ListSqlColumns[]  =  
+{
+	{   0,	_T(  "qyPcRegInfoTab1.col0"  ),			SQL_CHAR,	},		//  0
+	{	1,	_T(  "qyPcRegInfoTab1.col1"  ),			SQL_CHAR,	},		//  1
+	{	2,	_T(  "qyPcRegInfoTab1.col2"  ),			SQL_CHAR,	},		//	2
+	{	3,	_T(  "qyPcRegInfoTab1.col3"  ),			SQL_CHAR,	},		//	3
+	{	4,	_T(  "qyPcRegInfoTab1.col4"  ),			SQL_CHAR,	},		//	4
+	{	5,	_T(  "qyPcRegInfoTab1.col5"  ),			SQL_CHAR,	},		//	5
+	{	6,	_T(  "qyPcRegInfoTab1.col6"  ),			SQL_CHAR,	},		//	6
+	{	7,	_T(  "qyPcRegInfoTab1.col7"  ),			SQL_CHAR,	},		//	7
+	{	8,	_T(  "qyPcRegInfoTab1.col8"  ),			SQL_CHAR,	},		//	8
+	{	9,	_T(  "qyPcRegInfoTab1.col9"  ),			SQL_CHAR,	},		//	9
+	{	10,	_T(  "qyPcRegInfoTab1.col10"  ),		SQL_CHAR,	},		//	10
+	{	11,	_T(  "qyPcRegInfoTab1.col11"  ),		SQL_CHAR,	},		//	11
+	{	12,	_T(  "qyPcTab.ip"  ),					SQL_CHAR,	},		//	12
+	{	13,	_T(  "qyPcRegInfoTab1.mac0"  ),			SQL_CHAR,	},		//	13
+	{	-1,									},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_shhgPcUsrInTab1ListQueryStruct  =
+{
+	 CONST_shhgPcUsrInTab1ListSqlColumns,  CONST_shhgPcUsrListDisplayColumns,
+};
+
+
+QNM_QUERY_STRUCT	*	gpSimpleUsrQueryStruct			=  &CONST_shhgSimpleUsrQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcListQueryStruct				=  &CONST_shhgPcListQueryStruct;
+QNM_QUERY_STRUCT	*	gpUnchkedPcListQueryStruct		=  &CONST_shhgUnchkedPcListQueryStruct;
+QNM_QUERY_STRUCT	*	gpWillAttackPcListQueryStruct	=  &CONST_shhgUnchkedPcListQueryStruct;  //  &CONST_zjgaWillAttackPcListQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcRasRuleListQueryStruct		=  &CONST_shhgPcRuleListQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcUsrListQueryStruct			=  &CONST_shhgPcUsrListQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcUsrInTab1ListQueryStruct	=  &CONST_shhgPcUsrInTab1ListQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcEventAllQueryStruct			=  &CONST_shhgPcEventAllQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcRasEventQueryStruct			=  &CONST_shhgPcRasEventQueryStruct;
+
+#endif
+//  }  以上是上海海关的界面显示信息
+
+
+//  以下是浙江公安的界面显示信息  {
+#if  DEFAULT_qyCustomId  ==  CONST_qyCustomId_zjga
+
+#ifndef		__OTHER__
+	#define		MACRO_zjgaSimpleUsrSqlColumns													\
+						/*  {	0,  _T(  "qyPcRegInfoTab.col0"  ),		SQL_CHAR,	},	//	0  */	\
+						{	1,  _T(  "qyPcRegInfoTab.col2"  ),		SQL_CHAR,	},		/*	1  */	\
+						{	2,  _T(  "qyPcRegInfoTab.col1"  ),		SQL_CHAR,	},	/*	2  */	\
+						{	3,	_T(  "qyPcRegInfoTab.col3"  ),		SQL_CHAR,	},		/*	3  */	\
+						{	4,	_T(  "qyPcRegInfoTab.col4"  ),		SQL_CHAR,	},		/*	4  */	
+
+	#define		MACRO_zjgaEventSimpleUsrSqlColumns											\
+						/*	{	1,	_T(  "qyPcEventTab.col0"  ),	SQL_CHAR,	},	//  1  */	\
+						{	2,	_T(  "qyPcEventTab.col2"  ),		SQL_CHAR,	},	/*	2  */	\
+						{	3,	_T(  "qyPcEventTab.col1"  ),		SQL_CHAR,	},	/*	3  */		\
+						{	4,	_T(  "qyPcEventTab.col3"  ),		SQL_CHAR,	},	/*	4  */	\
+						{	5,	_T(  "qyPcEventTab.col4"  ),		SQL_CHAR,	},	/*	5  */
+
+	#define		MACRO_zjgaSimpleUsrDisplayColumns												\
+						/*  {	CONST_qyColumnDisplayType_str,	_T(  "用户类型"  ),		SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },		//  0  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "单位"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },		/*  1  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "其它单位"  ),			SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },	/*  2  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "部门"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },		/*  3  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "使用人"  ),			SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50, },		/*  4  */	
+
+#else
+	#define		MACRO_zjgaSimpleUsrSqlColumns													\
+						/*  {	CONST_fieldId_yhlx,  _T(  "qyPcRegInfoTab.col0"  ),		SQL_CHAR,	0,	0,	0,	0,	},	//	0  */	\
+						{	CONST_fieldId_zb,		_T(  "qyPcRegInfoTab.col11"  ),		SQL_CHAR,	0,	0,	4,	0,	},		/*	1  */	\
+						{	CONST_fieldId_bb,		_T(  "qyPcRegInfoTab.col12"  ),		SQL_CHAR,	0,	0,	3,	0,	},		/*	1  */	\
+						{	CONST_fieldId_dw,		_T(  "qyPcRegInfoTab.col2"  ),		SQL_CHAR,	0,	0,	2,	0,	},		/*	1  */	\
+						{	CONST_fieldId_bm,		_T(  "qyPcRegInfoTab.col3"  ),		SQL_CHAR,	0,	0,	1,	0,	},		/*	3  */	\
+						{	CONST_fieldId_syr,		_T(  "qyPcRegInfoTab.col4"  ),		SQL_CHAR,	0,	0,	0,	0,	},		/*	4  */	
+
+	#define		MACRO_zjgaSimpleUsrInTab1SqlColumns													\
+						/*  {	CONST_fieldId_yhlx,  _T(  "qyPcRegInfoTab1.col0"  ),	SQL_CHAR,	0,	0,	0,	0,	},	//	0  */	\
+						{	CONST_fieldId_zb,		_T(  "qyPcRegInfoTab1.col11"  ),	SQL_CHAR,	0,	0,	4,	0,	},		/*	1  */	\
+						{	CONST_fieldId_bb,		_T(  "qyPcRegInfoTab1.col12"  ),	SQL_CHAR,	0,	0,	3,	0,	},		/*	1  */	\
+						{	CONST_fieldId_dw,		_T(  "qyPcRegInfoTab1.col2"  ),		SQL_CHAR,	0,	0,	2,	0,	},		/*	1  */	\
+						{	CONST_fieldId_bm,		_T(  "qyPcRegInfoTab1.col3"  ),		SQL_CHAR,	0,	0,	1,	0,	},		/*	3  */	\
+						{	CONST_fieldId_syr,		_T(  "qyPcRegInfoTab1.col4"  ),		SQL_CHAR,	0,	0,	0,	0,	},		/*	4  */	
+
+	#define		MACRO_zjgaEventSimpleUsrSqlColumns											\
+						/*	{	CONST_fieldId_yhlx,	_T(  "qyPcEventTab.col0"  ),		SQL_CHAR,	0,	0,	0,	0,	},	//  1  */	\
+						{	CONST_fieldId_zb,	_T(  "qyPcEventTab.col5"  ),			SQL_CHAR,	0,	0,	4,	0,	},				\
+						{	CONST_fieldId_bb,	_T(  "qyPcEventTab.col6"  ),			SQL_CHAR,	0,	0,	3,	0,	},				\
+						{	CONST_fieldId_dw,	_T(  "qyPcEventTab.col2"  ),			SQL_CHAR,	0,	0,	2,	0,	},	/*	2  */	\
+						{	CONST_fieldId_bm,	_T(  "qyPcEventTab.col3"  ),			SQL_CHAR,	0,	0,	1,	0,	},	/*	4  */	\
+						{	CONST_fieldId_syr,	_T(  "qyPcEventTab.col4"  ),			SQL_CHAR,	0,	0,	0,	0,	},	/*	5  */
+
+	#define		MACRO_zjgaSimpleUsrDisplayColumns												\
+						/*  {	CONST_qyColumnDisplayType_str,	_T(  "用户类型"  ),		SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },		//  0  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "总部"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },		/*  1  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "本部"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },		/*  1  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "单位"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },		/*  1  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "部门"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },		/*  3  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "使用人"  ),			SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50, },		/*  4  */	
+
+	#define		MACRO_zjgaSimpleUsrDisplayColumns_en												\
+						/*  {	CONST_qyColumnDisplayType_str,	_T(  "用户类型"  ),		SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },		//  0  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "Company"  ),			SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },		/*  1  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "Group"  ),			SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },		/*  1  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "Dept"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },		/*  1  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "Unit"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },		/*  3  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "User"  ),				SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50, },		/*  4  */	
+
+	#define		MACRO_zjgaEventSimpleUsrDisplayColumns												\
+						/*  {	CONST_qyColumnDisplayType_str,	_T(  "用户类型"  ),		SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },		//  0  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "总部"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },		/*  1  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "本部"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },		/*  1  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "单位"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },		/*  1  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "部门"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },		/*  3  */	\
+						{	CONST_qyColumnDisplayType_str,	_T(  "使用人"  ),			SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50, },		/*  4  */	
+	
+
+#endif
+
+
+ QY_COLUMNINFO  CONST_zjgaSimpleUsrSqlColumns[]  =
+{
+	 MACRO_zjgaSimpleUsrSqlColumns
+	{	-1,											},
+
+};
+
+ QY_COLUMNINFO  CONST_zjgaSimpleUsrDisplayColumns[]  =
+{
+	 MACRO_zjgaSimpleUsrDisplayColumns
+	{	-1,																							},
+};
+
+ QNM_QUERY_STRUCT  CONST_zjgaSimpleUsrQueryStruct  =  
+{
+	 CONST_zjgaSimpleUsrSqlColumns,	CONST_zjgaSimpleUsrDisplayColumns,
+};
+
+
+
+ //  浙江公安显示主机列表的结构 
+ QY_COLUMNINFO	CONST_zjgaPcListSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcRegInfoTab.auditTime"  ),	SQL_CHAR,	},
+	MACRO_zjgaSimpleUsrSqlColumns
+	{	5,	_T(  "qyPcTab.ip"  ),				SQL_CHAR,	},		//	5
+	{	6,	_T(  "qyPcTab.pcName"  ),			SQL_CHAR,	},		//	6		//  {	6,	"qyPcTab.nMacs"  ),		SQL_CHAR,	},		//	6
+	{	7,	_T(  "qyPcTab.osName"  ),			SQL_CHAR,	},		//	7
+	{	7,	_T(  "qyPcTab.servicePack"  ),		SQL_CHAR,	},		//	7
+	//  {	7,	_T(  "qyPcTab.ucbAddedManually"  ),	SQL_CHAR,	},		//	7
+	{	8,	_T(  "qyPcTab.mac0"  ),				SQL_CHAR,	},		//	8
+	{	-1,											},
+};
+
+ QY_COLUMNINFO	CONST_zjgaPcListDisplayColumns[]  = 
+{
+	{	CONST_qyColumnDisplayType_time,	_T(  "审核时间"  ),			SQL_CHAR,		LVCFMT_LEFT, 130, 1, 50, },	//  0
+	MACRO_zjgaSimpleUsrDisplayColumns
+	{	CONST_qyColumnDisplayType_str,	_T(  "IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_str,	_T(  "机器名"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//  5	//  {	CONST_qyColumnDisplayType_str,	"网卡数",			SQL_CHAR,		LVCFMT_LEFT, 50, 1, 50, },	//  5
+	{	CONST_qyColumnDisplayType_str,	_T(  "操作系统"  ),			SQL_CHAR,		LVCFMT_LEFT, 70, 1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,	_T(  "补丁"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1,	50,	},	//  6
+	//  {	CONST_qyColumnDisplayType_bool,	_T(  "手工登记"  ),			SQL_CHAR,		LVCFMT_LEFT, 70, 1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,	_T(  "mac"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50,	},	//  7
+	{	-1,															},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcListQueryStruct  =  
+{
+	 CONST_zjgaPcListSqlColumns,	CONST_zjgaPcListDisplayColumns,
+};
+
+
+
+
+
+
+
+
+
+
+  //  浙江公安显示主机资产列表的结构 
+ QY_COLUMNINFO	CONST_zjgaPcAssetListSqlColumns[]  =  
+{
+	MACRO_zjgaSimpleUsrSqlColumns
+	{	4,	_T(  "qyPcTab.ip"  ),				SQL_CHAR,	},		//	5
+	{	5,	_T(  "qyPcAssetTab.iType"  ),		SQL_INTEGER,},
+	{	6,	_T(  "qyPcAssetTab.name"  ),		SQL_CHAR,	},
+	{	7,	_T(  "qyPcAssetTab.des0"  ),		SQL_CHAR,	},
+	{	8,	_T(  "qyPcTab.pcName"  ),			SQL_CHAR,	},		//	6		
+	{	9,	_T(  "qyPcAssetTab.endTime"  ),		SQL_CHAR,	},
+	{	10,	_T(  "qyPcAssetTab.startTime"  ),	SQL_CHAR,	},
+	{	11, _T(  "qyPcAssetTab.uiLangId"  ),	SQL_INTEGER,},
+	{	11,	_T(  "qyPcAssetTab.iPlatformId"  ),	SQL_INTEGER,},		//	7
+	{	12,	_T(  "qyPcAssetTab.winDir"  ),		SQL_CHAR,	},		//	7
+	{	13,	_T(  "qyPcAssetTab.mac0"  ),		SQL_CHAR,	},		//	8
+	{	-1,											},
+};
+
+ QY_COLUMNINFO	CONST_zjgaPcAssetListDisplayColumns[]  = 
+{
+	MACRO_zjgaSimpleUsrDisplayColumns
+	{	CONST_qyColumnDisplayType_str,			_T(  "IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_assetType,	_T(  "设备类型"  ),			SQL_CHAR,		LVCFMT_LEFT, 80,1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_str,			_T(  "名称"  ),				SQL_CHAR,		LVCFMT_LEFT, 200,1, 50, },	//  5	//  {	CONST_qyColumnDisplayType_str,	"网卡数",			SQL_CHAR,		LVCFMT_LEFT, 50, 1, 50, },	//  5
+	{	CONST_qyColumnDisplayType_str,			_T(  "描述"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,			_T(  "计算机名"  ),			SQL_CHAR,		LVCFMT_LEFT, 70, 1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_time,			_T(  "最近检测时间"  ),		SQL_CHAR,		LVCFMT_LEFT, 120, 1, 50, },	//  6
+	{	CONST_qyColumnDisplayType_time,			_T(  "首次检测时间"  ),		SQL_CHAR,		LVCFMT_LEFT, 120, 1, 50, },	//  6
+	{	CONST_qyColumnDisplayType_langId,		_T(  "语言"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },
+	{	CONST_qyColumnDisplayType_platformId,	_T(  "操作系统"  ),			SQL_CHAR,		LVCFMT_LEFT, 70, 1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,			_T(  "系统目录"  ),			SQL_CHAR,		LVCFMT_LEFT, 70, 1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,			_T(  "MAC"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50,	},	//  7
+	{	-1,															},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcAssetListQueryStruct  =  
+{
+	 CONST_zjgaPcAssetListSqlColumns,	CONST_zjgaPcAssetListDisplayColumns,
+};
+
+
+
+
+  //  浙江公安显示主机硬件资产报表的结构 
+ QY_COLUMNINFO	CONST_zjgaPcAssetReportListSqlColumns[]  =  
+{
+	MACRO_zjgaSimpleUsrSqlColumns
+	{	CONST_fieldId_zcbh0,	_T(  "qyPcRegInfoTab.col13"  ),			SQL_CHAR,	0,  0,  0,	},		
+	{	4,						_T(  "qnmTmpTab.des0"  ),				SQL_CHAR,	},
+	{	5,						_T(  "qnmTmpTab.des1"  ),				SQL_CHAR,	},
+	{	6,						_T(  "qnmTmpTab.des2"  ),				SQL_CHAR,	},
+	{	7,						_T(  "qnmTmpTab.des3"  ),				SQL_CHAR,	},
+	{	8,						_T(  "qnmTmpTab.des4"  ),				SQL_CHAR,	},
+	{	4,						_T(  "qnmTmpTab.des5"  ),				SQL_CHAR,	},
+	{	4,						_T(  "qnmTmpTab.des6"  ),				SQL_CHAR,	},
+	{	13,						_T(  "qnmTmpTab.mac"  ),				SQL_CHAR,	},		//	8
+	{	CONST_fieldId_zcbh1,	_T(  "qyPcRegInfoTab.col14"  ),			SQL_CHAR,	0,  0,  1,	},		//	8
+	{	CONST_fieldId_zcsm1,	_T(  "qyPcRegInfoTab.col15"  ),			SQL_CHAR,	0,  0,  1,	},		//	8
+	{	CONST_fieldId_zcbh2,	_T(  "qyPcRegInfoTab.col16"  ),			SQL_CHAR,	0,  0,  2,	},		//	8
+	{	CONST_fieldId_zcsm2,	_T(  "qyPcRegInfoTab.col17"  ),			SQL_CHAR,	0,  0,  2,	},		//	8
+	{	13,						_T(  "qnmTmpTab.col0"  ),				SQL_CHAR,	},
+	{	13,						_T(  "qnmTmpTab.col1"  ),				SQL_CHAR,	},
+	{	13,						_T(  "qnmTmpTab.col2"  ),				SQL_CHAR,	},
+	{	-1,											},
+};
+
+  QY_COLUMNINFO	CONST_zjgaPcAssetReportListDisplayColumns[]  = 
+{
+	MACRO_zjgaSimpleUsrDisplayColumns
+	{	CONST_qyColumnDisplayType_str,			_T(  "资产编号"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_str,			_T(  "CPU"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_str,			_T(  "内存"  ),				SQL_CHAR,		LVCFMT_LEFT, 70,1, 50, },	//  5	//  {	CONST_qyColumnDisplayType_str,	"网卡数"  ),			SQL_CHAR,		LVCFMT_LEFT, 50, 1, 50, },	//  5
+	{	CONST_qyColumnDisplayType_str,			_T(  "Bios"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,			_T(  "硬盘"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,			_T(  "光驱"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,			_T(  "网卡"  ),				SQL_CHAR,		LVCFMT_LEFT, 120, 1, 50, },	//  6
+	{	CONST_qyColumnDisplayType_str,			_T(  "显卡"  ),				SQL_CHAR,		LVCFMT_LEFT, 120, 1, 50, },	//  6
+	{	CONST_qyColumnDisplayType_str,			_T(  "MAC"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },
+	{	CONST_qyColumnDisplayType_str,			_T(  "资产编号1"  ),		SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_str,			_T(  "资产说明1"  ),		SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_str,			_T(  "资产编号2"  ),		SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_str,			_T(  "资产说明2"  ),		SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_str,			_T(  "语言"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,			_T(  "操作系统"  ),			SQL_CHAR,		LVCFMT_LEFT, 70, 1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,			_T(  "Win目录"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,1, 50,	},	//  7
+	{	-1,															},
+};
+
+
+ QY_COLUMNINFO	CONST_zjgaPcAssetReportListDisplayColumns_en[]  = 
+{
+	MACRO_zjgaSimpleUsrDisplayColumns_en
+	{	CONST_qyColumnDisplayType_str,			_T(  "AssetsNo"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_str,			_T(  "CPU"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_str,			_T(  "Mem"  ),				SQL_CHAR,		LVCFMT_LEFT, 70,1, 50, },	//  5	//  {	CONST_qyColumnDisplayType_str,	"网卡数",			SQL_CHAR,		LVCFMT_LEFT, 50, 1, 50, },	//  5
+	{	CONST_qyColumnDisplayType_str,			_T(  "Bios"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,			_T(  "Disk"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,			_T(  "Cdrom"  ),			SQL_CHAR,		LVCFMT_LEFT, 70, 1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,			_T(  "NetworkCard"  ),		SQL_CHAR,		LVCFMT_LEFT, 120, 1, 50, },	//  6
+	{	CONST_qyColumnDisplayType_str,			_T(  "Display"  ),			SQL_CHAR,		LVCFMT_LEFT, 120, 1, 50, },	//  6
+	{	CONST_qyColumnDisplayType_str,			_T(  "MAC"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },
+	{	CONST_qyColumnDisplayType_str,			_T(  "AssetsNo1"  ),		SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_str,			_T(  "AssetsDesc1"  ),		SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_str,			_T(  "AssetsNo2"  ),		SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_str,			_T(  "AssetsDesc2"  ),		SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_str,			_T(  "Language"  ),			SQL_CHAR,		LVCFMT_LEFT, 70, 1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,			_T(  "OS"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,			_T(  "WinDir"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,1, 50,	},	//  7
+	{	-1,															},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcAssetReportListQueryStruct  =  
+{
+	 CONST_zjgaPcAssetReportListSqlColumns,	CONST_zjgaPcAssetReportListDisplayColumns,
+};
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcAssetReportListQueryStruct_en  =  
+{
+	 CONST_zjgaPcAssetReportListSqlColumns,	CONST_zjgaPcAssetReportListDisplayColumns_en,
+};
+
+
+
+
+
+ 
+
+ //  浙江公安显示补丁列表的结构 
+ QY_COLUMNINFO	CONST_zjgaPcSpListSqlColumns[]  =  
+{
+	MACRO_zjgaSimpleUsrSqlColumns
+	{	5,	_T(  "qyPcTab.ip"  ),				SQL_CHAR,	},		//	5
+	{	7,	_T(  "qyPcSpTab.osName"  ),			SQL_CHAR,	},		//	7
+	{	7,	_T(  "qyPcSpTab.servicePack"  ),	SQL_CHAR,	},		//	7
+	{	7,	_T(  "qyPcSpTab.spName"  ),			SQL_CHAR,	},
+	{	7,	_T(  "qyCusNameTab.cusName"  ),		SQL_CHAR,	},
+	{	7,	_T(  "qyPcSpTab.lastTime"  ),		SQL_CHAR,	},
+	{	8,	_T(  "qyPcTab.mac0"  ),				SQL_CHAR,	},		//	8
+	{	7,	_T(  "qyPcSpTab.winDir"  ),			SQL_CHAR,	},		//  7
+	{	-1,											},
+};
+
+ QY_COLUMNINFO	CONST_zjgaPcSpListDisplayColumns[]  = 
+{
+ 	MACRO_zjgaSimpleUsrDisplayColumns
+	{	CONST_qyColumnDisplayType_str,		_T(  "IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,	1,	50, },	//  4
+	{	CONST_qyColumnDisplayType_str,		_T(  "操作系统"  ),			SQL_CHAR,		LVCFMT_LEFT, 70,	1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,		_T(  "Service Pack"  ),		SQL_CHAR,		LVCFMT_LEFT, 160,	1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_pcSp,		_T(  "补丁"  ),				SQL_CHAR,		LVCFMT_LEFT, 70,	1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,		_T(  "补丁别名"  ),			SQL_CHAR,		LVCFMT_LEFT, 70,	1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_time,		_T(  "最近检查时间"  ),		SQL_CHAR,		LVCFMT_LEFT, 130,	1,	50,	},	//  6
+	{	CONST_qyColumnDisplayType_str,		_T(  "MAC"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50,	},	//  7
+	{	CONST_qyColumnDisplayType_str,		_T(  "Win目录"  ),			SQL_CHAR,		LVCFMT_LEFT, 80,	1,	50,	},	//  6
+	{	-1,															},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcSpListQueryStruct  =  
+{
+	 CONST_zjgaPcSpListSqlColumns,	CONST_zjgaPcSpListDisplayColumns,
+};
+
+
+  //  浙江公安显示特殊补丁列表的结构 
+ QY_COLUMNINFO	CONST_zjgaPcSpSpecialListSqlColumns[]  =  
+{
+	MACRO_zjgaSimpleUsrSqlColumns
+	{	5,	_T(  "qyPcTab.ip"  ),				SQL_CHAR,	},		//	5
+	{	7,	_T(  "qyPcTab.osName"  ),			SQL_CHAR,	},		//	7
+	//  {	7,	_T(  "qyPcSpTab.servicePack"  ),	SQL_CHAR,	},		//	7
+	{	7,	_T(  "qnmTmpTab.des0"  ),			SQL_CHAR,	},
+	//  {	7,	_T(  "qyPcSpTab.spName"  ),			SQL_CHAR,	},
+	{	7,	_T(  "qnmTmpTab.col0"  ),			SQL_CHAR,	},
+	{	7,	_T(  "qyCusNameTab.cusName"  ),		SQL_CHAR,	},
+	//  {	7,	_T(  "qyPcSpTab.lastTime"  ),		SQL_CHAR,	},
+	{	7,	_T(  "qnmTmpTab.des1"  ),			SQL_CHAR,	},
+	{	8,	_T(  "qyPcTab.mac0"  ),				SQL_CHAR,	},		//	8
+	{	7,	_T(  "qyPcTab.winDir"  ),			SQL_CHAR,	},
+	{	-1,											},
+};
+
+#define		CONST_zjgaPcSpSpecialListDisplayColumns		CONST_zjgaPcSpListDisplayColumns
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcSpSpecialListQueryStruct  =  
+{
+	 CONST_zjgaPcSpSpecialListSqlColumns,	CONST_zjgaPcSpSpecialListDisplayColumns,
+};
+
+
+ ////////////////////////////////////////////////
+
+ //
+ //  浙江公安显示用户列表的结构 
+ QY_COLUMNINFO	CONST_zjgaPcUsrListSqlColumns[]  =  
+{
+	//  {	0, _T(  "qyPcRegInfoTab.bOk"  ),			SQL_CHAR,	},		//  0
+	MACRO_zjgaSimpleUsrSqlColumns
+	{	CONST_fieldId_jqlx,		_T(  "qyPcRegInfoTab.col5"  ),			SQL_CHAR,	0,  0,  0,	},		//	5
+	{	CONST_fieldId_zcbh0,	_T(  "qyPcRegInfoTab.col13"  ),			SQL_CHAR,	0,  0,  0,	},		
+	{	CONST_fieldId_zyyt,		_T(  "qyPcRegInfoTab.col6"  ),			SQL_CHAR,	0,  0,  0,	},		//	6
+	{	CONST_fieldId_lxdh,		_T(  "qyPcRegInfoTab.col7"  ),			SQL_CHAR,	0,  0,  0,	},		//	7
+	{	CONST_fieldId_sydd,		_T(  "qyPcRegInfoTab.col10"  ),			SQL_CHAR,	0,  0,  0,	},		//	10
+	{	CONST_fieldId_zcbh1,	_T(  "qyPcRegInfoTab.col14"  ),			SQL_CHAR,	0,  0,  1,	},		//	8
+	{	CONST_fieldId_zcsm1,	_T(  "qyPcRegInfoTab.col15"  ),			SQL_CHAR,	0,  0,  1,	},		//	8
+	{	CONST_fieldId_zcbh2,	_T(  "qyPcRegInfoTab.col16"  ),			SQL_CHAR,	0,  0,  2,	},		//	8
+	{	CONST_fieldId_zcsm2,	_T(  "qyPcRegInfoTab.col17"  ),			SQL_CHAR,	0,  0,  2,	},		//	8
+	{	11,						_T(  "qyPcTab.ip"  ),					SQL_CHAR,	0,  0,  0,	},		//	11
+	{	12,						_T(  "qyPcRegInfoTab.mac0"  ),			SQL_CHAR,	0,  0,  0,	},		//	12
+	{	-1,									},
+};
+
+
+ QY_COLUMNINFO	CONST_zjgaPcUsrListDisplayColumns[] = 
+{
+	//  {	CONST_qyColumnDisplayType_bool,		"     确认?",			SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50, },	//  13  
+	MACRO_zjgaSimpleUsrDisplayColumns
+	{	CONST_qyColumnDisplayType_jqlx,		_T(  "机器类型"  ),				SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50, },	//  5
+	{	CONST_qyColumnDisplayType_str,		_T(  "资产编号"  ),				SQL_CHAR,		LVCFMT_LEFT, 70, 1, 50, },  
+	{	CONST_qyColumnDisplayType_str,		_T(  "主要用途"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  6
+	{	CONST_qyColumnDisplayType_str,		_T(  "联系电话"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  7					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "使用地点"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  10					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "资产编号1"  ),			SQL_CHAR,		LVCFMT_LEFT, 70,  0, 0, },	//  8					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "资产说明1"  ),			SQL_CHAR,		LVCFMT_LEFT, 70,  0,  0, },	//  9					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "资产编号2"  ),			SQL_CHAR,		LVCFMT_LEFT, 70,  0, 0, },	//  8					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "资产说明2"  ),			SQL_CHAR,		LVCFMT_LEFT, 70,  0,  0, },	//  9					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "IP"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//  11					   
+	{	CONST_qyColumnDisplayType_str,		_T(  "MAC"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1,	50,	},	//  12					   
+	{	-1,																									},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcUsrListQueryStruct  =
+{
+	 CONST_zjgaPcUsrListSqlColumns,  CONST_zjgaPcUsrListDisplayColumns,
+};
+
+  //  浙江公安显示用户重复注册列表的结构 
+ QY_COLUMNINFO	CONST_zjgaPcUsrInTab1ListSqlColumns[]  =  
+{
+	//  {   0,	_T(  "qyPcRegInfoTab1.bOk"  ),			SQL_CHAR,	},		//  0
+	MACRO_zjgaSimpleUsrInTab1SqlColumns
+	{	CONST_fieldId_jqlx,		_T(  "qyPcRegInfoTab1.col5"  ),				SQL_CHAR,	0,  0,  0,	},		//	5
+	{	CONST_fieldId_zcbh0,	_T(  "qyPcRegInfoTab1.col13"  ),			SQL_CHAR,	0,  0,  0,	},		
+	{	CONST_fieldId_zyyt,		_T(  "qyPcRegInfoTab1.col6"  ),				SQL_CHAR,	0,  0,  0,	},		//	6
+	{	CONST_fieldId_lxdh,		_T(  "qyPcRegInfoTab1.col7"  ),				SQL_CHAR,	0,  0,  0,	},		//	7
+	{	CONST_fieldId_sydd,		_T(  "qyPcRegInfoTab1.col10"  ),			SQL_CHAR,	0,  0,  0,	},		//	10
+	{	CONST_fieldId_zcbh1,	_T(  "qyPcRegInfoTab1.col14"  ),			SQL_CHAR,	0,  0,  1,	},		//	8
+	{	CONST_fieldId_zcsm1,	_T(  "qyPcRegInfoTab1.col15"  ),			SQL_CHAR,	0,  0,  1,	},		//	8
+	{	CONST_fieldId_zcbh2,	_T(  "qyPcRegInfoTab1.col16"  ),			SQL_CHAR,	0,  0,  2,	},		//	8
+	{	CONST_fieldId_zcsm2,	_T(  "qyPcRegInfoTab1.col17"  ),			SQL_CHAR,	0,  0,  2,	},		//	8
+	{	11,						_T(  "qyPcTab.ip"  ),						SQL_CHAR,	},		//	11
+	{	12,						_T(  "qyPcRegInfoTab1.mac0"  ),				SQL_CHAR,	},		//	12
+	{	-1,									},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcUsrInTab1ListQueryStruct  =
+{
+	 CONST_zjgaPcUsrInTab1ListSqlColumns,  CONST_zjgaPcUsrListDisplayColumns,
+};
+
+
+ //  2005/05/10, 客户端列表
+ QY_COLUMNINFO  CONST_zjgaQwmSvrListSqlColumns[]  =
+{
+	 MACRO_zjgaSimpleUsrSqlColumns
+	 {	11,						_T(  "qyPcTab.ip"  ),						SQL_CHAR,	},		//	11
+	 {	13,						_T(  "qyPcTab.qwmVer"  ),					SQL_CHAR,	},
+	 {	13,						_T(  "qwmSvrTab.seqNo"  ),						SQL_CHAR,	},
+	 {	14,						_T(  "qyPcTab.startTime"  ),				SQL_CHAR,	},
+	 {	15,						_T(  "qyPcTab.lastCommTime"  ),				SQL_CHAR,	},
+	 {	12,						_T(  "qyPcTab.mac0"  ),						SQL_CHAR,	},		//	12
+	 {	16,						_T(  "qyPcTab.uiLangId"  ),					SQL_INTEGER,},
+	 {	17,						_T(  "qyPcTab.iPlatformId"  ),				SQL_INTEGER,},
+	 {	18,						_T(  "qyPcTab.winDir"  ),					SQL_CHAR,	},
+	 {	-1,						},
+};
+
+ QY_COLUMNINFO  CONST_zjgaQwmSvrListDisplayColumns[]  =
+{	 
+	 MACRO_zjgaSimpleUsrDisplayColumns
+	 {	CONST_qyColumnDisplayType_str,		_T(  "IP"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,  0, 0, },	//  8					   
+	 {	CONST_qyColumnDisplayType_str,		_T(  "版本"  ),			SQL_CHAR,		LVCFMT_LEFT, 80,  0, 0, },	//  8					   
+	 {	CONST_qyColumnDisplayType_str,		_T(  "标识符"  ),		SQL_CHAR,		LVCFMT_LEFT, 80,  0, 0, },	//  8					   
+	 {	CONST_qyColumnDisplayType_time,		_T(  "分发时间"  ),		SQL_CHAR,		LVCFMT_LEFT, 115,  0, 0, },	//  8					   
+	 {	CONST_qyColumnDisplayType_time,		_T(  "最近联系时间"  ),	SQL_CHAR,		LVCFMT_LEFT, 115,  0, 0, },	//  8					   
+	 {	CONST_qyColumnDisplayType_str,		_T(  "MAC"  ),			SQL_CHAR,		LVCFMT_LEFT, 90,  0, 0, },	//  8					   
+	 {	CONST_qyColumnDisplayType_langId,	_T(  "语言"  ),			SQL_CHAR,		LVCFMT_LEFT, 70,  0, 0, },	//  8					   
+	 {	CONST_qyColumnDisplayType_platformId,_T(  "操作系统"  ),	SQL_CHAR,		LVCFMT_LEFT, 70,  0, 0, },	//  8					   
+	 {	CONST_qyColumnDisplayType_str,		_T(  "Windows目录"  ),	SQL_CHAR,		LVCFMT_LEFT, 90,  0, 0, },	//  8					   
+
+
+	 {	-1,						},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaQwmSvrListQueryStruct  =
+{
+	 CONST_zjgaQwmSvrListSqlColumns,  CONST_zjgaQwmSvrListDisplayColumns,
+};
+
+
+//////////////////////////////////////////
+
+/*
+ //  浙江公安显示免干扰主机列表的结构 
+ QY_COLUMNINFO	CONST_zjgaUnchkedPcListSqlColumns[]  =  
+{
+	MACRO_zjgaSimpleUsrSqlColumns
+	{	5,	_T(  "qyPcTab.ip"  ),				SQL_CHAR,	},		//	5
+	{	8,	_T(  "qyPcTab.mac0"  ),				SQL_CHAR,	},		//	8
+	{	-1,											},
+};
+
+ QY_COLUMNINFO	CONST_zjgaUnchkedPcListDisplayColumns[]  = 
+{
+	MACRO_zjgaSimpleUsrDisplayColumns
+	{	CONST_qyColumnDisplayType_str,	_T(  "IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//  4
+	{	CONST_qyColumnDisplayType_str,	_T(  "mac"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50,	},	//  7
+	{	-1,															},
+};
+
+
+  QNM_QUERY_STRUCT  CONST_zjgaUnchkedPcListQueryStruct  =  
+{
+	 CONST_zjgaUnchkedPcListSqlColumns,	CONST_zjgaUnchkedPcListDisplayColumns,
+};
+*/
+
+ //  浙江公安显示拨号权限列表的结构 
+ QY_COLUMNINFO	CONST_zjgaPcRuleListSqlColumns[]  =  
+{
+	MACRO_zjgaSimpleUsrSqlColumns
+	{	5,	_T(  "qyPcTab.ip"  ),					SQL_CHAR,	},		//	5
+	{	6,	_T(  "qyPcRuleTab.floppyCmd"  ),		SQL_CHAR,	},
+	{	6,	_T(  "qyPcRuleTab.cdromCmd"  ),			SQL_CHAR,	},
+	{	6,	_T(  "qyPcRuleTab.usbCmd"  ),			SQL_CHAR,	},
+	{	6,	_T(  "qyPcRuleTab.rasCmd"  ),			SQL_CHAR,	},		//	6							
+	{	6,	_T(  "qyPcRuleTab.col1"  ),				SQL_CHAR,	},
+	{	6,	_T(  "qyPcRuleTab.col0"  ),				SQL_CHAR,	},
+	{	6,	_T(  "qyPcRuleTab.col2"  ),				SQL_CHAR,	},		//  
+	{	6,	_T(  "qyPcRuleTab.col3"  ),				SQL_CHAR,	},		//  
+	{	6,	_T(  "qyPcRuleTab.col4"  ),				SQL_CHAR,	},		//  
+	{	6,	_T(  "qyPcRuleTab.col5"  ),				SQL_CHAR,	},		//  
+	{	6,	_T(  "qyPcRuleTab.col6"  ),				SQL_CHAR,	},		//  
+	{   7,  _T(  "qyPcRuleTab.stopMon"  ),			SQL_CHAR,	},		//  7
+	{	8,	_T(  "qyPcRuleTab.bUnchked"  ),			SQL_CHAR,	},		//  8
+	{	9,	_T(  "qyPcRuleTab.bDoSecChk"  ),		SQL_CHAR,	},
+	{	9,	_T(  "qyPcTab.mac0"  ),					SQL_CHAR,	},		//	9
+	{	-1,									},
+};
+
+ QY_COLUMNINFO	CONST_zjgaPcRuleListDisplayColumns[] = 
+{
+	MACRO_zjgaSimpleUsrDisplayColumns
+	{	CONST_qyColumnDisplayType_str,		_T(  "IP"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_devCmd,	_T(  "软驱"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_devCmd,	_T(  "光驱"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_devCmd,	_T(  "USB"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_rasCmd,	_T(  "拨号权限"  ),				SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50,	},					   
+	{	CONST_qyColumnDisplayType_devCmd,	_T(  "远程上网报警"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_devCmd,	_T(  "安全模式"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_devCmd,	_T(  "系统事件审计"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_devCmd,	_T(  "操作系统用户审计"  ),		SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_devCmd,	_T(  "打印机审计"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_devCmd,	_T(  "NetStat审计"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,		_T(  "审计目录"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+
+	{	CONST_qyColumnDisplayType_bool,		_T(  "卸载"  ),					SQL_CHAR,		LVCFMT_LEFT, 50, 1, 50, },		
+	{	CONST_qyColumnDisplayType_bool,		_T(  "免检"  ),					SQL_CHAR,		LVCFMT_LEFT, 50, 1, 50, },		
+	{	CONST_qyColumnDisplayType_bool,		_T(  "安全检查"  ),				SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50, },		
+	{	CONST_qyColumnDisplayType_str,		_T(  "MAC"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1,	50,	},
+	{	-1,																	},
+};
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcRuleListQueryStruct  =  
+{
+	 CONST_zjgaPcRuleListSqlColumns,	CONST_zjgaPcRuleListDisplayColumns,
+};
+
+
+
+ //  终端的网络连接属性, 2005/05/25
+ QY_COLUMNINFO	CONST_zjgaPcAdapterListSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcAdapterTab.id"  ),					SQL_INTEGER,	},
+	{	0,	_T(  "qyPcAdapterTab.iStatus"  ),				SQL_INTEGER,	},
+	MACRO_zjgaSimpleUsrSqlColumns
+	//  {	5,	_T(  "qyPcTab.ip"  ),								SQL_CHAR,		},		//	5
+	{	5,	_T(  "qyPcTab.pcName"  ),						SQL_CHAR,		},
+	//  {	6,	_T(  "qyPcAdapterTab.uiType"  ),				SQL_INTEGER,	},
+	{	6,	_T(  "qyPcAdapterTab.des0"  ),					SQL_CHAR,		},
+	{	6,	_T(  "qyPcAdapterTab.devDesc"  ),				SQL_CHAR,		},
+	{	6,	_T(  "qyPcAdapterTab.uiAdapterType"  ),			SQL_INTEGER,	},
+	{	6,	_T(  "qyPcAdapterTab.mac"  ),					SQL_CHAR,	},		//
+	{	6,	_T(  "qyPcAdapterTab.ipBuf"  ),					SQL_CHAR,	},
+	{	6,	_T(  "qyPcAdapterTab.ipMaskBuf"  ),				SQL_CHAR,	},
+	{	6,	_T(  "qyPcAdapterTab.gatewayBuf"  ),			SQL_CHAR,	},
+	{	6,	_T(  "qyPcAdapterTab.ucbDhcpEnabled"  ),		SQL_CHAR,	},
+	{	6,	_T(  "qyPcAdapterTab.dhcpServerIp"  ),			SQL_CHAR,	},
+	{	6,	_T(  "qyPcAdapterTab.ucbAutoDns"  ),			SQL_CHAR,	},
+	{	6,	_T(  "qyPcAdapterTab.dnsBuf"  ),				SQL_CHAR,	},
+	//  {	6,	_T(  "qyPcAdapterTab.proxyBuf"  ),				SQL_CHAR,	},
+	{	6,	_T(  "qyPcAdapterTab.ucbHaveWins"  ),			SQL_CHAR,	},
+	{	6,	_T(  "qyPcAdapterTab.primaryWinsServerIp"  ),	SQL_CHAR,	},
+	{	6,	_T(  "qyPcAdapterTab.secondaryWinsServerIp"  ),	SQL_CHAR,	},
+	{	6,	_T(  "qyPcAdapterTab.lastTime"  ),				SQL_CHAR,	},
+	//
+	{	9,	_T(  "qyPcAdapterTab.mac0"  ),					SQL_CHAR,	},		//	9
+	{	-1,									},
+};
+
+ QY_COLUMNINFO	CONST_zjgaPcAdapterListDisplayColumns[] = 
+{
+	{	CONST_qyColumnDisplayType_long,					_T(  "序号"  ),					SQL_CHAR,		LVCFMT_LEFT, 0,1, 50, },
+	{	CONST_qyColumnDisplayType_pcAdapterStatus,		_T(  "状态"  ),					SQL_CHAR,		LVCFMT_LEFT, 80,1, 50, },
+	MACRO_zjgaSimpleUsrDisplayColumns
+	//  {	CONST_qyColumnDisplayType_str,					_T(  "IP"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "计算机名"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	//  {	CONST_qyColumnDisplayType_pcNetworkPropType,	_T(  "类型"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "描述"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "名称"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_adapterType,			_T(  "网卡类型"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "网卡MAC"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "网卡IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "掩码"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "路由"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_bool,					_T(  "是否启动DHCP"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "DHCP服务器"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_bool,					_T(  "是否自动获得DNS"  ),		SQL_CHAR,		LVCFMT_LEFT, 120,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "DNS"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	//  {	CONST_qyColumnDisplayType_str,					_T(  "Proxy"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_bool,					_T(  "是否启用WINS"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "WINS主服务器"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "WINS二级服务器"  ),		SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_time,					_T(  "最新刷新时间"  ),			SQL_CHAR,		LVCFMT_LEFT, 120,1, 50, },
+	//
+	{	CONST_qyColumnDisplayType_str,					_T(  "MAC"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1,	50,	},
+	{	-1,																	},
+};
+
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcAdapterListQueryStruct  =
+{
+	 CONST_zjgaPcAdapterListSqlColumns,  CONST_zjgaPcAdapterListDisplayColumns,
+};
+
+//
+
+
+ //  终端的代理设置属性, 2005/05/25
+ QY_COLUMNINFO	CONST_zjgaPcProxyCfgListSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcAdapterTab.id"  ),						SQL_INTEGER,	},
+	{	0,	_T(  "qyPcAdapterTab.iStatus"  ),					SQL_INTEGER,	},
+	MACRO_zjgaSimpleUsrSqlColumns
+	{	5,	_T(  "qyPcTab.ip"  ),								SQL_CHAR,		},		//	5
+	//  {	6,	_T(  "qyPcAdapterTab.uiType"  ),				SQL_INTEGER,	},
+	{	6,	_T(  "qyPcAdapterTab.iParam0"  ),					SQL_INTEGER,	},
+	{	6,	_T(  "qyPcAdapterTab.paramStr0"  ),					SQL_CHAR,		},
+	{	6,	_T(  "qyPcAdapterTab.iProp0"  ),					SQL_INTEGER,	},	//	pUsrInfo->ucbEnableAutodial;  uiProps  ++  ;
+	{	6,	_T(  "qyPcAdapterTab.iProp1"  ),					SQL_INTEGER,	},	//  pUsrInfo->ucbNoNetAutodial;  uiProps  ++  ;
+	{	6,	_T(  "qyPcAdapterTab.iProp2"  ),					SQL_INTEGER,	},	//  pUsrInfo->ucbAutoDetectSettings;  uiProps  ++  ;
+	{	6,	_T(  "qyPcAdapterTab.iProp3"  ),					SQL_INTEGER,	},	//  pUsrInfo->ucbProxyEnable;  uiProps  ++  ;
+	{	6,	_T(  "qyPcAdapterTab.propStr0"  ),					SQL_CHAR,		},		//  pUsrInfo->proxyServer,  pRcd->propStrs[uiPropStrs],  sizeof(  pRcd->propStrs[uiPropStrs]  )  );  uiPropStrs  ++  ;
+	{	6,	_T(  "qyPcAdapterTab.propStr1"  ),					SQL_CHAR,		},		//  pUsrInfo->proxyOverride,  pRcd->propStrs[uiPropStrs],  sizeof(  pRcd->propStrs[uiPropStrs]  )  );  uiPropStrs  ++  ;
+	{	6,	_T(  "qyPcAdapterTab.lastTime"  ),					SQL_CHAR,		},
+	//
+	{	9,	_T(  "qyPcAdapterTab.mac0"  ),						SQL_CHAR,		},		//	9
+	{	-1,									},
+};
+
+ QY_COLUMNINFO	CONST_zjgaPcProxyCfgListDisplayColumns[] = 
+{
+	{	CONST_qyColumnDisplayType_long,					_T(  "序号"  ),								SQL_CHAR,		LVCFMT_LEFT, 0,1, 50, },
+	{	CONST_qyColumnDisplayType_pcAdapterStatus,		_T(  "状态"  ),								SQL_CHAR,		LVCFMT_LEFT, 80,1, 50, },
+	MACRO_zjgaSimpleUsrDisplayColumns
+	{	CONST_qyColumnDisplayType_str,					_T(  "IP"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	//  {	CONST_qyColumnDisplayType_pcNetworkPropType,	_T(  "类型"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_platformId,			_T(  "操作系统"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "用户名"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_iBool,				_T(  "可自动拨号"  ),						SQL_CHAR,		LVCFMT_LEFT, 75,1, 50, },
+	{	CONST_qyColumnDisplayType_iBool,				_T(  "自动拨号时考虑网络连接"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },		
+	{	CONST_qyColumnDisplayType_iBool,				_T(  "自动检测设置"  ),						SQL_CHAR,		LVCFMT_LEFT, 85,1, 50, },
+	{	CONST_qyColumnDisplayType_iBool,				_T(  "起用代理"  ),							SQL_CHAR,		LVCFMT_LEFT, 60,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "代理设置"  ),							SQL_CHAR,		LVCFMT_LEFT, 120,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "不使用代理的地址"  ),					SQL_CHAR,		LVCFMT_LEFT, 110,1, 50, },
+	//
+	{	CONST_qyColumnDisplayType_time,					_T(  "最新刷新时间"  ),						SQL_CHAR,		LVCFMT_LEFT, 120,1, 50, },
+	//
+	{	CONST_qyColumnDisplayType_str,					_T(  "MAC"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1,	50,	},
+	{	-1,																	},
+};
+
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcProxyCfgListQueryStruct  =
+{
+	 CONST_zjgaPcProxyCfgListSqlColumns,  CONST_zjgaPcProxyCfgListDisplayColumns,
+};
+
+ ////////////////////////////////////////
+ //
+
+
+ //  终端的计算机信息设置属性, 2005/05/25
+ QY_COLUMNINFO	CONST_zjgaPcComputerPropListSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcAdapterTab.id"  ),						SQL_INTEGER,	},
+	{	0,	_T(  "qyPcAdapterTab.iStatus"  ),					SQL_INTEGER,	},
+	MACRO_zjgaSimpleUsrSqlColumns
+	{	5,	_T(  "qyPcTab.ip"  ),								SQL_CHAR,		},		//	5
+	//  {	6,	_T(  "qyPcAdapterTab.uiType"  ),				SQL_INTEGER,	},
+	{	7,	_T(  "qyPcAdapterTab.propStr0"  ),					SQL_CHAR,		},		//	pComputer->activeComputerName,  pRcd->propStrs[uiPropStrs],  sizeof(  pRcd->propStrs[uiPropStrs]  )  );  uiPropStrs  ++  ;
+	{	7,	_T(  "qyPcAdapterTab.propStr1"  ),					SQL_CHAR,		},		//  pComputer->computerName,  pRcd->propStrs[uiPropStrs],  sizeof(  pRcd->propStrs[uiPropStrs]  )  );  uiPropStrs  ++  ;
+	{	7,	_T(  "qyPcAdapterTab.propstr2"  ),					SQL_CHAR,		},
+	{	6,	_T(  "qyPcAdapterTab.iParam0"  ),					SQL_INTEGER,	},		//  pComputer->iPlatformId;  uiKeyParams  ++  ;
+	{	6,	_T(  "qyPcAdapterTab.iParam1"  ),					SQL_INTEGER,	},		//  pComputer->uiLangId;  uiKeyParams  ++  ;
+	{	7,	_T(  "qyPcAdapterTab.paramStr0"  ),					SQL_CHAR,		},		//  pComputer->winDir,  pRcd->paramStrs[uiKeyParamStrs],  sizeof(  pRcd->paramStrs[uiKeyParamStrs]  )  );  uiKeyParamStrs  ++  ;
+	//
+	{	6,	_T(  "qyPcAdapterTab.lastTime"  ),					SQL_CHAR,		},
+	{	9,	_T(  "qyPcAdapterTab.mac0"  ),						SQL_CHAR,		},		//	9
+	{	-1,									},
+};
+
+ QY_COLUMNINFO	CONST_zjgaPcComputerPropListDisplayColumns[] = 
+{
+	{	CONST_qyColumnDisplayType_long,					_T(  "序号"  ),								SQL_CHAR,		LVCFMT_LEFT, 0,1, 50, },
+	{	CONST_qyColumnDisplayType_pcAdapterStatus,		_T(  "状态"  ),								SQL_CHAR,		LVCFMT_LEFT, 80,1, 50, },
+	MACRO_zjgaSimpleUsrDisplayColumns
+	{	CONST_qyColumnDisplayType_str,					_T(  "IP"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	//  {	CONST_qyColumnDisplayType_pcNetworkPropType,	_T(  "类型"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "当前计算机名"  ),						SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "Netbios计算机名"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "计算机名"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_platformId,			_T(  "操作系统"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_langId,				_T(  "语言"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "winDir"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	//
+	{	CONST_qyColumnDisplayType_time,					_T(  "最新刷新时间"  ),						SQL_CHAR,		LVCFMT_LEFT, 120,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "MAC"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1,	50,	},
+	{	-1,																	},
+};
+
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcComputerPropListQueryStruct  =
+{
+	 CONST_zjgaPcComputerPropListSqlColumns,  CONST_zjgaPcComputerPropListDisplayColumns,
+};
+
+
+  //  终端的计算机信息策略, 2005/05/25
+ QY_COLUMNINFO	CONST_zjgaPcComputerRuleListSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcAdapterTab.id"  ),						SQL_INTEGER,	},
+	{	0,	_T(  "qyPcAdapterTab.iStatus"  ),					SQL_INTEGER,	},
+	MACRO_zjgaSimpleUsrSqlColumns
+	{	5,	_T(  "qyPcTab.ip"  ),								SQL_CHAR,		},		//	5
+	//  {	6,	_T(  "qyPcAdapterTab.uiType"  ),				SQL_INTEGER,	},
+	{	7,	_T(  "qyPcAdapterTab.propStr1"  ),					SQL_CHAR,		},		//  pComputer->computerName,  pRcd->propStrs[uiPropStrs],  sizeof(  pRcd->propStrs[uiPropStrs]  )  );  uiPropStrs  ++  ;
+	{	7,	_T(  "qyPcAdapterTab.propStr2"  ),					SQL_CHAR,		},		//  pComputer->computerName,  pRcd->propStrs[uiPropStrs],  sizeof(  pRcd->propStrs[uiPropStrs]  )  );  uiPropStrs  ++  ;
+	{	7,	_T(  "qyPcAdapterTab.iProp0"  ),					SQL_INTEGER,	},
+	{	6,	_T(  "qyPcAdapterTab.iParam0"  ),					SQL_INTEGER,	},		//  pComputer->iPlatformId;  uiKeyParams  ++  ;
+	{	6,	_T(  "qyPcAdapterTab.iParam1"  ),					SQL_INTEGER,	},		//  pComputer->uiLangId;  uiKeyParams  ++  ;
+	{	7,	_T(  "qyPcAdapterTab.paramStr0"  ),					SQL_CHAR,		},		//  pComputer->winDir,  pRcd->paramStrs[uiKeyParamStrs],  sizeof(  pRcd->paramStrs[uiKeyParamStrs]  )  );  uiKeyParamStrs  ++  ;
+	//  {	7,	_T(  "qyPcAdapterTab.propStr0"  ),					SQL_CHAR,		},		//	pComputer->activeComputerName,  pRcd->propStrs[uiPropStrs],  sizeof(  pRcd->propStrs[uiPropStrs]  )  );  uiPropStrs  ++  ;
+	//
+	{	6,	_T(  "qyPcAdapterTab.lastTime"  ),					SQL_CHAR,		},
+	{	9,	_T(  "qyPcAdapterTab.mac0"  ),						SQL_CHAR,		},		//	9
+	{	-1,									},
+};
+
+ QY_COLUMNINFO	CONST_zjgaPcComputerRuleListDisplayColumns[] = 
+{
+	{	CONST_qyColumnDisplayType_long,					_T(  "序号"  ),								SQL_CHAR,		LVCFMT_LEFT, 0,1, 50, },
+	{	CONST_qyColumnDisplayType_pcAdapterStatus,		_T(  "状态"  ),								SQL_CHAR,		LVCFMT_LEFT, 80,1, 50, },
+	MACRO_zjgaSimpleUsrDisplayColumns
+	{	CONST_qyColumnDisplayType_str,					_T(  "IP"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	//  {	CONST_qyColumnDisplayType_pcNetworkPropType,	_T(  "类型"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "Netbios计算机名"  ),						SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "计算机名"  ),						SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_iBool,				_T(  "修改后是否重起"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_platformId,			_T(  "操作系统"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_langId,				_T(  "语言"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "winDir"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	//  {	CONST_qyColumnDisplayType_str,					_T(  "当前计算机名"  ),						SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	//
+	{	CONST_qyColumnDisplayType_time,					_T(  "最新刷新时间"  ),						SQL_CHAR,		LVCFMT_LEFT, 120,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "MAC"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1,	50,	},
+	{	-1,																	},
+};
+
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcComputerRuleListQueryStruct  =
+{
+	 CONST_zjgaPcComputerRuleListSqlColumns,  CONST_zjgaPcComputerRuleListDisplayColumns,
+};
+
+
+
+
+ //  终端的打印机信息, 2005/05/25
+ QY_COLUMNINFO	CONST_zjgaPcPrinterPropListSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcPrinterTab.id"  ),						SQL_INTEGER,	},
+	MACRO_zjgaSimpleUsrSqlColumns
+	{	5,	_T(  "qyPcTab.ip"  ),								SQL_CHAR,		},		//	5
+	{	7,	_T(  "qyPcPrinterTab.name"  ),						SQL_CHAR,		},		//  pComputer->computerName,  pRcd->propStrs[uiPropStrs],  sizeof(  pRcd->propStrs[uiPropStrs]  )  );  uiPropStrs  ++  ;
+	//
+	{	7,	_T(  "qyPcPrinterTab.iPlatformId"  ),				SQL_INTEGER,	},
+	{	7,	_T(  "qyPcPrinterTab.uiLangId"  ),					SQL_INTEGER,	},
+	{	7,	_T(  "qyPcPrinterTab.winDir"  ),					SQL_CHAR,		},
+	{	6,	_T(  "qyPcPrinterTab.lastTime"  ),					SQL_CHAR,		},
+	{	9,	_T(  "qyPcPrinterTab.mac0"  ),						SQL_CHAR,		},		//	9
+	{	-1,																},
+};
+
+ QY_COLUMNINFO	CONST_zjgaPcPrinterPropListDisplayColumns[] = 
+{
+	{	CONST_qyColumnDisplayType_long,					_T(  "序号"  ),								SQL_CHAR,		LVCFMT_LEFT, 0,1, 50, },
+	MACRO_zjgaSimpleUsrDisplayColumns
+	{	CONST_qyColumnDisplayType_str,					_T(  "IP"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "名称"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	//  
+	{	CONST_qyColumnDisplayType_platformId,			_T(  "操作系统"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_langId,				_T(  "语言"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "winDir"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	//
+	{	CONST_qyColumnDisplayType_time,					_T(  "最新刷新时间"  ),						SQL_CHAR,		LVCFMT_LEFT, 120,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "MAC"  ),					SQL_CHAR,		LVCFMT_LEFT, 100,1,	50,	},
+	{	-1,																	},
+};
+
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcPrinterPropListQueryStruct  =
+{
+	 CONST_zjgaPcPrinterPropListSqlColumns,  CONST_zjgaPcPrinterPropListDisplayColumns,
+};
+
+ //
+ ////////////////////////////////////
+
+   //  终端的计算机信息策略, 2005/05/25
+ QY_COLUMNINFO	CONST_zjgaPcEventLogListSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcEventLogTab.id"  ),						SQL_INTEGER,	},
+	MACRO_zjgaSimpleUsrSqlColumns
+	{	5,	_T(  "qyPcTab.ip"  ),								SQL_CHAR,		},		//	5
+	{	5,	_T(  "qyPcEventLogTab.wEventType"  ),				SQL_INTEGER,	},
+	{	5,	_T(  "qyPcEventLogTab.timeGeneratedBuf"  ),			SQL_CHAR,		},
+	{	5,	_T(  "qyPcEventLogTab.sourceName"  ),				SQL_CHAR,		},
+	//  {	5,	_T(  "qyPcEventLogTab.wEventCategory"  ),			SQL_INTEGER,	},
+	{	5,	_T(  "qyPcEventLogTab.dwEventId"  ),				SQL_INTEGER,	},
+	{	5,	_T(  "qyPcEventLogTab.accountName"  ),				SQL_CHAR,		},
+	{	5,	_T(  "qyPcEventLogTab.computerName"  ),				SQL_CHAR,		},
+	{	5,	_T(  "qyPcEventLogTab.eventLogDesc"  ),				SQL_CHAR,		},
+	//
+	{	7,	_T(  "qyPcEventLogTab.iPlatformId"  ),				SQL_INTEGER,	},
+	{	7,	_T(  "qyPcEventLogTab.uiLangId"  ),					SQL_INTEGER,	},
+	{	7,	_T(  "qyPcEventLogTab.winDir"  ),					SQL_CHAR,		},
+	{	5,	_T(  "qyPcEventLogTab.mac0"  ),						SQL_CHAR,		},
+	{	-1,																},
+};
+
+ QY_COLUMNINFO	CONST_zjgaPcEventLogListDisplayColumns[] = 
+{
+	{	CONST_qyColumnDisplayType_long,					_T(  "序号"  ),								SQL_CHAR,		LVCFMT_LEFT, 0,1, 50, },
+	MACRO_zjgaSimpleUsrDisplayColumns
+	{	CONST_qyColumnDisplayType_str,					_T(  "IP"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_pcEventLogType,			_T(  "类型"  ),								SQL_CHAR,		LVCFMT_LEFT, 60,1, 50, },
+	{	CONST_qyColumnDisplayType_time,					_T(  "时间"  ),								SQL_CHAR,		LVCFMT_LEFT, 120,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "来源"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	//  {	CONST_qyColumnDisplayType_long,				_T(  "分类"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_pcEventId,			_T(  "事件ID"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "用户"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "计算机"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "描述"  ),								SQL_CHAR,		LVCFMT_LEFT, 360,1, 50, },
+	//
+	{	CONST_qyColumnDisplayType_platformId,			_T(  "操作系统"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_langId,				_T(  "语言"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "winDir"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "MAC"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	-1,					},
+};
+
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcEventLogListQueryStruct  =  
+{
+	 CONST_zjgaPcEventLogListSqlColumns,  CONST_zjgaPcEventLogListDisplayColumns,
+};
+
+
+
+  QY_COLUMNINFO	CONST_zjgaPcOsUsrListSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcOsUsrTab.id"  ),						SQL_INTEGER,	},
+	MACRO_zjgaSimpleUsrSqlColumns
+	{	5,	_T(  "qyPcTab.ip"  ),							SQL_CHAR,		},		//	5
+	{	5,	_T(  "qyPcOsUsrTab.usrName"  ),					SQL_CHAR,		},
+	{	5,	_T(  "qyPcOsUsrTab.ucbDisabled"  ),				SQL_CHAR,		},
+	//
+	{	7,	_T(  "qyPcOsUsrTab.iPlatformId"  ),				SQL_INTEGER,	},
+	{	7,	_T(  "qyPcOsUsrTab.uiLangId"  ),				SQL_INTEGER,	},
+	{	7,	_T(  "qyPcOsUsrTab.winDir"  ),					SQL_CHAR,		},
+	{	5,	_T(  "qyPcOsUsrTab.mac0"  ),					SQL_CHAR,		},
+	{	-1,															},
+};
+
+ QY_COLUMNINFO	CONST_zjgaPcOsUsrListDisplayColumns[] = 
+{
+	{	CONST_qyColumnDisplayType_long,					_T(  "序号"  ),								SQL_CHAR,		LVCFMT_LEFT, 0,1, 50, },
+	MACRO_zjgaSimpleUsrDisplayColumns
+	{	CONST_qyColumnDisplayType_str,					_T(  "IP"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "帐户名"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_bool,					_T(  "是否禁用"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	//
+	{	CONST_qyColumnDisplayType_platformId,			_T(  "操作系统"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_langId,				_T(  "语言"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "winDir"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "MAC"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	-1,					},
+};
+
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcOsUsrListQueryStruct  =  
+{
+	 CONST_zjgaPcOsUsrListSqlColumns,  CONST_zjgaPcOsUsrListDisplayColumns,
+};
+
+
+
+ QY_COLUMNINFO	CONST_zjgaPcNetStatListSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcNetStatTab.id"  ),						SQL_INTEGER,	},
+	MACRO_zjgaSimpleUsrSqlColumns
+	{	5,	_T(  "qyPcTab.ip"  ),								SQL_CHAR,		},		//	5
+	{	5,	_T(  "qyPcNetStatTab.uiType"  ),					SQL_INTEGER,	},
+	{	5,	_T(  "qyPcNetStatTab.localIp"  ),					SQL_CHAR,		},
+	{	5,	_T(  "qyPcNetStatTab.dwLocalPort"  ),				SQL_INTEGER,	},
+	{	5,	_T(  "qyPcNetStatTab.remoteIp"  ),					SQL_CHAR,		},
+	{	5,	_T(  "qyPcNetStatTab.dwRemotePort"  ),				SQL_INTEGER,	},
+	{	5,	_T(  "qyPcNetStatTab.dwState"  ),					SQL_INTEGER,	},
+	{	5,	_T(  "qyPcNetStatTab.lastTime"  ),					SQL_CHAR,		},
+	//
+	//  {	7,	_T(  "qyPcNetStatTab.iPlatformId"  ),				SQL_INTEGER,	},
+	//  {	7,	_T(  "qyPcNetStatTab.uiLangId"  ),					SQL_INTEGER,	},
+	//  {	7,	_T(  "qyPcNetStatTab.winDir"  ),					SQL_CHAR,		},
+	//
+	{	5,	_T(  "qyPcNetStatTab.mac0"  ),						SQL_CHAR,		},
+	{	-1,															},
+};
+
+ QY_COLUMNINFO	CONST_zjgaPcNetStatListDisplayColumns[] = 
+{
+	{	CONST_qyColumnDisplayType_long,					_T(  "序号"  ),								SQL_CHAR,		LVCFMT_LEFT, 0,1, 50, },
+	MACRO_zjgaSimpleUsrDisplayColumns
+	{	CONST_qyColumnDisplayType_str,					_T(  "IP"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_pcCommType,			_T(  "类型"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_ip12,					_T(  "本地IP"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_long,					_T(  "本地端口"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_ip12,					_T(  "远端IP"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_long,					_T(  "远端端口"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_tcpState,				_T(  "状态"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_time,					_T(  "刷新时间"  ),							SQL_CHAR,		LVCFMT_LEFT, 120,1, 50, },
+	//
+	//  {	CONST_qyColumnDisplayType_platformId,			_T(  "操作系统"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	//  {	CONST_qyColumnDisplayType_langId,				_T(  "语言"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	//  {	CONST_qyColumnDisplayType_str,					_T(  "winDir"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	//
+	{	CONST_qyColumnDisplayType_str,					_T(  "MAC"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	-1,					},
+};
+
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcNetStatListQueryStruct  =  
+{
+	 CONST_zjgaPcNetStatListSqlColumns,  CONST_zjgaPcNetStatListDisplayColumns,
+};
+
+
+ QY_COLUMNINFO	CONST_zjgaPcProcessPropListSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcProcessTab.id"  ),						SQL_INTEGER,	},
+	MACRO_zjgaSimpleUsrSqlColumns
+	{	5,	_T(  "qyPcTab.ip"  ),								SQL_CHAR,		},		//	5
+	{	5,	_T(  "qyPcProcessTab.dwPid"  ),						SQL_INTEGER,	},
+	{	5,	_T(  "qyPcProcessTab.appName"  ),					SQL_CHAR,		},
+	//
+	{	7,	_T(  "qyPcProcessTab.iPlatformId"  ),				SQL_INTEGER,	},
+	{	7,	_T(  "qyPcProcessTab.uiLangId"  ),					SQL_INTEGER,	},
+	{	7,	_T(  "qyPcProcessTab.winDir"  ),					SQL_CHAR,		},
+	//
+	{	6,	_T(  "qyPcProcessTab.lastTime"  ),					SQL_CHAR,		},
+	//
+	{	5,	_T(  "qyPcProcessTab.mac0"  ),						SQL_CHAR,		},
+	{	-1,															},
+};
+
+ QY_COLUMNINFO	CONST_zjgaPcProcessPropListDisplayColumns[] = 
+{
+	{	CONST_qyColumnDisplayType_long,					_T(  "序号"  ),								SQL_CHAR,		LVCFMT_LEFT, 0,1, 50, },
+	MACRO_zjgaSimpleUsrDisplayColumns
+	{	CONST_qyColumnDisplayType_str,					_T(  "IP"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_uLong,				_T(  "PID"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "名称"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	//
+	{	CONST_qyColumnDisplayType_platformId,			_T(  "操作系统"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_langId,				_T(  "语言"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "winDir"  ),							SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	//
+	{	CONST_qyColumnDisplayType_time,					_T(  "刷新时间"  ),							SQL_CHAR,		LVCFMT_LEFT, 120,1, 50, },
+	//
+	{	CONST_qyColumnDisplayType_str,					_T(  "MAC"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	-1,					},
+};
+
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcProcessPropListQueryStruct  =
+{
+	 CONST_zjgaPcProcessPropListSqlColumns,  CONST_zjgaPcProcessPropListDisplayColumns,
+};
+
+
+
+  QY_COLUMNINFO	CONST_zjgaPcProcessRuleListSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcProcessRuleTab.id"  ),					SQL_INTEGER,	},
+	{	5,	_T(  "qyPcProcessRuleTab.uiType"  ),				SQL_INTEGER,	},
+	MACRO_zjgaSimpleUsrSqlColumns
+	{	5,	_T(  "qyPcTab.ip"  ),								SQL_CHAR,		},		//	5
+	{	5,	_T(  "qyPcProcessRuleTab.appName"  ),				SQL_CHAR,		},
+	//
+	{	5,	_T(  "qyPcProcessRuleTab.mac0"  ),					SQL_CHAR,		},
+	{	-1,															},
+};
+
+ QY_COLUMNINFO	CONST_zjgaPcProcessRuleListDisplayColumns[] = 
+{
+	{	CONST_qyColumnDisplayType_long,					_T(  "序号"  ),								SQL_CHAR,		LVCFMT_LEFT, 0,1, 50, },
+	{	CONST_qyColumnDisplayType_pcProcessRuleType,	_T(  "策略"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	MACRO_zjgaSimpleUsrDisplayColumns
+	{	CONST_qyColumnDisplayType_str,					_T(  "IP"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	CONST_qyColumnDisplayType_str,					_T(  "名称"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	//
+	{	CONST_qyColumnDisplayType_mac,					_T(  "MAC"  ),								SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },
+	{	-1,															},
+};
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcProcessRuleListQueryStruct  =
+{
+	 CONST_zjgaPcProcessRuleListSqlColumns,  CONST_zjgaPcProcessRuleListDisplayColumns,
+};
+
+
+ //
+ //////////////////////////////////////////////
+
+
+ ///////////////////////////////////
+
+
+  //  浙江公安显示网络设备管理策略列表的结构, 2005/03/05
+ QY_COLUMNINFO  CONST_zjgaSnmpObjRuleListSqlColumns[]  =
+{
+	{	0,	_T(  "qySnmpObjRuleTab.id"  ),						SQL_INTEGER,												},
+	{	0,	_T(  "qySnmpObjRuleTab.iType"  ),					SQL_INTEGER,												},
+	{	0,	_T(  "qySnmpObjTab.productName"  ),					SQL_CHAR,													},
+	{	0,	_T(  "qySnmpObjTab.cusName"  ),						SQL_CHAR,													},
+	{	0,	_T(  "qySnmpObjTab.ip"  ),							SQL_CHAR,													},
+	{	0,	_T(  "qySnmpObjPolicyTab.grpName"  ),				SQL_CHAR,													},
+	{	0,	_T(  "qySnmpObjRuleTab.ibDirectConn"  ),			SQL_INTEGER,													},
+	{	0,	_T(  "qySwitchPortTab.portIfDescr"  ),				SQL_CHAR,													},
+	{	0,	_T(  "qySnmpObjRuleTab.ibDownPortIfMacChanged"  ),	SQL_INTEGER,													},
+	{	0,	_T(  "qySnmpObjRuleTab.switchMac"  ),				SQL_CHAR,													},
+	{	-1,	NULL,	},
+};
+
+ QY_COLUMNINFO  CONST_zjgaSnmpObjRuleListDisplayColumns[]  =
+{
+	{	CONST_qyColumnDisplayType_long,				_T(  "序号"  ),				SQL_INTEGER,	LVCFMT_LEFT, 60,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_ruleType,			_T(  "类型"  ),				SQL_INTEGER,	LVCFMT_LEFT, 100,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_str,				_T(  "网络设备型号"  ),		SQL_CHAR,		LVCFMT_LEFT, 150,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_str,				_T(  "别名"  ),				SQL_CHAR,		LVCFMT_LEFT, 60,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_ip12,				_T(  "IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_str,				_T(  "Snmp组策略"  ),		SQL_CHAR,		LVCFMT_LEFT, 80,	1, 50,	},	//  13  
+ 	{	CONST_qyColumnDisplayType_snmpBool,			_T(  "是否接入"  ),			SQL_CHAR,		LVCFMT_LEFT, 60,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_str,				_T(  "端口"  ),				SQL_CHAR,		LVCFMT_LEFT, 120,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_snmpBool,			_T(  "是否阻断联接变更"  ),	SQL_CHAR,		LVCFMT_LEFT, 110,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_mac,				_T(  "MAC"  ),				SQL_CHAR,		LVCFMT_LEFT, 87,	1, 50,	},	//  13  
+	{	-1,																									},
+};
+
+ QNM_QUERY_STRUCT  CONST_zjgaSnmpObjRuleListQueryStruct  =
+{
+	 CONST_zjgaSnmpObjRuleListSqlColumns,	CONST_zjgaSnmpObjRuleListDisplayColumns,
+};
+
+  //  浙江公安显示网络设备管理策略列表的结构, 2005/03/05
+ QY_COLUMNINFO  CONST_zjgaConflictConnListSqlColumns[]  =
+{
+	{	0,	_T(  "qnmConflictConnTab.id"  ),					SQL_INTEGER,												},
+	{	0,	_T(  "qnmConflictConnTab.ucbLocked"  ),				SQL_CHAR,													},
+	{	0,	_T(  "qySnmpObjTab.productName"  ),					SQL_CHAR,													},
+	{	0,	_T(  "qySnmpObjTab.cusName"  ),						SQL_CHAR,													},
+	{	0,	_T(  "qySnmpObjTab.ip"  ),							SQL_CHAR,													},
+	{	0,	_T(  "qySwitchPortTab.portIfDescr"  ),				SQL_CHAR,													},
+	{	0,	_T(  "qnmConflictConnTab.connectedMac"  ),			SQL_CHAR,													},
+	{	0,	_T(  "qyPcTab.pcName"  ),							SQL_CHAR,													},
+	{	0,	_T(  "qyPcTab.ip"  ),								SQL_CHAR,													},
+	{	-1,						},
+};
+
+ QY_COLUMNINFO  CONST_zjgaConflictConnListDisplayColumns[]  =
+{
+	{	CONST_qyColumnDisplayType_long,				_T(  "序号"  ),				SQL_INTEGER,	LVCFMT_LEFT, 60,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_bool,				_T(  "是否绑定"  ),			SQL_CHAR,		LVCFMT_LEFT, 60,	1, 50,	},
+	{	CONST_qyColumnDisplayType_str,				_T(  "网络设备型号"  ),		SQL_CHAR,		LVCFMT_LEFT, 150,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_str,				_T(  "别名"  ),				SQL_CHAR,		LVCFMT_LEFT, 60,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_ip12,				_T(  "IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_str,				_T(  "绑定端口"  ),			SQL_CHAR,		LVCFMT_LEFT, 120,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_mac,				_T(  "MAC"  ),				SQL_CHAR,		LVCFMT_LEFT, 87,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_str,				_T(  "计算机名"  ),			SQL_CHAR,		LVCFMT_LEFT, 120,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_str,				_T(  "计算机IP"  ),			SQL_CHAR,		LVCFMT_LEFT, 120,	1, 50,	},	//  13  
+	{	-1,						},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaConflictConnListQueryStruct  =
+{
+	 CONST_zjgaConflictConnListSqlColumns,	CONST_zjgaConflictConnListDisplayColumns,
+};
+
+
+
+ //  浙江公安显示接入列表的结构, 2005/03/05
+ QY_COLUMNINFO  CONST_zjgaDirectConnListSqlColumns[]  =
+{
+	{	0,	_T(  "qySnmpObjTab.productName"  ),					SQL_CHAR,													},
+	{	0,	_T(  "qySnmpObjTab.cusName"  ),						SQL_CHAR,													},
+	{	0,	_T(  "qySnmpObjTab.ip"  ),							SQL_CHAR,													},
+	{	0,	_T(  "qySwitchPortTab.portIfDescr"  ),				SQL_CHAR,													},
+	{	0,	_T(  "qyPcTab.pcName"  ),							SQL_CHAR,													},
+	MACRO_zjgaSimpleUsrSqlColumns
+	{	0,	_T(  "qyPcTab.ip"  ),								SQL_CHAR,													},
+	{	0,	_T(  "qySwitchConnectedPcTab.connectedMac"  ),		SQL_CHAR,													},
+	{	-1,						},
+};
+
+ QY_COLUMNINFO  CONST_zjgaDirectConnListDisplayColumns[]  =
+{
+	{	CONST_qyColumnDisplayType_str,				_T(  "网络设备型号"  ),		SQL_CHAR,		LVCFMT_LEFT, 150,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_str,				_T(  "别名"  ),				SQL_CHAR,		LVCFMT_LEFT, 60,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_ip12,				_T(  "IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_str,				_T(  "端口"  ),				SQL_CHAR,		LVCFMT_LEFT, 120,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_str,				_T(  "计算机名"  ),			SQL_CHAR,		LVCFMT_LEFT, 120,	1, 50,	},	//  13  
+	MACRO_zjgaSimpleUsrDisplayColumns
+	{	CONST_qyColumnDisplayType_str,				_T(  "计算机IP"  ),			SQL_CHAR,		LVCFMT_LEFT, 120,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_mac,				_T(  "MAC"  ),				SQL_CHAR,		LVCFMT_LEFT, 87,	1, 50,	},	//  13  
+	{	-1,						},
+};
+
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaDirectConnListQueryStruct  =
+{
+	 CONST_zjgaDirectConnListSqlColumns,  CONST_zjgaDirectConnListDisplayColumns,
+};
+
+  //  浙江公安显示网络设备联接列表的结构 
+ QY_COLUMNINFO	CONST_zjgaNetDevConnListSqlColumns[]  =  
+{
+	{	0,	_T(  "qySwitchConnectedPcTab.lastTime"  ),			SQL_CHAR,													},		//  0
+	{	0,	_T(  "qySnmpObjTab.place"  ),						SQL_CHAR,													},		//  0
+	{	0,	_T(  "qySnmpObjTab.productName"  ),					SQL_CHAR,													},		//  0
+	{	0,	_T(  "qySnmpObjTab.ip"  ),							SQL_CHAR,													},		//  0
+	{	0,	_T(  "qySnmpObjTab.mac"  ),							SQL_CHAR,													},		//  0
+	{	0,	_T(  "qySnmpObjTab.cusName"  ),						SQL_CHAR,													},		//  0
+	{	0,	_T(  "qySwitchPortTab.portIfIndex"  ),				SQL_INTEGER,												},		//  0
+	{	0,	_T(  "qySwitchConnectedPcTab.ucbDirectConn"  ),		SQL_CHAR,													},		//  0
+	{	0,	_T(  "qySwitchConnectedPcTab.connectedIp"  ),		SQL_CHAR,													},		//  0
+	{	0,	_T(  "qySwitchConnectedPcTab.connectedMac"  ),		SQL_CHAR,													},		//  0
+	{	-1,																									},
+};
+
+
+ QY_COLUMNINFO	CONST_zjgaNetDevConnListDisplayColumns[] = 
+{
+	{	CONST_qyColumnDisplayType_time,		_T(  "最近扫描时间"  ),		SQL_CHAR,		LVCFMT_LEFT, 100,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_str,		_T(  "使用地点"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_str,		_T(  "网络设备型号"  ),		SQL_CHAR,		LVCFMT_LEFT, 100,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_ip12,		_T(  "IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 110,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_mac,		_T(  "MAC"  ),				SQL_CHAR,		LVCFMT_LEFT, 0,		1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_str,		_T(  "别名"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_long,		_T(  "端口"  ),				SQL_INTEGER,	LVCFMT_LEFT, 50,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_bool,		_T(  "是否接入"  ),			SQL_CHAR,		LVCFMT_LEFT, 60,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_ip12,		_T(  "联接IP"  ),			SQL_CHAR,		LVCFMT_LEFT, 110,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_mac,		_T(  "联接MAC"  ),			SQL_CHAR,		LVCFMT_LEFT, 87,	1, 50,	},	//  13  
+	{	-1,																									},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaNetDevConnListQueryStruct  =
+{
+	 CONST_zjgaNetDevConnListSqlColumns,  CONST_zjgaNetDevConnListDisplayColumns,
+};
+
+
+
+ //  浙江公安显示查询结果的结构 
+ QY_COLUMNINFO	CONST_zjgaSearchListSqlColumns[]  =  
+{
+	{	0,	_T(  "qnmTmpTab.col0"  ),			SQL_CHAR,													},
+	{	0,	_T(  "qnmTmpTab.mac"  ),			SQL_CHAR,													},		//  0
+	{	0,	_T(  "qnmTmpTab.ip"  ),				SQL_CHAR,													},		//  0
+	{	0,	_T(  "qnmTmpTab.des0"  ),			SQL_CHAR,													},		//  0
+	{	-1,																									},
+};
+
+
+ QY_COLUMNINFO	CONST_zjgaSearchListDisplayColumns[] = 
+{
+	{	CONST_qyColumnDisplayType_str,		_T(  "类型"  ),		SQL_CHAR,		LVCFMT_LEFT, 100,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_mac,		_T(  "MAC"  ),		SQL_CHAR,		LVCFMT_LEFT, 100,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_ip12,		_T(  "IP"  ),		SQL_CHAR,		LVCFMT_LEFT, 120,	1, 50,	},	//  13  
+	{	CONST_qyColumnDisplayType_str,		_T(  "描述"  ),		SQL_CHAR,		LVCFMT_LEFT, 400,	1, 50,	},	//  13  
+	{	-1,																									},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaSearchListQueryStruct  =
+{
+	 CONST_zjgaSearchListSqlColumns,  CONST_zjgaSearchListDisplayColumns,
+};
+
+
+
+  //  浙江公安显示所有系统事件列表的结构 
+ QY_COLUMNINFO	CONST_zjgaOpEventAllSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcEventTab.eventType"  ),		SQL_INTEGER,	},		//	0
+	{	6,	_T(  "qyPcEventTab.usrName"  ),			SQL_CHAR,		},		//	6
+	{	11,	_T(  "qyPcEventTab.des0"  ),			SQL_CHAR,		},		//	11	为检查工具使用
+	{	7,	_T(  "qyPcEventTab.cntEventTime"  ),	SQL_CHAR,		},		//	7
+	{	10,	_T(  "qyPcEventTab.comment0"  ),		SQL_CHAR,		},		//	10
+	{	-1,										},
+};
+ 
+ QY_COLUMNINFO	CONST_zjgaOpEventAllDisplayColumns[] = 
+{
+   {	CONST_qyColumnDisplayType_eventType,	_T(  "事件"  ),				SQL_CHAR,		LVCFMT_LEFT, 120,	1,	50,		},	//  0
+   {	CONST_qyColumnDisplayType_str,			_T(  "用户"  ),				SQL_CHAR,		LVCFMT_LEFT, 80,	1,	50,		},	//	12
+   {	CONST_qyColumnDisplayType_str,			_T(  "描述"  ),				SQL_CHAR,		LVCFMT_LEFT, 250,	1,	50,		},	//	5
+   {	CONST_qyColumnDisplayType_time,			_T(  "管理中心时间"  ),		SQL_CHAR,		LVCFMT_LEFT, 130,	1,	50,		},	//	6
+   {	CONST_qyColumnDisplayType_str,			_T(  "备注"  ),				SQL_CHAR,		LVCFMT_LEFT, 80,	1,	50,		},	//	9
+   {	-1,																},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaOpEventAllQueryStruct  =  
+{
+	 CONST_zjgaOpEventAllSqlColumns,	CONST_zjgaOpEventAllDisplayColumns,
+};
+
+
+ //  浙江公安显示所有事件列表的结构 
+ QY_COLUMNINFO	CONST_zjgaPcEventAllSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcEventTab.eventType"  ),		SQL_INTEGER,	},		//	0
+	MACRO_zjgaEventSimpleUsrSqlColumns
+	{	6,	_T(  "qyPcEventTab.ip"  ),				SQL_CHAR,		},		//	6
+	{	11,	_T(  "qyPcEventTab.des0"  ),			SQL_CHAR,		},		//	11	为检查工具使用
+	{	11,	_T(  "qyPcEventTab.des1"  ),			SQL_CHAR,		},		//	11	为检查工具使用
+	{	12, _T(  "qyPcEventTab.usrName"  ),			SQL_CHAR,		},		//	12
+	{	8,	_T(  "qyPcEventTab.localEventTime"  ),	SQL_CHAR,		},		//	8
+	{	7,	_T(  "qyPcEventTab.cntEventTime"  ),	SQL_CHAR,		},		//	7
+	{	9,	_T(  "qyPcEventTab.mac0"  ),			SQL_CHAR,		},		//	9
+	{	10,	_T(  "qyPcEventTab.comment0"  ),			SQL_CHAR,		},		//	10
+	{	-1,										},
+};
+ 
+ QY_COLUMNINFO	CONST_zjgaPcEventAllDisplayColumns[] = 
+{
+   {	CONST_qyColumnDisplayType_eventType,	_T(  "事件"  ),				SQL_CHAR,		LVCFMT_LEFT, 120, 1, 50, },	//  0
+   MACRO_zjgaEventSimpleUsrDisplayColumns
+   {	CONST_qyColumnDisplayType_str,			_T(  "IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 105,1, 50, },	//	5
+   {	CONST_qyColumnDisplayType_str,			_T(  "描述"  ),				SQL_CHAR,		LVCFMT_LEFT, 250,1, 50, },	//	5
+   {	CONST_qyColumnDisplayType_str,			_T(  "附加描述"  ),			SQL_CHAR,		LVCFMT_LEFT, 150,1, 50, },	//	5
+   {	CONST_qyColumnDisplayType_str,			_T(  "登录用户"  ),			SQL_CHAR,		LVCFMT_LEFT, 80,1, 50, },	//	12
+   {	CONST_qyColumnDisplayType_time,			_T(  "本地时间"  ),			SQL_CHAR,		LVCFMT_LEFT, 110, 1, 50,	},	//	7
+   {	CONST_qyColumnDisplayType_time,			_T(  "管理中心时间"  ),		SQL_CHAR,		LVCFMT_LEFT, 110, 1,	50,	},	//	6
+   {	CONST_qyColumnDisplayType_mac,			_T(  "MAC"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//	8
+   {	CONST_qyColumnDisplayType_str,			_T(  "备注"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//	9
+   {	-1,																},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcEventAllQueryStruct  =  
+{
+	 CONST_zjgaPcEventAllSqlColumns,	CONST_zjgaPcEventAllDisplayColumns,
+};
+
+
+  //  浙江公安显示所有网络设备事件列表的结构 
+ QY_COLUMNINFO	CONST_zjgaNetDevEventAllSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcEventTab.eventType"  ),		SQL_INTEGER,	},		//	0
+	{	2,	_T(  "qyPcEventTab.col5"  ),			SQL_CHAR,		},		//  2
+	{	5,	_T(  "qyPcEventTab.productName"  ),		SQL_CHAR,		},		//	5
+	{	6,	_T(  "qyPcEventTab.ip"  ),				SQL_CHAR,		},		//	6
+	{	11,	_T(  "qyPcEventTab.des0"  ),			SQL_CHAR,		},		//	11	为检查工具使用
+	{	7,	_T(  "qyPcEventTab.cntEventTime"  ),	SQL_CHAR,		},		//	7
+	{	9,	_T(  "qyPcEventTab.mac0"  ),			SQL_CHAR,		},		//	9
+	{	11,	_T(  "qyPcEventTab.connectedMac"  ),	SQL_CHAR,		},		//  11
+	{	10,	_T(  "qyPcEventTab.comment0"  ),		SQL_CHAR,		},		//	10
+	{	-1,										},
+};
+ 
+ QY_COLUMNINFO	CONST_zjgaNetDevEventAllDisplayColumns[] = 
+{
+   {	CONST_qyColumnDisplayType_eventType,	_T(  "事件"  ),				SQL_CHAR,		LVCFMT_LEFT, 120,	1, 50, },	//  0
+   {	CONST_qyColumnDisplayType_str,			_T(  "使用地点"  ),			SQL_CHAR,		LVCFMT_LEFT, 60,	1, 50, },	//  3
+   {	CONST_qyColumnDisplayType_str,			_T(  "设备型号"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,	1, 50, },	//  3
+   {	CONST_qyColumnDisplayType_str,			_T(  "IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 105,	1, 50, },	//	5
+   {	CONST_qyColumnDisplayType_str,			_T(  "描述"  ),				SQL_CHAR,		LVCFMT_LEFT, 380,	1, 50, },	//	5
+   {	CONST_qyColumnDisplayType_time,			_T(  "管理中心时间"  ),		SQL_CHAR,		LVCFMT_LEFT, 110,	1, 50, },	//	6
+   {	CONST_qyColumnDisplayType_mac,			_T(  "MAC"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,	1, 50, },	//	8
+   {	CONST_qyColumnDisplayType_mac,			_T(  "联接MAC"  ),			SQL_CHAR,		LVCFMT_LEFT, 100,	1, 50, },	//	8
+   {	CONST_qyColumnDisplayType_str,			_T(  "备注"  ),				SQL_CHAR,		LVCFMT_LEFT, 80,	1, 50, },	//	9
+   {	-1,																},
+};
+
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaNetDevEventAllQueryStruct  =
+{
+	 CONST_zjgaNetDevEventAllSqlColumns,	CONST_zjgaNetDevEventAllDisplayColumns,
+};
+
+ //  浙江公安显示拨号事件列表的结构 
+ QY_COLUMNINFO	CONST_zjgaPcRasEventSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcEventTab.eventType"  ),		SQL_INTEGER,	},		//	0
+	MACRO_zjgaEventSimpleUsrSqlColumns
+	{	6,	_T(  "qyPcEventTab.des0"  ),			SQL_CHAR,		},		//	6
+	{	7,	_T(  "qyPcEventTab.des1"  ),			SQL_CHAR,		},		//  7
+	{	8,	_T(  "qyPcEventTab.cntEventTime"  ),	SQL_CHAR,		},		//  8
+	{	9,	_T(  "qyPcEventTab.localEventTime"  ),	SQL_CHAR,		},		//	9
+	{	10,	_T(  "qyPcEventTab.ip"  ),				SQL_CHAR,		},		//	10
+	{	11,	_T(  "qyPcEventTab.mac0"  ),			SQL_CHAR,		},		//	11
+	{	-1,													},
+};
+ 
+ QY_COLUMNINFO	CONST_zjgaPcRasEventDisplayColumns[] = 
+{
+	{	CONST_qyColumnDisplayType_eventType,	_T(  "事件"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//  0
+	MACRO_zjgaEventSimpleUsrDisplayColumns
+	{	CONST_qyColumnDisplayType_str,			_T(  "拨号权限"  ),			SQL_CHAR,		LVCFMT_LEFT, 60, 1, 50, },	//	
+	{	CONST_qyColumnDisplayType_str,			_T(  "拨号号码"  ),			SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//	9
+	{	CONST_qyColumnDisplayType_time,			_T(  "管理中心时间"  ),		SQL_CHAR,		LVCFMT_LEFT, 110, 1, 50, },	//	9
+	{	CONST_qyColumnDisplayType_time,			_T(  "本地时间"  ),			SQL_CHAR,		LVCFMT_LEFT, 110, 1, 50,	},	//	7
+	{	CONST_qyColumnDisplayType_str,			_T(  "IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//	8
+	{	CONST_qyColumnDisplayType_str,			_T(  "MAC"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1,	50,	},	//	6
+	{	-1,																									},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaPcRasEventQueryStruct  =  
+{
+	 CONST_zjgaPcRasEventSqlColumns,	CONST_zjgaPcRasEventDisplayColumns,
+};
+
+
+ //  浙江公安显示所有安检事件列表的结构 
+ QY_COLUMNINFO	CONST_zjgaSecChkEventAllSqlColumns[]  =  
+{
+	{	0,	_T(  "qyPcEventTab.eventType"  ),		SQL_INTEGER,	},		//	0
+	//  MACRO_zjgaSimpleUsrSqlColumns								//  2005/05/04, 为了符合普通管理单位的需要，将当前用户改为历史用户信息
+	MACRO_zjgaEventSimpleUsrSqlColumns
+	{	6,	_T(  "qyPcEventTab.ip"  ),				SQL_CHAR,		},		//	6
+	{	11,	_T(  "qyPcEventTab.des0"  ),			SQL_CHAR,		},		//	11	为检查工具使用
+	{	11,	_T(  "qyPcEventTab.des1"  ),			SQL_CHAR,		},		//	11	为检查工具使用
+	{	12, _T(  "qyPcEventTab.usrName"  ),			SQL_CHAR,		},		//	12
+	{	8,	_T(  "qyPcEventTab.localEventTime"  ),	SQL_CHAR,		},		//	8
+	{	7,	_T(  "qyPcEventTab.cntEventTime"  ),	SQL_CHAR,		},		//	7
+	{	9,	_T(  "qyPcEventTab.mac0"  ),			SQL_CHAR,		},		//	9
+	{	10,	_T(  "qyPcEventTab.comment0"  ),			SQL_CHAR,		},		//	10
+	{	-1,										},
+};
+ 
+ QY_COLUMNINFO	CONST_zjgaSecChkEventAllDisplayColumns[] = 
+{
+	{	CONST_qyColumnDisplayType_eventType,	_T(  "事件"  ),				SQL_CHAR,		LVCFMT_LEFT, 100, 1, 50, },	//  0
+	MACRO_zjgaSimpleUsrDisplayColumns
+   	{	CONST_qyColumnDisplayType_str,			_T(  "IP"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//	5
+	{	CONST_qyColumnDisplayType_str,			_T(  "描述"  ),				SQL_CHAR,		LVCFMT_LEFT, 250,1, 50, },	//	5
+	{	CONST_qyColumnDisplayType_str,			_T(  "附加描述"  ),			SQL_CHAR,		LVCFMT_LEFT, 50,1, 50, },	//	5
+	{	CONST_qyColumnDisplayType_str,			_T(  "登录用户"  ),			SQL_CHAR,		LVCFMT_LEFT, 80,1, 50, },	//	12
+   	{	CONST_qyColumnDisplayType_time,			_T(  "本地时间"  ),			SQL_CHAR,		LVCFMT_LEFT, 110, 1, 50,	},	//	7
+   	{	CONST_qyColumnDisplayType_time,			_T(  "管理中心时间"  ),		SQL_CHAR,		LVCFMT_LEFT, 110, 1,	50,	},	//	6
+   	{	CONST_qyColumnDisplayType_str,			_T(  "MAC"  ),				SQL_CHAR,		LVCFMT_LEFT, 100,1, 50, },	//	8
+   	{	CONST_qyColumnDisplayType_str,			_T(  "备注"  ),				SQL_CHAR,		LVCFMT_LEFT, 80, 1, 50, },	//	9
+	{	-1,																},
+};
+
+
+ QNM_QUERY_STRUCT  CONST_zjgaSecChkEventAllQueryStruct  =
+{
+	 CONST_zjgaSecChkEventAllSqlColumns,	CONST_zjgaSecChkEventAllDisplayColumns,
+};
+
+
+QNM_QUERY_STRUCT	*	gpSimpleUsrQueryStruct				=  &CONST_zjgaSimpleUsrQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcListQueryStruct					=  &CONST_zjgaPcListQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcAssetListQueryStruct			=  &CONST_zjgaPcAssetListQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcAssetReportListQueryStruct		=  &CONST_zjgaPcAssetReportListQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcAssetReportListQueryStruct_en	=  &CONST_zjgaPcAssetReportListQueryStruct_en;
+QNM_QUERY_STRUCT	*	gpPcSpListQueryStruct				=  &CONST_zjgaPcSpListQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcSpSpecialListQueryStruct		=  &CONST_zjgaPcSpSpecialListQueryStruct;
+//  QNM_QUERY_STRUCT	*	gpUnchkedPcListQueryStruct			=  &CONST_zjgaUnchkedPcListQueryStruct;
+//  QNM_QUERY_STRUCT	*	gpWillAttackPcListQueryStruct		=  &CONST_zjgaUnchkedPcListQueryStruct;  //  &CONST_zjgaWillAttackPcListQueryStruct;
+//
+QNM_QUERY_STRUCT	*	gpPcUsrListQueryStruct				=  &CONST_zjgaPcUsrListQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcUsrInTab1ListQueryStruct		=  &CONST_zjgaPcUsrInTab1ListQueryStruct;
+QNM_QUERY_STRUCT	*	gpQwmSvrListQueryStruct				=  &CONST_zjgaQwmSvrListQueryStruct;
+//
+QNM_QUERY_STRUCT	*	gpPcRasRuleListQueryStruct			=  &CONST_zjgaPcRuleListQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcAdapterListQueryStruct			=  &CONST_zjgaPcAdapterListQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcProxyCfgListQueryStruct			=  &CONST_zjgaPcProxyCfgListQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcComputerPropListQueryStruct		=  &CONST_zjgaPcComputerPropListQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcComputerRuleListQueryStruct		=  &CONST_zjgaPcComputerRuleListQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcPrinterPropListQueryStruct		=  &CONST_zjgaPcPrinterPropListQueryStruct;
+//
+QNM_QUERY_STRUCT	*	gpPcEventLogListQueryStruct			=  &CONST_zjgaPcEventLogListQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcOsUsrListQueryStruct			=  &CONST_zjgaPcOsUsrListQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcNetStatListQueryStruct			=  &CONST_zjgaPcNetStatListQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcProcessPropListQueryStruct		=  &CONST_zjgaPcProcessPropListQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcProcessRuleListQueryStruct		=  &CONST_zjgaPcProcessRuleListQueryStruct;
+//
+QNM_QUERY_STRUCT	*	gpSnmpObjRuleListQueryStruct		=  &CONST_zjgaSnmpObjRuleListQueryStruct;
+QNM_QUERY_STRUCT	*	gpConflictConnListQueryStruct		=  &CONST_zjgaConflictConnListQueryStruct;
+QNM_QUERY_STRUCT	*	gpDirectConnListQueryStruct			=  &CONST_zjgaDirectConnListQueryStruct;
+QNM_QUERY_STRUCT	*	gpNetDevConnListQueryStruct			=  &CONST_zjgaNetDevConnListQueryStruct;
+QNM_QUERY_STRUCT	*	gpSearchListQueryStruct				=  &CONST_zjgaSearchListQueryStruct;
+QNM_QUERY_STRUCT	*	gpOpEventAllQueryStruct				=  &CONST_zjgaOpEventAllQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcEventAllQueryStruct				=  &CONST_zjgaPcEventAllQueryStruct;
+QNM_QUERY_STRUCT	*	gpNetDevEventAllQueryStruct			=  &CONST_zjgaNetDevEventAllQueryStruct;
+QNM_QUERY_STRUCT	*	gpPcRasEventQueryStruct				=  &CONST_zjgaPcRasEventQueryStruct;
+QNM_QUERY_STRUCT	*	gpSecChkEventAllQueryStruct			=  &CONST_zjgaSecChkEventAllQueryStruct;
+
+#endif	
+//  }  以上是浙江公安的界面显示信息
+
+
+

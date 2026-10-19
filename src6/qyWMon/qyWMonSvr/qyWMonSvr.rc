@@ -1,0 +1,246 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "#include ""qyWMonSvr.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+IDC_CURSOR1             CURSOR                  "cursor1.cur"
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 3,36,22,0
+ PRODUCTVERSION 3,36,22,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080004b0"
+        BEGIN
+            VALUE "Comments", "www.qycx.com"
+            VALUE "CompanyName", " Beijing Qingyang Innovation Network Technology Co., Ltd"
+            VALUE "FileDescription", "PcManager -- www.qycx.com"
+            VALUE "FileVersion", "3, 36, 22, 0"
+            VALUE "InternalName", "PcManager -- www.qycx.com"
+            VALUE "LegalCopyright", "Copyright(C) 2003"
+            VALUE "LegalTrademarks", "Qingyang"
+            VALUE "OriginalFilename", "qyWMonSvr2k.exe"
+            VALUE "ProductName", "PcManager -- www.qycx.com"
+            VALUE "ProductVersion", "3, 36, 22, 0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x800, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_qyReg DIALOG  0, 0, 317, 229
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "qyRegTool"
+FONT 9, "??"
+BEGIN
+    DEFPUSHBUTTON   "??",IDOK,75,190,50,14
+    PUSHBUTTON      "??",IDCANCEL,199,190,50,14
+    CTEXT           "???????????",IDC_title,62,20,192,18,SS_CENTERIMAGE
+    LTEXT           "??????????(*?????)",IDC_hint0,30,46,138,9
+    LTEXT           "???2003? ? ????????,?????????",IDC_hint1,25,161,264,10
+    CONTROL         "Progress1",IDC_PROGRESS_reg,"msctls_progress32",NOT WS_VISIBLE | WS_BORDER,25,171,186,10
+    LTEXT           "Static",IDC_STATIC0,25,65,13,11,SS_CENTERIMAGE | NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC1,34,75,13,11,SS_CENTERIMAGE | NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC2,43,84,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC3,53,93,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC4,62,103,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC5,71,112,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC6,81,121,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC7,90,131,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC8,54,66,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC9,63,75,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC10,73,85,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC11,82,94,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC12,91,103,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC13,101,113,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC14,110,122,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC15,119,131,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC16,80,66,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC17,89,75,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC18,99,85,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC19,108,94,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC20,117,103,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC21,127,113,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC22,136,122,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC23,145,131,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC24,107,66,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC25,117,75,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC26,126,85,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC27,135,94,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC28,145,103,13,11,NOT WS_VISIBLE
+    LTEXT           "Static",IDC_STATIC29,154,113,13,11,NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT0,133,65,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT1,143,75,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT2,152,84,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT3,161,93,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT4,171,103,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT5,180,112,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT6,189,121,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT7,199,131,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT8,151,65,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT9,161,75,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT10,170,84,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT11,179,93,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT12,189,103,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT13,198,112,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT14,207,121,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT15,217,131,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT16,226,140,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT17,235,149,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT18,245,159,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_EDIT19,254,168,12,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    COMBOBOX        IDC_COMBO0,180,63,16,124,CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO1,189,73,16,124,CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO2,199,82,16,124,CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO3,208,91,16,124,CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO4,217,101,16,124,CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO5,227,110,16,124,CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO6,236,119,16,124,CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO7,245,129,16,124,CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO8,255,138,16,124,CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO9,264,149,16,124,CBS_DROPDOWNLIST | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "",IDC_line,240,61,17,10,NOT WS_VISIBLE
+    LISTBOX         IDC_LIST_secChk,239,75,24,19,LBS_SORT | LBS_NOINTEGRALHEIGHT | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_secChk,239,47,28,34,CBS_DROPDOWNLIST | CBS_SORT | NOT WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_qyAskToReboot DIALOG  0, 0, 211, 103
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "????"
+FONT 9, "Tahoma"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,45,65,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,114,65,50,14
+    CONTROL         "Progress1",IDC_PROGRESS_askToReboot,"msctls_progress32",WS_BORDER,23,42,164,11
+    LTEXT           "???????60?",IDC_STATIC_hint0,25,17,161,18
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_qyReg, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 310
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 222
+    END
+
+    IDD_qyAskToReboot, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 204
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 96
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+#include "qyWMonSvr.rc2"  // non-Microsoft Visual C++ edited resources
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

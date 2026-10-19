@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="qnmResp">
+</Property><Property Name="Solution File" Value="D:\qycx4\develop6\srcRoot\src6\qyMc\qnmResp\qnmResp.sln">
+</Property><Property Name="User Options File" Value="D:\qycx4\develop6\srcRoot\src6\qyMc\qnmResp\qnmResp.suo">
+</Property><Property Name="Date" Value="2013年1月19日">
+</Property><Property Name="Time" Value="13:58">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="qnmResp.sln" Description="File successfully backed up as D:\qycx4\develop6\srcRoot\src6\qyMc\qnmResp\qnmResp.sln.old">
+</Event><Event ErrorLevel="0" Project="" Source="qnmResp.suo" Description="File successfully backed up as D:\qycx4\develop6\srcRoot\src6\qyMc\qnmResp\qnmResp.suo.old">
+</Event><Event ErrorLevel="0" Project="qnmResp" Source="qnmResp.vcproj" Description="Converting project file 'D:\qycx4\develop6\srcRoot\src6\qyMc\qnmResp\qnmResp.vcproj'.">
+</Event><Event ErrorLevel="1" Project="qnmResp" Source="qnmResp.vcproj" Description="VCWebServiceProxyGeneratorTool is no longer supported. The tool has been removed from your project settings.">
+</Event><Event ErrorLevel="1" Project="qnmResp" Source="qnmResp.vcproj" Description="MSB8012: $(TargetPath) ('D:\qycx4\develop6\srcRoot\src6\qyMc\qnmResp\.\..\..\..\..\Win32\Debug\bin\qnmResp.exe') does not match the Linker's OutputFile property value '.\..\..\..\..\Win32\Debug\bin\qnmResp.exe' ('D:\qycx4\develop6\Win32\Debug\bin\qnmResp.exe') in project configuration 'Debug|Win32'. This may cause your project to build incorrectly. To correct this, please make sure that $(TargetPath) property value matches the value specified in %(Link.OutputFile).">
+</Event><Event ErrorLevel="1" Project="qnmResp" Source="qnmResp.vcproj" Description="MSB8012: $(TargetPath) ('D:\qycx4\develop6\srcRoot\src6\qyMc\qnmResp\.\..\..\..\..\Win32\Release\bin\qnmResp.exe') does not match the Linker's OutputFile property value '.\..\..\..\..\Win32\Release\bin\qnmResp.exe' ('D:\qycx4\develop6\Win32\Release\bin\qnmResp.exe') in project configuration 'Release|Win32'. This may cause your project to build incorrectly. To correct this, please make sure that $(TargetPath) property value matches the value specified in %(Link.OutputFile).">
+</Event><Event ErrorLevel="0" Project="qnmResp" Source="qnmResp.vcproj" Description="Done converting to new project file 'D:\qycx4\develop6\srcRoot\src6\qyMc\qnmResp\qnmResp.vcxproj'.">
+</Event><Event ErrorLevel="3" Project="qnmResp" Source="qnmResp.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="qnmResp.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="qnmResp.sln" Description="Converted">
+</Event></UpgradeLog>

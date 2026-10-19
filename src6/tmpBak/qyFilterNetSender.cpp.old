@@ -1,0 +1,84 @@
+
+#include	"stdafx.h"
+#include	<tchar.h>
+
+#include	"streams.h"
+
+#include	"qySampleGrabberPublic.h"
+#include	"qyFilterNetSender.h"
+
+
+CFilterNetSender::CFilterNetSender(  LPUNKNOWN pUnk,  HRESULT *phr) :
+    CBaseFilter(NAME("CFilterNetSender"), pUnk, &mFilterLock, CLSID_NetSender_is)
+{
+	m_pPosition  =  NULL;
+	m_pInputPin  =  new  CXInputPin(  this,  phr  );
+}
+
+CFilterNetSender::~CFilterNetSender(  )
+{
+	OutputDebugString(  _T(  "~CFiltetNetSender"  )  );
+
+	if  (  m_pInputPin  )  delete  m_pInputPin;
+	if  (  m_pPosition  )  {
+		delete  m_pPosition;
+	}
+}
+
+//
+STDMETHODIMP  CFilterNetSender::NonDelegatingQueryInterface(  REFIID  riid,  void  **  ppv  )
+{
+	if  (  riid  ==  IID_IMediaPosition  ||  riid  ==  IID_IMediaSeeking  )  {
+		HRESULT	hr  =  S_OK;
+		if  (  m_pPosition  ==  NULL  )  {
+			m_pPosition  =  new  CPosPassThru(  _T(  "pass thru"  ),  (  IUnknown  *  )GetOwner(  ),  &hr,  this->m_pInputPin  );
+			if  (  !m_pPosition  )  return  E_OUTOFMEMORY;
+		}
+		if  (  FAILED(  hr  )  )  {
+			delete  m_pPosition;  m_pPosition  =  NULL;
+			return  hr;
+		}
+		return  m_pPosition->NonDelegatingQueryInterface(  riid,  ppv  );
+		}
+	else  {
+		  return  CBaseFilter::NonDelegatingQueryInterface(  riid,  ppv  );
+	}
+}
+
+//
+// GetPin
+//
+CBasePin * CFilterNetSender::GetPin(int n)
+{
+    if (n == 0) {
+        return m_pInputPin;
+    } else {
+        return NULL;
+    }
+}
+
+
+//
+// GetPinCount
+//
+int CFilterNetSender::GetPinCount()
+{
+    return 1;
+}
+
+
+//
+// Stop
+//
+// Overriden to close the dump file
+//
+STDMETHODIMP CFilterNetSender::Stop()
+{
+    CAutoLock cObjectLock(m_pLock);
+
+	if (m_pInputPin)  {
+        //  m_pInputPin->CloseFile();
+	}
+    
+    return CBaseFilter::Stop();
+}

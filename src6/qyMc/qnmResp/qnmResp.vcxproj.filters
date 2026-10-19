@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{a24bf068-0b80-47b2-8687-563c1b925447}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Source Files\qyMcPublic">
+      <UniqueIdentifier>{91b9e215-4c1a-4ffd-be0b-cec53c4bde0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{f2b27bec-39f5-4545-b904-cf3474e5a26d}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Header Files\qyMcInclude">
+      <UniqueIdentifier>{1b63708e-d66f-4a9d-8baa-ab019de4111d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{31876a1c-2d3b-4e17-8622-2281259452b1}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="qnmRespPublic">
+      <UniqueIdentifier>{f70bd9b3-1d77-412f-b964-dd2645f41232}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="qnmRespInclude">
+      <UniqueIdentifier>{00c15483-7cf8-401f-b05c-f4046070d217}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="qyCommProc">
+      <UniqueIdentifier>{4fd29107-23b6-4f21-8898-2f2f64ebac6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="qyCommProc\qyCommProcInclude">
+      <UniqueIdentifier>{091c3a6b-f2ce-4940-8a45-cdfb7b70bd1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="qyCustom">
+      <UniqueIdentifier>{6775c804-a98b-44ef-b790-e08069b3de6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="qyCommProc_mis">
+      <UniqueIdentifier>{7abf65e3-fea7-42c8-9390-197df1b6a62f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="qyPublic2">
+      <UniqueIdentifier>{4f4fa64d-5fb9-4569-9dc5-16af68b089b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="qyCommProc_open">
+      <UniqueIdentifier>{3371423f-a610-4b7e-b922-eeaad611f831}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="qnmResp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QnmRespDaemon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qymcPublic\qmCommonDbFunc.cpp">
+      <Filter>Source Files\qyMcPublic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qymcPublic\qmCommondbFunc_mis.cpp">
+      <Filter>Source Files\qyMcPublic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qymcPublic\qmCommonFunc.cpp">
+      <Filter>Source Files\qyMcPublic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qymcPublic\qmStr.cpp">
+      <Filter>Source Files\qyMcPublic</Filter>
+    </ClCompile>
+    <ClCompile Include="qnmRespPublic\qnmRespProc.cpp">
+      <Filter>qnmRespPublic</Filter>
+    </ClCompile>
+    <ClCompile Include="qnmRespPublic\qnmRespProc_netMc2.cpp">
+      <Filter>qnmRespPublic</Filter>
+    </ClCompile>
+    <ClCompile Include="qnmRespPublic\qyPing.c">
+      <Filter>qnmRespPublic</Filter>
+    </ClCompile>
+    <ClCompile Include="qnmRespPublic\winpcap_common.cpp">
+      <Filter>qnmRespPublic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\genericqueue.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qnmCommProc.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qnmCommProc1.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qnmFwCommProc.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qnmOsAuditCommProc.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qnmsCommProc.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qnmWarnCommProc.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qwmDynFunc.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qwmNetworkStatusCommProc.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyArpProc.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyCommProc.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyDmItemCommProc.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyGenericDaemon.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyModuleFunc.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyMtSock.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyShowInfoCommProc.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyString.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qySyncCommProc.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyTCharCommProc.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyTmpMemory.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\tmpCeLib.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCustom\qnmCustom.cpp">
+      <Filter>qyCustom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCustom\qnmCustomComm.cpp">
+      <Filter>qyCustom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCustom\qyCustom.cpp">
+      <Filter>qyCustom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc_mis\isProtocolFunc.cpp">
+      <Filter>qyCommProc_mis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc_mis\isTmpFunc.cpp">
+      <Filter>qyCommProc_mis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc_mis\qnmCommProc_mis.cpp">
+      <Filter>qyCommProc_mis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc_mis\qyMsgFunc.cpp">
+      <Filter>qyCommProc_mis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc_mis\qyq2.cpp">
+      <Filter>qyCommProc_mis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc_mis\qyWmComm_is.cpp">
+      <Filter>qyCommProc_mis</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qySqlFunc_odbc.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qySqlFuncPublic.cpp">
+      <Filter>qyCommProc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\qyOpen\qyCommProc_open\qySyncObj.cpp">
+      <Filter>qyCommProc_open</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\qymcPublic\myDb.cpp">
+      <Filter>Source Files\qyMcPublic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="qnmResp.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="qnmResp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QnmRespDaemon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCLUDE\qmStr.h">
+      <Filter>Header Files\qyMcInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="include\qnmRespCfg.h">
+      <Filter>qnmRespInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="include\qnmRespCommon.h">
+      <Filter>qnmRespInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="include\qyPing.h">
+      <Filter>qnmRespInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\qyCommProc\include\qnmCommProc.h">
+      <Filter>qyCommProc\qyCommProcInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\qyCommProc\include\qnmCustom.h">
+      <Filter>qyCommProc\qyCommProcInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\qyCommProc\INCLUDE\qnmFwCommProc.h">
+      <Filter>qyCommProc\qyCommProcInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\qyCommProc\INCLUDE\qwmDynFunc.h">
+      <Filter>qyCommProc\qyCommProcInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\qyCommProc\include\qyCommProc.h">
+      <Filter>qyCommProc\qyCommProcInclude</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\qnmResp.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\qnmResp.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\qnmRespDoc.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\Toolbar.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+</Project>

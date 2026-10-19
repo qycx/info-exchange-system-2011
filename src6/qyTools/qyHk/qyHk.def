@@ -1,0 +1,15 @@
+
+; qyHk.def : Declares the module parameters for the DLL.
+
+LIBRARY      "qyHk"
+DESCRIPTION  'Qycx CBT Hook Library'
+
+SECTIONS
+          .SHARDAT READ WRITE SHARED
+
+EXPORTS
+        qyCBTProc
+		qyReadCurrentFocus
+		qySetHook
+		qyDeleteHook
+

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="qyMc">
+</Property><Property Name="Solution File" Value="D:\qycx4\develop6\srcRoot\src6\qyMc\MAIN\qyMc.sln">
+</Property><Property Name="User Options File" Value="D:\qycx4\develop6\srcRoot\src6\qyMc\MAIN\qyMc.suo">
+</Property><Property Name="Date" Value="Friday, August 06, 2010">
+</Property><Property Name="Time" Value="9:47 AM">
+</Property><Property Name="Log Number" Value="8">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="qyMc.sln" Description="File successfully backed up as D:\qycx4\develop6\srcRoot\src6\qyMc\MAIN\qyMc.sln.old">
+</Event><Event ErrorLevel="0" Project="" Source="qyMc.suo" Description="File successfully backed up as D:\qycx4\develop6\srcRoot\src6\qyMc\MAIN\qyMc.suo.old">
+</Event><Event ErrorLevel="0" Project="qyMc" Source="qyMc.vcproj" Description="Project upgraded successfully.">
+</Event><Event ErrorLevel="3" Project="qyMc" Source="qyMc.vcproj" Description="Converted">
+</Event><Event ErrorLevel="2" Project="qyRtcTool" Source="..\..\qyTools\qyRtcTool\qyRtcTool.vcproj" Description="Failed to upgrade project file 'D:\qycx4\develop6\srcRoot\src6\qyTools\qyRtcTool\qyRtcTool.vcproj'.  Please make sure the file exists and is not write-protected.">
+</Event><Event ErrorLevel="2" Project="qyRtcTool" Source="..\..\qyTools\qyRtcTool\qyRtcTool.vcproj" Description="Project upgrade failed.">
+</Event><Event ErrorLevel="3" Project="qyRtcTool" Source="..\..\qyTools\qyRtcTool\qyRtcTool.vcproj" Description="Not Converted">
+</Event><Event ErrorLevel="0" Project="" Source="qyMc.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="qyMc.sln" Description="Converted">
+</Event></UpgradeLog>

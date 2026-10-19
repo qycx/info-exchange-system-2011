@@ -1,0 +1,29 @@
+# 本档案为只读历史归档，下列为「已剔除、未入库」的文件类型（仅作记录，非忽略待提交文件）
+# IDE/构建缓存（均可由源文件重新生成，无版本价值）
+*.ncb
+*.opt
+*.aps
+*.clw
+*.plg
+*.sdf
+*.ipch
+*.suo
+*.user
+*.pdb
+*.idb
+*.pch
+*.obj
+*.ilk
+*.bsc
+*.sbr
+*.res
+*.exp
+*.map
+# 预编译 / 第三方二进制
+*.exe
+*.dll
+*.lib
+*.ocx
+*.sys
+*.drv
+*.tmp

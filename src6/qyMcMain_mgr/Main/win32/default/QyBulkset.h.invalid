@@ -1,0 +1,65 @@
+#if !defined(AFX_QYBULKSET_H__4583872D_29A8_4A69_9447_E0F5FF73D513__INCLUDED_)
+#define AFX_QYBULKSET_H__4583872D_29A8_4A69_9447_E0F5FF73D513__INCLUDED_
+
+#if _MSC_VER > 1000
+#pragma once
+#endif // _MSC_VER > 1000
+// QyBulkset.h : header file
+//
+
+/////////////////////////////////////////////////////////////////////////////
+// CQyBulkset recordset
+
+class CQyBulkset : public CRecordset
+{
+public:
+	CQyBulkset(CDatabase* pDatabase = NULL);
+	~CQyBulkset(  );
+	DECLARE_DYNAMIC(CQyBulkset)
+
+	CStringArray				m_arrayName;
+	int							m_nColsWidth[QY_MAXCOLS];
+	int							m_nDataType[QY_MAXCOLS];
+
+	void** m_ppvData;    // allocate dynamically to nColumns later
+	void** m_ppvLengths; // allocate dynamically to nColumns later
+
+ 
+	int  Initialize(  unsigned int nFields,  QY_COLUMNINFO * pColumns  );
+
+
+// Field/Param Data
+	//{{AFX_FIELD(CQyBulkset, CRecordset)
+	//}}AFX_FIELD
+
+
+// Overrides
+	// ClassWizard generated virtual function overrides
+	//{{AFX_VIRTUAL(CQyBulkset)
+	public:
+	virtual CString GetDefaultConnect();    // Default connection string
+	virtual CString GetDefaultSQL();    // Default SQL for Recordset
+	virtual void DoFieldExchange(CFieldExchange* pFX);  // RFX support
+	//}}AFX_VIRTUAL
+
+	
+	virtual void Close();
+
+// Attributes
+
+// Overridables
+	virtual void DoBulkFieldExchange(CFieldExchange* pFX);
+	virtual void CheckRowsetError(RETCODE nRetCode);
+	
+
+// Implementation
+#ifdef _DEBUG
+	virtual void AssertValid() const;
+	virtual void Dump(CDumpContext& dc) const;
+#endif
+};
+
+//{{AFX_INSERT_LOCATION}}
+// Microsoft Visual C++ will insert additional declarations immediately before the previous line.
+
+#endif // !defined(AFX_QYBULKSET_H__4583872D_29A8_4A69_9447_E0F5FF73D513__INCLUDED_)

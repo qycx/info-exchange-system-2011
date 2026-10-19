@@ -1,0 +1,16 @@
+# Microsoft Developer Studio Generated Dependency File, included by qwmHelp.mak
+
+.\HookApi.cpp : \
+	"..\..\qyCommProc\include\qwmHideProcessCommProc.h"\
+	".\HookApi.h"\
+	".\HookClass.h"\
+	
+
+.\HookClass.cpp : \
+	".\HookClass.h"\
+	
+
+..\..\qyCommProc\qwmHideProcessCommProc.cpp : \
+	"..\..\qyCommProc\include\qwmHideProcessCommProc.h"\
+	"i:\progra~1\micros~2\vc98\include\basetsd.h"\
+	

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="QyMc_isCli">
+</Property><Property Name="Solution File" Value="D:\qycx4\develop6\srcRoot\src6\qyMc\Main\win32\default_isCli\QyMc_isCli.sln">
+</Property><Property Name="Date" Value="2012年11月3日">
+</Property><Property Name="Time" Value="15:20:25">
+</Property><Property Name="Log Number" Value="4">
+</Property></Properties><Event ErrorLevel="0" Project="QyMc_isCli" Source="QyMc_isCli.vcproj" Description="Converting project file 'D:\qycx4\develop6\srcRoot\src6\qyMc\Main\win32\default_isCli\QyMc_isCli.vcproj'.">
+</Event><Event ErrorLevel="1" Project="QyMc_isCli" Source="QyMc_isCli.vcproj" Description="VCWebServiceProxyGeneratorTool is no longer supported. The tool has been removed from your project settings.">
+</Event><Event ErrorLevel="1" Project="QyMc_isCli" Source="QyMc_isCli.vcproj" Description="MSB8012: $(TargetPath) ('D:\qycx4\develop6\srcRoot\src6\qyMc\Main\win32\default_isCli\..\..\..\..\..\..\Win32\Debug\bin\QyMc_isCli.exe') does not match the Linker's OutputFile property value '..\..\..\..\..\..\Win32\Debug\bin\QyMc_isCli.exe' ('D:\qycx4\develop6\Win32\Debug\bin\QyMc_isCli.exe') in project configuration 'Debug|Win32'. This may cause your project to build incorrectly. To correct this, please make sure that $(TargetPath) property value matches the value specified in %(Link.OutputFile).">
+</Event><Event ErrorLevel="1" Project="QyMc_isCli" Source="QyMc_isCli.vcproj" Description="MSB8012: $(TargetPath) ('D:\qycx4\develop6\srcRoot\src6\qyMc\Main\win32\default_isCli\..\..\..\..\..\..\Win32\Release\bin\QyMc_isCli.exe') does not match the Linker's OutputFile property value '..\..\..\..\..\..\Win32\Release\bin\QyMc_isCli.exe' ('D:\qycx4\develop6\Win32\Release\bin\QyMc_isCli.exe') in project configuration 'Release|Win32'. This may cause your project to build incorrectly. To correct this, please make sure that $(TargetPath) property value matches the value specified in %(Link.OutputFile).">
+</Event><Event ErrorLevel="0" Project="QyMc_isCli" Source="QyMc_isCli.vcproj" Description="Done converting to new project file 'D:\qycx4\develop6\srcRoot\src6\qyMc\Main\win32\default_isCli\QyMc_isCli.vcxproj'.">
+</Event><Event ErrorLevel="3" Project="QyMc_isCli" Source="QyMc_isCli.vcproj" Description="Converted">
+</Event></UpgradeLog>

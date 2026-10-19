@@ -1,0 +1,51 @@
+
+
+#ifndef  __QYFILTERNETRECEIVER_H__
+#define  __QYFILTERNETRECEIVER_H__	//  {
+
+#include	"qyNetOutputPin.h"
+
+class CFilterNetReceiver: public CBaseFilter
+{
+    // Let the pins access our internal state
+    friend class CNetOutputPin;
+
+private:
+	CCritSec			m_filterLock;
+	CNetOutputPin	*	m_pOutputPin;
+
+	BOOL				m_isVideo;
+	IMediaSample	*	m_pSample;
+
+
+	long				m_audioBytesPerSecond;
+	REFERENCE_TIME		m_lastSampleTime;
+
+public:
+
+    CFilterNetReceiver(LPUNKNOWN pUnk,HRESULT *hr);
+    ~CFilterNetReceiver();
+
+    CBasePin *GetPin(int n);
+    int GetPinCount();
+
+    // Function needed for the class factory
+    //  static CUnknown * WINAPI CreateInstance(LPUNKNOWN pUnk, HRESULT *phr);
+
+    // Send EndOfStream if no input connection
+    //  STDMETHODIMP Run(REFERENCE_TIME tStart);
+    //  STDMETHODIMP Pause();
+    STDMETHODIMP Stop();
+
+	void  SetAudioBytesPerSecond(  long  inBytes  );
+	BOOL  GetSampleBuffer(  PBYTE  *  outBuffer  );
+	BOOL  DeliverHoldingSample(  long  inSampleSize  );
+
+	void  SetupMediaType(  long  inType,  char  *  inFormat,  long  inLength  );
+
+};
+
+
+
+#endif  //  }
+

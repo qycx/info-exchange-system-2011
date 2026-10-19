@@ -1,0 +1,143 @@
+
+
+#include	"stdafx.h"
+
+#include	<tchar.h>
+
+#include	"streams.h"
+#include	"qyFilterNetReceiver.h"
+
+CNetOutputPin::CNetOutputPin(CFilterNetReceiver *pFilter, HRESULT *phr, LPCWSTR pName):
+CBaseOutputPin(  _T(  "NetOutput"  ),  pFilter,  &pFilter->m_filterLock,  phr,  pName  )
+{
+	m_pFilter  =  pFilter;
+	this->m_preferredMt.InitMediaType(  );
+	//  this->m_preferredMt  =
+
+	VIDEOINFOHEADER	vi;
+	VIDEOINFOHEADER *pvi  =  &vi;
+
+	ZeroMemory(  pvi,  sizeof(  VIDEOINFOHEADER  )  );
+
+	pvi->bmiHeader.biCompression  =  BI_RGB;
+	pvi->bmiHeader.biSize  =  sizeof(  BITMAPINFOHEADER  );
+	pvi->bmiHeader.biWidth  =  320;
+	pvi->bmiHeader.biHeight  =  240;
+	pvi->bmiHeader.biPlanes  =  1;
+	pvi->bmiHeader.biBitCount  =  24;
+	pvi->bmiHeader.biCompression  =  MAKEFOURCC(  'W',  'M',  'V',  '3'  );
+	pvi->bmiHeader.biSizeImage  =  GetBitmapSize(  &pvi->bmiHeader  );
+	pvi->bmiHeader.biClrImportant   =  0;
+
+	pvi->AvgTimePerFrame  =  DEFAULT_AvgTimePerFrame;	//  1000000;
+
+	SetRectEmpty(  &(  pvi->rcSource  )  );
+	SetRectEmpty(  &(  pvi->rcTarget  )  );
+
+	this->m_preferredMt.SetType(  &MEDIATYPE_Video  );
+	this->m_preferredMt.SetFormatType(  &FORMAT_VideoInfo  );
+	this->m_preferredMt.SetTemporalCompression(  FALSE  );
+
+	//
+	const  GUID  SubTypeGUID  =  GetBitmapSubtype(  &pvi->bmiHeader  );
+	this->m_preferredMt.SetSubtype(  &SubTypeGUID  );
+	this->m_preferredMt.SetSampleSize(  pvi->bmiHeader.biSizeImage  );
+
+
+}
+
+CNetOutputPin::~CNetOutputPin(  )
+{
+}
+
+void  CNetOutputPin::SetupMediaType(  long  inType,  char  *  inFormat,  long  inLength  )
+{
+	//  if  (  inType  ==  PT_VideoMediaType  )  
+	{
+		this->m_preferredMt.SetType(  &MEDIATYPE_Video  );
+		m_preferredMt.SetFormatType(  &FORMAT_VideoInfo  );
+		//
+		VIDEOINFOHEADER  *  pvi  =  (  VIDEOINFOHEADER  *  )inFormat;
+		const  GUID  subtype  =  GetBitmapSubtype(  &pvi->bmiHeader  );
+		m_preferredMt.SetSubtype(  &subtype  );
+
+		pvi->bmiHeader.biSizeImage  =  GetBitmapSize(  &pvi->bmiHeader  );
+		m_preferredMt.SetFormat(  (  BYTE  *  )inFormat,  inLength  );
+		m_preferredMt.SetSampleSize(  pvi->bmiHeader.biSizeImage  );
+	}
+
+	m_preferredMt.SetTemporalCompression(  FALSE  );
+}
+
+HRESULT  CNetOutputPin::CheckMediaType(  const  CMediaType  *  inMediaType  )
+{
+#if  0
+	if  (  *inMediaType  ==  m_preferredMt  )  {
+		return  NOERROR;
+	}
+#endif
+	if  (  inMediaType->majortype  ==  m_preferredMt.majortype
+		&&  inMediaType->subtype  ==  m_preferredMt.subtype  
+		)
+	{
+		return  NOERROR;
+	}
+
+	return  E_FAIL;
+}
+
+
+HRESULT  CNetOutputPin::DecideBufferSize(  IMemAllocator  *  pAlloc,  ALLOCATOR_PROPERTIES  *  pprop  )
+{
+	ASSERT(  pAlloc  );
+	ASSERT(  pprop  );
+	HRESULT	hr  =  NOERROR;
+
+	if  (  m_preferredMt.formattype  ==  FORMAT_VideoInfo  )  {
+		VIDEOINFOHEADER  *  info  =  (  VIDEOINFOHEADER  *  )m_preferredMt.pbFormat;
+		pprop->cbBuffer  =  info->bmiHeader.biSizeImage;
+	}
+	else  {
+		  WAVEFORMATEX  *  info  =  (  WAVEFORMATEX  *  )m_preferredMt.pbFormat;
+		  pprop->cbBuffer  =  info->nAvgBytesPerSec;
+	}
+	pprop->cBuffers  =  1;
+	pprop->cbAlign  =  1;
+
+	ASSERT(  pprop->cbBuffer  );
+
+	ALLOCATOR_PROPERTIES  Actual;
+	hr  =  pAlloc->SetProperties(  pprop,  &Actual  );
+	if  (  FAILED(  hr  )  )  {
+		return  hr;
+	}
+
+	ASSERT(  Actual.cBuffers  ==  1  );
+
+	if  (  pprop->cBuffers  >  Actual.cBuffers  ||
+		pprop->cbBuffer  >  Actual.cbBuffer  )
+	{
+		return  E_FAIL;
+	}
+
+	return  NOERROR;
+}
+
+
+HRESULT  CNetOutputPin::GetMediaType(  int  iPosition,  CMediaType  *  pMediaType  )
+{
+	if  (  iPosition  ==  0  )  {
+		*pMediaType  =  m_preferredMt;
+		return  NOERROR;
+	}
+	return  E_INVALIDARG;
+}
+
+
+
+
+
+
+
+
+

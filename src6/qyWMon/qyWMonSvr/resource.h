@@ -1,0 +1,117 @@
+//{{NO_DEPENDENCIES}}
+// Microsoft Developer Studio generated include file.
+// Used by qyWMonSvr.rc
+//
+#define IDD_qyReg                       101
+#define IDC_CURSOR1                     102
+#define IDC_line                        102
+#define IDR_DATA_packet2k               103
+#define IDC_LIST_secChk                 103
+#define IDD_qyAskToReboot               103
+#define IDR_DATA_qwmHelp                104
+#define IDR_DATA_qwmHelp2               105
+#define IDR_DATA_qwmRd                  106
+#define IDR_DATA_qwmHelp3               107
+#define IDR_DATA_qwmRdHelp              108
+#define IDC_PROGRESS_askToReboot        1001
+#define IDC_STATIC_hint0                1002
+#define IDC_title                       1004
+#define IDC_hint0                       1006
+#define IDC_EDIT8                       1022
+#define IDC_EDIT9                       1023
+#define IDC_EDIT10                      1024
+#define IDC_EDIT11                      1025
+#define IDC_EDIT12                      1026
+#define IDC_hint1                       1027
+#define IDC_PROGRESS_reg                1028
+#define IDC_EDIT13                      1029
+#define IDC_EDIT14                      1030
+#define IDC_EDIT15                      1031
+#define IDC_EDIT16                      1032
+#define IDC_EDIT17                      1033
+#define IDC_EDIT18                      1034
+#define IDC_EDIT19                      1035
+#define IDC_EDIT0                       1041
+#define IDC_COMBO0                      1042
+#define IDC_COMBO1                      1052
+#define IDC_COMBO2                      1053
+#define IDC_COMBO3                      1054
+#define IDC_COMBO4                      1055
+#define IDC_COMBO5                      1056
+#define IDC_COMBO6                      1057
+#define IDC_COMBO7                      1058
+#define IDC_COMBO8                      1059
+#define IDC_COMBO9                      1060
+#define IDC_COMBO_secChk                1062
+#define IDC_STATIC0                     1069
+#define IDC_STATIC1                     1070
+#define IDC_STATIC2                     1071
+#define IDC_STATIC3                     1072
+#define IDC_STATIC4                     1073
+#define IDC_STATIC5                     1074
+#define IDC_STATIC6                     1075
+#define IDC_STATIC7                     1076
+#define IDC_STATIC8                     1077
+#define IDC_STATIC9                     1079
+#define IDC_STATIC10                    1080
+#define IDC_STATIC11                    1081
+#define IDC_STATIC12                    1082
+#define IDC_STATIC13                    1083
+#define IDC_STATIC14                    1084
+#define IDC_STATIC15                    1085
+#define IDC_STATIC16                    1086
+#define IDC_STATIC17                    1087
+#define IDC_STATIC18                    1088
+#define IDC_STATIC19                    1089
+#define IDC_STATIC20                    1090
+#define IDC_STATIC21                    1091
+#define IDC_STATIC22                    1092
+#define IDC_STATIC23                    1093
+#define IDC_STATIC24                    1094
+#define IDC_STATIC25                    1095
+#define IDC_STATIC26                    1096
+#define IDC_STATIC27                    1097
+#define IDC_STATIC28                    1098
+#define IDC_STATIC29                    1099
+#define IDC_EDIT1                       1100
+#define IDC_EDIT2                       1101
+#define IDC_EDIT3                       1102
+#define IDC_EDIT4                       1103
+#define IDC_EDIT5                       1104
+#define IDC_EDIT6                       1105
+#define IDC_EDIT7                       1106
+#define IDC_pc0                         1151
+#define IDC_pc1                         1152
+#define IDC_pc2                         1153
+#define IDC_pc3                         1154
+#define IDC_pc4                         1155
+#define IDC_pc5                         1156
+#define IDC_pc6                         1157
+#define IDC_pc7                         1158
+#define IDC_pc8                         1159
+#define IDC_pc9                         1160
+#define IDC_pc10                        1161
+#define IDC_pc11                        1162
+#define IDC_pc12                        1163
+#define IDC_pc13                        1164
+#define IDC_pc14                        1165
+#define IDC_pc15                        1166
+#define IDC_pc16                        1167
+#define IDC_pc17                        1168
+#define IDC_pc18                        1169
+#define IDC_pc19                        1170
+#define IDC_pc20                        1171
+#define IDC_pc21                        1172
+#define IDC_pc22                        1173
+#define IDC_pc23                        1174
+
+// Next default values for new objects
+// 
+#ifdef APSTUDIO_INVOKED
+#ifndef APSTUDIO_READONLY_SYMBOLS
+#define _APS_NEXT_RESOURCE_VALUE        104
+#define _APS_NEXT_COMMAND_VALUE         40001
+#define _APS_NEXT_CONTROL_VALUE         1003
+#define _APS_NEXT_SYMED_VALUE           109
+#endif
+#endif

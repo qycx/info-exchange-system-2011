@@ -1,0 +1,52 @@
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Add manually edited resources here...
+
+/////////////////////////////////////////////////////////////////////////////
+// DATA 
+ 
+ 
+#ifndef  __X64__
+	#ifdef  _DEBUG
+			IDR_DATA_qwmHelp            RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\debug\\bin\\qwmHelp.dll"
+			IDR_DATA_qwmHelp2           RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\debug\\bin\\qwmHelp2.dll"
+			#if 0
+				IDR_DATA_qwmRd		        RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\debug\\bin\\qwmRd.dll"
+				IDR_DATA_qwmHelp3	        RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\debug\\bin\\qwmHelp3.dll"
+				IDR_DATA_qwmRdHelp	        RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\debug\\bin\\qwmRdHelp.dll"
+			#endif
+	#else
+			IDR_DATA_qwmHelp            RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\release\\bin\\qwmHelp.dll"
+			IDR_DATA_qwmHelp2           RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\release\\bin\\qwmHelp2.dll"
+			#if 0
+				IDR_DATA_qwmRd		        RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\release\\bin\\qwmRd.dll"
+				IDR_DATA_qwmHelp3	        RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\release\\bin\\qwmHelp3.dll"
+				IDR_DATA_qwmRdHelp	        RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\release\\bin\\qwmRdHelp.dll"
+			#endif 
+	#endif
+#else
+	#ifdef  _DEBUG
+			IDR_DATA_qwmHelp            RCDATA  DISCARDABLE     "..\\..\\..\\..\\x64\\debug\\bin\\qwmHelp.dll"
+			IDR_DATA_qwmHelp2           RCDATA  DISCARDABLE     "..\\..\\..\\..\\x64\\debug\\bin\\qwmHelp2.dll"
+			#if 0
+				IDR_DATA_qwmRd		        RCDATA  DISCARDABLE     "..\\..\\..\\..\\x64\\debug\\bin\\qwmRd.dll"
+				IDR_DATA_qwmHelp3	        RCDATA  DISCARDABLE     "..\\..\\..\\..\\x64\\debug\\bin\\qwmHelp3.dll"
+				IDR_DATA_qwmRdHelp	        RCDATA  DISCARDABLE     "..\\..\\..\\..\\x64\\debug\\bin\\qwmRdHelp.dll"
+			#endif
+	#else
+			IDR_DATA_qwmHelp            RCDATA  DISCARDABLE     "..\\..\\..\\..\\x64\\release\\bin\\qwmHelp.dll"
+			IDR_DATA_qwmHelp2           RCDATA  DISCARDABLE     "..\\..\\..\\..\\x64\\release\\bin\\qwmHelp2.dll"
+			#if 0
+				IDR_DATA_qwmRd		        RCDATA  DISCARDABLE     "..\\..\\..\\..\\x64\\release\\bin\\qwmRd.dll"
+				IDR_DATA_qwmHelp3	        RCDATA  DISCARDABLE     "..\\..\\..\\..\\x64\\release\\bin\\qwmHelp3.dll"
+				IDR_DATA_qwmRdHelp	        RCDATA  DISCARDABLE     "..\\..\\..\\..\\x64\\release\\bin\\qwmRdHelp.dll"
+			#endif 
+	#endif
+
+#endif
+
+
+

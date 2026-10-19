@@ -1,0 +1,2 @@
+#define CONST_chkFileSize 246877
+#define CONST_chkFileDigest { ( unsigned char )0x96, ( unsigned char )0x76, ( unsigned char )0xcd, ( unsigned char )0x46, ( unsigned char )0x8e, ( unsigned char )0xeb, ( unsigned char )0xf7, ( unsigned char )0x2e, ( unsigned char )0x30, ( unsigned char )0x86, ( unsigned char )0xfb, ( unsigned char )0xdd, ( unsigned char )0xbd, ( unsigned char )0x0f, ( unsigned char )0x7e, ( unsigned char )0xc6 }

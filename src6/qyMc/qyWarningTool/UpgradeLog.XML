@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="qyWarningTool">
+</Property><Property Name="Solution File" Value="D:\qycx4\develop6\srcRoot\src6\qyMc\qyWarningTool\qyWarningTool.sln">
+</Property><Property Name="User Options File" Value="D:\qycx4\develop6\srcRoot\src6\qyMc\qyWarningTool\qyWarningTool.suo">
+</Property><Property Name="Date" Value="2013年1月19日">
+</Property><Property Name="Time" Value="14:15">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="qyWarningTool.sln" Description="File successfully backed up as D:\qycx4\develop6\srcRoot\src6\qyMc\qyWarningTool\qyWarningTool.sln.old">
+</Event><Event ErrorLevel="0" Project="" Source="qyWarningTool.suo" Description="File successfully backed up as D:\qycx4\develop6\srcRoot\src6\qyMc\qyWarningTool\qyWarningTool.suo.old">
+</Event><Event ErrorLevel="0" Project="qyWarningTool" Source="qyWarningTool.vcproj" Description="Converting project file 'D:\qycx4\develop6\srcRoot\src6\qyMc\qyWarningTool\qyWarningTool.vcproj'.">
+</Event><Event ErrorLevel="1" Project="qyWarningTool" Source="qyWarningTool.vcproj" Description="VCWebServiceProxyGeneratorTool is no longer supported. The tool has been removed from your project settings.">
+</Event><Event ErrorLevel="1" Project="qyWarningTool" Source="qyWarningTool.vcproj" Description="MSB8012: $(TargetPath) ('D:\qycx4\develop6\srcRoot\src6\qyMc\qyWarningTool\.\..\..\..\..\Win32\Debug\bin\qyWarningTool.exe') does not match the Linker's OutputFile property value '.\..\..\..\..\Win32\Debug\bin\qyWarningTool.exe' ('D:\qycx4\develop6\Win32\Debug\bin\qyWarningTool.exe') in project configuration 'Debug|Win32'. This may cause your project to build incorrectly. To correct this, please make sure that $(TargetPath) property value matches the value specified in %(Link.OutputFile).">
+</Event><Event ErrorLevel="1" Project="qyWarningTool" Source="qyWarningTool.vcproj" Description="MSB8012: $(TargetPath) ('D:\qycx4\develop6\srcRoot\src6\qyMc\qyWarningTool\.\..\..\..\..\Win32\Release\bin\qyWarningTool.exe') does not match the Linker's OutputFile property value '.\..\..\..\..\Win32\Release\bin\qyWarningTool.exe' ('D:\qycx4\develop6\Win32\Release\bin\qyWarningTool.exe') in project configuration 'Release|Win32'. This may cause your project to build incorrectly. To correct this, please make sure that $(TargetPath) property value matches the value specified in %(Link.OutputFile).">
+</Event><Event ErrorLevel="0" Project="qyWarningTool" Source="qyWarningTool.vcproj" Description="Done converting to new project file 'D:\qycx4\develop6\srcRoot\src6\qyMc\qyWarningTool\qyWarningTool.vcxproj'.">
+</Event><Event ErrorLevel="3" Project="qyWarningTool" Source="qyWarningTool.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="qyWarningTool.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="qyWarningTool.sln" Description="Converted">
+</Event></UpgradeLog>

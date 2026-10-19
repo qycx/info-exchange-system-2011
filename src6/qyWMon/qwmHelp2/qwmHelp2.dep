@@ -1,0 +1,70 @@
+# Microsoft Developer Studio Generated Dependency File, included by qwmHelp2.mak
+
+.\qwmHelp2.cpp : \
+	"..\..\asrinclude\asrcomm.h"\
+	"..\..\asrinclude\asrcommon.h"\
+	"..\..\asrInclude\asrLog.h"\
+	"..\..\asrinclude\asrobjs.h"\
+	"..\..\asrinclude\asrprecomp.h"\
+	"..\..\asrInclude\awmComm.h"\
+	"..\..\asrinclude\commondefs.h"\
+	"..\..\asrinclude\commonfunc.h"\
+	"..\..\asrinclude\commonfunc1.h"\
+	"..\..\asrinclude\commonfunc3.h"\
+	"..\..\asrinclude\commonfunc4.h"\
+	"..\..\asrinclude\commonsock.h"\
+	"..\..\asrinclude\genericqueue.h"\
+	"..\..\asrinclude\getopt_long.h"\
+	"..\..\qyCommProc\include\qnmCommProc.h"\
+	"..\..\qyCommProc\include\qwmHideProcessCommProc.h"\
+	"..\..\qyCommProc\include\qyCommProc.h"\
+	"..\..\qycommproc\include\qywmcomm.h"\
+	"..\..\qyCustom\include\qnmSysCustom.h"\
+	"..\..\qycustom\include\qycustom.h"\
+	"..\..\qycustom\include\qyprecustom.h"\
+	"..\..\qyenclib\include\d3des.h"\
+	"..\..\qyinclude\contentfilter\qycfpublic.h"\
+	"..\..\qyinclude\md5\qymd5public.h"\
+	"..\..\qyinclude\qyauth\qyauthcommon.h"\
+	"..\..\qyinclude\qycfg.h"\
+	"..\..\qyinclude\qycommcommon.h"\
+	"..\..\qyinclude\qycommon.h"\
+	"..\..\qyinclude\qycommon\qwmcommonfunc.h"\
+	"..\..\qyinclude\qycommon\qycommonfunc5.h"\
+	"..\..\qyinclude\qycommon\qycommonfunc6.h"\
+	"..\..\qyinclude\qycommon\qycommonfunc7.h"\
+	"..\..\qyinclude\qycommon\qycommonfunc8.h"\
+	"..\..\qyinclude\qycommon\qydebugfunc.h"\
+	"..\..\qyinclude\qycommon\qydefs.h"\
+	"..\..\qyinclude\qycommon\qyerrfunc.h"\
+	"..\..\qyinclude\qycommon\qyloghelpfunc.h"\
+	"..\..\qyinclude\qycommon\qymodifypefunc.h"\
+	"..\..\qyinclude\qycommon\qyobjs.h"\
+	"..\..\qyinclude\qycommon\qytypes.h"\
+	"..\..\qyinclude\qycommonpublic.h"\
+	"..\..\qyinclude\qyenclib\qyencfunc.h"\
+	"..\..\qyInclude\qyGuiCommon.h"\
+	"..\..\qyinclude\qylog\qylogfunc.h"\
+	"..\..\qyinclude\qymodulelib\qymodulefunc.h"\
+	"..\..\qyinclude\qyprecomp.h"\
+	"..\..\qyinclude\qysock\qycommonsock.h"\
+	"..\..\qyinclude\qysock\qymtsock.h"\
+	"..\..\qyinclude\qysock\qysockpublic.h"\
+	"..\..\qypublic\qycomm\include\qycomm.h"\
+	"..\..\qypublic\qycomm\include\qycommcfg.h"\
+	"..\..\qypublic\qycomm\include\qycommfunc.h"\
+	"..\..\qyPublic\qyGuiLib\include\qyGuiFunc.h"\
+	"..\..\qyPublic\qyGuiLib\include\qyGuiPublic.h"\
+	"..\include\asrWMonPrecomp.h"\
+	"i:\progra~1\micros~2\vc98\include\basetsd.h"\
+	
+
+.\StdAfx.cpp : \
+	".\StdAfx.h"\
+	"i:\progra~1\micros~2\vc98\include\basetsd.h"\
+	
+
+..\..\qyCommProc\qwmHideProcessCommProc.cpp : \
+	"..\..\qyCommProc\include\qwmHideProcessCommProc.h"\
+	"i:\progra~1\micros~2\vc98\include\basetsd.h"\
+	

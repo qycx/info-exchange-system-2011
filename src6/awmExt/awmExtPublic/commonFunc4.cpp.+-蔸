@@ -1,0 +1,226 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <windows.h>
+#include <lm.h>
+#include <lmshare.h>
+#include <time.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <stdio.h>
+
+extern "C" int truncFileHead( int nTruncated, char *fileName );
+
+
+#include "commonDefs1.h"
+#include "commonFunc.h"
+
+#define ASR_ERR_STR					"err"
+#define ASR_STATUS_STR				"status"
+
+  extern "C" int asrSetRegCfg( char *rootKey, char *cfgName, char *cfgVal )
+{
+	int iRet = -1;
+	BOOL bKeyCreated = FALSE;
+	HKEY hKey;
+	int rc = -1;
+	// char buf[256];
+	
+	// sprintf( buf, "%d", ASR_QUIT_VAL );
+
+	if ( ( rc = RegCreateKey( HKEY_LOCAL_MACHINE, rootKey, &hKey ) ) != ERROR_SUCCESS ) {
+		char buf[128];
+		wsprintf( buf, "RegCreate returns %d", rc );
+		debugLog( "asrSetRegCfg( ): RegCreateKey( ) failed: %s", buf );
+		goto errLabel;
+	}
+	bKeyCreated = TRUE;
+	if ( RegSetValueEx( hKey, cfgName, 0, REG_SZ, ( const unsigned char * )cfgVal, lstrlen( cfgVal ) ) != ERROR_SUCCESS ) {
+		debugLog( "asrSetRegCfg( ): RegSetValueEx( ) failed." );
+		goto errLabel;
+	}
+
+	iRet = 0;
+
+errLabel:
+
+	if ( bKeyCreated ) RegCloseKey( hKey );
+
+	return iRet;
+
+}
+
+ extern "C" int asrShowRegErr( char *rootKey, char *errStr )
+{
+	return asrSetRegCfg( rootKey, ASR_ERR_STR, errStr );
+}
+
+ extern "C" int asrShowRegStatus( char *rootKey, char *statusStr )
+{
+	return asrSetRegCfg( rootKey, ASR_STATUS_STR, statusStr );
+}
+
+
+#define MAX_ERR_LOG_FILE_LEN	100000
+ static  char  sErrLogFile[1024] = "";
+ static  char  sErrLogHint[1024] = "";
+ static  char  sErrHintWndTitle[512]  =  "";
+ 
+ extern "C" int setErrLogFile( char *fileName )
+{
+	if ( strlen( fileName ) >= sizeof( sErrLogFile ) ) return -1;
+	
+	strcpy( sErrLogFile, fileName );
+	return 0;
+
+}
+
+ extern "C" int setErrLogHint( char *hint )
+{
+	if ( strlen( hint ) >= sizeof( sErrLogHint ) ) return -1;
+
+	strcpy( sErrLogHint, hint );
+	return 0;
+
+}
+
+ extern  "C"  int  setErrHintWndTitle(  char * title  )
+{
+	 if  (  strlen(  title  )  >=  sizeof(  sErrHintWndTitle  )  )  return  -1;
+
+	 strcpy(  sErrHintWndTitle,  title  );
+	 return  0;
+}
+
+ extern "C" int getFileLen( char *fileName )
+{
+	struct _stat tmpStat;
+
+	if( _stat( fileName, &tmpStat ) ) return -1;
+
+	return tmpStat.st_size;
+
+	
+}
+
+
+ extern "C" int errLog(char *fmt,...)
+{		 
+	if ( !strlen( sErrLogFile ) ) return 0;
+
+	va_list args;
+	
+	char filenamebuf[257];
+	char timebuf[50];
+	FILE *fperr;
+	BOOL isRealFileOpened=FALSE;
+	int fileLen = 0;
+
+	int errnoBuf;
+
+//	if ( debugLogOpt==0 ) return 0;
+
+	errnoBuf=errno;
+
+	va_start(args,fmt);
+		
+	if  (  sErrHintWndTitle[0]  )  {
+		HWND  firstWnd  =  NULL;
+	
+		firstWnd  =  FindWindow(  NULL,  sErrHintWndTitle  );
+		if  (  firstWnd  )  {
+			COPYDATASTRUCT	tmpCopyData;
+			char			buf[256];
+
+			_vsnprintf(  buf,  sizeof(  buf  )  -  1,  fmt,  args  );
+			buf[sizeof(  buf  )  -  1]  =  0;
+			tmpCopyData.lpData  =  buf;
+			tmpCopyData.cbData  =  sizeof(  buf  )  -  1;
+			SendMessage( firstWnd,  WM_COPYDATA,  NULL,  (  LPARAM  )&tmpCopyData  );
+		}
+	}
+
+
+#ifdef WIN32
+	// sprintf(filenamebuf,"%s\\err%lu-%lu.log",LOGDIR, GetCurrentProcessId( ), GetCurrentThreadId( ));
+	sprintf(filenamebuf,"%s", sErrLogFile );
+#else
+	sprintf(filenamebuf,"%s/%s%d",LOGDIR,COMMONERRLOGFILE,getpid());
+#endif
+
+
+	getcurtime(timebuf);
+
+	if ( ( fperr = fopen( filenamebuf,"a" ) ) ) 
+			isRealFileOpened = TRUE;
+
+	if ( fperr ) {
+			fprintf( fperr,"%s|%s: ", timebuf, sErrLogHint );
+			vfprintf( fperr, fmt, args );
+			fprintf( fperr, "\n" );
+			fflush( fperr );
+		}
+	else 
+		fprintf( stderr, "can't open a file to show error info\n" );
+
+
+	if ( fperr ) fclose(fperr);
+
+	va_end(args);
+
+	fileLen = getFileLen( filenamebuf );
+	if (  fileLen > MAX_ERR_LOG_FILE_LEN ) {
+		debugLog( "%s is too long, so is to be truncated.", filenamebuf );
+		if ( !truncFileHead( fileLen - MAX_ERR_LOG_FILE_LEN / 2, filenamebuf ) ) {
+			debugLog( "%s is truncated.", filenamebuf );
+			}
+		else {
+			debugLog( "%s can't be truncated, is to be deleted." );
+			DeleteFile( filenamebuf );
+		}
+	}
+
+	errno=errnoBuf;
+
+	return 0;
+
+}
+
+ extern "C" int truncFileHead( int nTruncated, char *fileName )
+{
+	int iErr = -1;
+	char tmpPath[1024];
+	char tmpFileName[2048];
+	FILE *fp = NULL, *tmpFp = NULL;
+	char buf[2048];
+	
+	if ( !GetTempPath( sizeof( tmpPath ), tmpPath ) ) return -1;
+	if ( !GetTempFileName( tmpPath, "awm", 0, tmpFileName ) ) return -1;
+
+	fp = fopen( fileName, "r" );
+	tmpFp = fopen( tmpFileName, "w" );
+	if ( !fp || !tmpFp ) goto errLabel;
+	
+	if ( fseek( fp, nTruncated, SEEK_SET ) ) goto errLabel;
+
+	while ( fgets( buf, sizeof( buf ), fp ) ) {
+		fputs( buf, tmpFp );
+	}
+	fclose( fp ); fp = NULL;
+	fclose( tmpFp ); tmpFp = NULL;
+
+	CopyFile( tmpFileName, fileName, FALSE );
+	DeleteFile( tmpFileName );
+
+	iErr = 0;
+
+errLabel:
+	if ( fp ) fclose( fp ); 
+	if ( tmpFp ) fclose( tmpFp );
+
+	return iErr;
+
+}
+

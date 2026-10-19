@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="qyMcDaemon">
+</Property><Property Name="Solution File" Value="D:\qycx4\develop6\srcRoot\src6\qyMc\qyMcDaemon\qyMcDaemon.sln">
+</Property><Property Name="User Options File" Value="D:\qycx4\develop6\srcRoot\src6\qyMc\qyMcDaemon\qyMcDaemon.suo">
+</Property><Property Name="Date" Value="2012年9月13日">
+</Property><Property Name="Time" Value="1:38">
+</Property><Property Name="Log Number" Value="5">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="qyMcDaemon.sln" Description="File successfully backed up as D:\qycx4\develop6\srcRoot\src6\qyMc\qyMcDaemon\qyMcDaemon.sln.old">
+</Event><Event ErrorLevel="0" Project="" Source="qyMcDaemon.suo" Description="File successfully backed up as D:\qycx4\develop6\srcRoot\src6\qyMc\qyMcDaemon\qyMcDaemon.suo.old">
+</Event><Event ErrorLevel="0" Project="qyMcDaemon" Source="qyMcDaemon.vcproj" Description="Converting project file 'D:\qycx4\develop6\srcRoot\src6\qyMc\qyMcDaemon\qyMcDaemon.vcproj'.">
+</Event><Event ErrorLevel="1" Project="qyMcDaemon" Source="qyMcDaemon.vcproj" Description="VCWebServiceProxyGeneratorTool is no longer supported. The tool has been removed from your project settings.">
+</Event><Event ErrorLevel="1" Project="qyMcDaemon" Source="qyMcDaemon.vcproj" Description="MSB8012: $(TargetPath) ('D:\qycx4\develop6\srcRoot\src6\qyMc\qyMcDaemon\.\..\..\..\..\Win32\Debug\bin\qyMcDaemon.exe') does not match the Linker's OutputFile property value '.\..\..\..\..\Win32\Debug\bin\qyMcDaemon.exe' ('D:\qycx4\develop6\Win32\Debug\bin\qyMcDaemon.exe') in project configuration 'Debug|Win32'. This may cause your project to build incorrectly. To correct this, please make sure that $(TargetPath) property value matches the value specified in %(Link.OutputFile).">
+</Event><Event ErrorLevel="1" Project="qyMcDaemon" Source="qyMcDaemon.vcproj" Description="MSB8012: $(TargetPath) ('D:\qycx4\develop6\srcRoot\src6\qyMc\qyMcDaemon\.\..\..\..\..\Win32\Release\bin\qyMcDaemon.exe') does not match the Linker's OutputFile property value '.\..\..\..\..\Win32\Release\bin\qyMcDaemon.exe' ('D:\qycx4\develop6\Win32\Release\bin\qyMcDaemon.exe') in project configuration 'Release|Win32'. This may cause your project to build incorrectly. To correct this, please make sure that $(TargetPath) property value matches the value specified in %(Link.OutputFile).">
+</Event><Event ErrorLevel="0" Project="qyMcDaemon" Source="qyMcDaemon.vcproj" Description="Done converting to new project file 'D:\qycx4\develop6\srcRoot\src6\qyMc\qyMcDaemon\qyMcDaemon.vcxproj'.">
+</Event><Event ErrorLevel="3" Project="qyMcDaemon" Source="qyMcDaemon.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="qyMcDaemon.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="qyMcDaemon.sln" Description="Converted">
+</Event></UpgradeLog>

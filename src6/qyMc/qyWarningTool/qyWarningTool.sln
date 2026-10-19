@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qyWarningTool", "qyWarningTool.vcproj", "{377D8C95-5C5D-4BDD-AD84-27A54428D2CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{377D8C95-5C5D-4BDD-AD84-27A54428D2CD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{377D8C95-5C5D-4BDD-AD84-27A54428D2CD}.Debug|Win32.Build.0 = Debug|Win32
+		{377D8C95-5C5D-4BDD-AD84-27A54428D2CD}.Release|Win32.ActiveCfg = Release|Win32
+		{377D8C95-5C5D-4BDD-AD84-27A54428D2CD}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

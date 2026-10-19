@@ -1,0 +1,101 @@
+#if !defined(AFX_QYPLAYSOUND_H__E8DE0E0A_F43E_49F8_A765_B6AA0427DB5C__INCLUDED_)
+#define AFX_QYPLAYSOUND_H__E8DE0E0A_F43E_49F8_A765_B6AA0427DB5C__INCLUDED_
+
+#if _MSC_VER > 1000
+#pragma once
+#endif // _MSC_VER > 1000
+// QyPlaySound.h : header file
+//
+
+#include	<afxmt.h>
+#include	"qyMcMainRealTimeMediaProc.h"
+
+/////////////////////////////////////////////////////////////////////////////
+// CQyPlaySound thread
+
+
+
+class CQyPlaySound : public CWinThread
+{
+	DECLARE_DYNCREATE(CQyPlaySound)
+public:
+	CQyPlaySound(  int iHertz  =  DEFAULT_audio_iHertz  );           // protected constructor used by dynamic creation
+
+// Attributes
+public:
+	struct							{
+		MC_VAR_isCli				*	pProcInfo;
+		PLAY_SOUND_procInfo		*	pPlaySoundProcInfo;
+
+		TCHAR						mutexName_syncStartStop[64];
+		BOOL						bStarted;
+				
+		int							m_nOutputBuffers;
+		int							m_nMaxOutputBuffers;
+		WAVEFORMATEX				waveFormatEx; 
+		HWAVEOUT					m_hPlay;
+		
+		char					*	pBuf;
+		unsigned  int				uiBufSize;
+
+		
+public:
+
+		CSemaphore				*	m_pSemaphore;					//  这个semaphore暂时用处不大
+
+
+	}								m_var;
+
+private:
+
+// Operations
+
+	
+public:
+
+	BOOL  bSetInfo(  PLAY_SOUND_procInfo  *  pPlaySoundProcInfo,  WAVEFORMATEX  *  p  );
+
+
+	
+	LRESULT OnStartPlaying(WPARAM wParam, LPARAM lParam);
+	LRESULT OnStopPlaying(WPARAM wParam, LPARAM lParam);
+	LRESULT OnEndThread(WPARAM wParam, LPARAM lParam);
+
+private:
+
+	LPWAVEHDR  CreateWaveHeader(  unsigned  int  uiBytesRecorded_perBlockAlign  );
+
+	void displayError(int code,char []);
+	virtual void ProcessSoundData(BYTE *sound, DWORD dwSamples);
+	LRESULT OnWriteSoundData(WPARAM wParam, LPARAM lParam);
+
+
+// Overrides
+	// ClassWizard generated virtual function overrides
+	//{{AFX_VIRTUAL(CQyPlaySound)
+	public:
+	virtual BOOL InitInstance();
+	virtual int ExitInstance();
+	//}}AFX_VIRTUAL
+
+// Implementation
+public:
+	virtual ~CQyPlaySound();
+private:
+
+	// Generated message map functions
+	//{{AFX_MSG(CQyPlaySound)
+		// NOTE - the ClassWizard will add and remove member functions here.
+	//}}AFX_MSG
+	afx_msg  void  OnEndPlaySoundData(WPARAM wParam, LPARAM lParam);
+	afx_msg  void  OnQyPostComm( UINT, LONG );
+
+	DECLARE_MESSAGE_MAP()
+};
+
+/////////////////////////////////////////////////////////////////////////////
+
+//{{AFX_INSERT_LOCATION}}
+// Microsoft Visual C++ will insert additional declarations immediately before the previous line.
+
+#endif // !defined(AFX_QYPLAYSOUND_H__E8DE0E0A_F43E_49F8_A765_B6AA0427DB5C__INCLUDED_)

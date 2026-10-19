@@ -1,0 +1,41 @@
+
+
+#ifndef  __QYNETOUTPIN_H__
+#define  __QYNETOUTPIN_H__	//  {
+
+
+class CNetOutputPin : public CBaseOutputPin
+{
+    friend class CFilterNetReceiver;
+
+    CFilterNetReceiver *m_pFilter;                  // Main filter object pointer
+	CMediaType			m_preferredMt;
+  
+public:
+
+    // Constructor and destructor
+
+    CNetOutputPin( CFilterNetReceiver *pFilter,
+                   HRESULT *phr,
+                   LPCWSTR pPinName  );
+    ~CNetOutputPin();
+
+
+	void  SetupMediaType(  long  inType,  char  *  inFormat,  long  inLength  );
+
+
+    // Check that we can support an output type
+    HRESULT CheckMediaType(const CMediaType *pmt);
+	
+    // Negotiation to use our input pins allocator
+    HRESULT DecideBufferSize(IMemAllocator *pMemAllocator,
+                             ALLOCATOR_PROPERTIES * ppropInputRequest);
+
+	HRESULT	GetMediaType(  int  iPosition,  CMediaType  *  pMediaType  );
+
+};
+
+
+#endif  //  }
+
+

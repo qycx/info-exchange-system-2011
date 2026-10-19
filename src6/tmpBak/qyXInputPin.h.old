@@ -1,0 +1,42 @@
+
+
+#ifndef  __QYXINPUTPIN_H__
+#define  __QYXINPUTPIN_H__	//  {
+
+class  CFilterNetSender;
+
+class CXInputPin : public CRenderedInputPin
+{
+    CFilterNetSender    *	m_pFilter;				// Main renderer object
+    CCritSec				m_receiveLock;			// Sample critical section
+    REFERENCE_TIME			m_tLast;				// Last sample receive time
+
+public:
+
+    CXInputPin(CFilterNetSender *pFilter,  HRESULT *phr);
+	~CXInputPin(  );
+
+    // Do something with this media sample
+    STDMETHODIMP Receive(IMediaSample *pSample);
+    STDMETHODIMP EndOfStream(void);
+	STDMETHODIMP BeginFlush(  void  );
+	STDMETHODIMP EndFlush(  void  );
+    STDMETHODIMP ReceiveCanBlock();
+
+
+    // Check if the pin can support this specific proposed type and format
+    HRESULT CheckMediaType(const CMediaType *);
+
+	//  HRESULT GetMediaType(int iPosition, __inout CMediaType *pMediaType);
+
+    // Break connection
+    //  HRESULT BreakConnect();
+
+};
+
+
+
+#endif  //  }
+
+
+

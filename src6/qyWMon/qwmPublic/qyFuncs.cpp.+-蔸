@@ -1,0 +1,308 @@
+
+#include	"stdafx.h"
+#include	<afxDb.h>
+
+
+int  LoadDBUsrs(  CDatabase  *  pDb,  CString  name  );
+int  LoadDBGrpUsrRelations(  CDatabase  *  pDb,  CString  name  );
+int  SaveDBGrpUsrRelations(  char  *  dsnName,  CString  name  );
+int	 SaveDBUsrs(  char  *  dsnName,  CString  name  );
+
+
+extern "C" int debugLog(char *fmt,...);
+
+
+
+//  将qyUsrTab中的数据导出到文件中
+ int  LoadDBUsrs(  CDatabase  *  pDb,  CString  name  ) 
+{
+	int			iErr			=	-1;		
+	FILE	*	fp				=	NULL;
+	char		buf[1024];
+	CString		sKeyword, sContext, tmpStr;
+	CDBVariant	varValue;
+	int			index, nField;
+	char		cSpace			=	0x20;
+	
+	CRecordset ls( pDb );
+
+	if  ( !(  fp  =  fopen(  name,  "w"  )  )  )  {
+		//  debugLog( "" );
+		goto errLabel;
+	}
+		
+	TRY{		
+		if( !ls.Open( CRecordset::forwardOnly, _T( "SELECT name,passwd FROM qyUsrTab" ) ) ){
+			debugLog( "LoadDBUsrs() open() failed." );
+			goto errLabel;
+		}
+		}
+	CATCH  (  CDBException,  e  )  {
+		debugLog( "LoadDBLog() caught err is:%s", e->m_strError );
+		goto errLabel;
+	}
+	END_CATCH
+
+	nField = ls.GetODBCFieldCount( );
+	while  (  !ls.IsEOF(  )  ) 	{	
+
+		   memset( buf, 0, sizeof( buf ) );
+		   for  (  index  = 0;  index  <  nField;  index  ++  )  {
+				TRY  {
+				 	 ls.GetFieldValue(  index,  varValue  );
+				 	 tmpStr  =  varValue.m_pstring->GetBuffer(  0  );
+			 		}
+			 	CATCH(  CDBException,  e  )  {			
+				 	  break;				
+			 		}
+			 	END_CATCH
+		
+			 	switch  (  index  )  {
+						case 0:
+							   sprintf( buf, "%s%s", tmpStr, "$");		
+							   break;
+						case 1:
+							   sprintf( buf, "%s%s%s", buf, tmpStr, "$");				
+							   break;
+			 			default:			
+								break;
+				}			
+		   }
+
+		   if( fprintf( fp, "%s\n", buf ) < 0 ) goto errLabel;
+		   
+		   ls.MoveNext( );
+
+	}
+
+	iErr = 0;
+
+errLabel:
+
+	if  (  ls.IsOpen(  )  )  ls.Close( );
+
+	if  (  fp  )  {  fclose(  fp  );  fp  =  NULL;  }
+
+	return iErr;		
+
+}
+
+
+  //  将qyUsrTab中的数据导出到文件中
+ int  LoadDBGrpUsrRelations(  CDatabase  *  pDb,  CString  name  ) 
+{
+	int			iErr			=	-1;		
+	FILE	*	fp				=	NULL;
+	char		buf[1024];
+	CString		sKeyword, sContext, tmpStr;
+	CDBVariant	varValue;
+	int			index, nField;
+	char		cSpace			=	0x20;
+	
+	CRecordset ls( pDb );
+
+	if  ( !(  fp  =  fopen(  name,  "w"  )  )  )  {
+		debugLog( "" );
+		goto errLabel;
+	}
+		
+	TRY{		
+		if( !ls.Open( CRecordset::forwardOnly, _T( "SELECT grpName,usrName FROM qyGrpUsrRelationTab" ) ) ){
+			debugLog( "LoadDBLog() open() failed." );
+			goto errLabel;
+		}
+		}
+	CATCH  (  CDBException,  e  )  {
+		debugLog( "LoadDBGrpUsrRelations(  ) caught err is:%s", e->m_strError );
+		goto errLabel;
+	}
+	END_CATCH
+
+	nField = ls.GetODBCFieldCount( );
+	while  (  !ls.IsEOF(  )  ) 	{	
+
+		   memset( buf, 0, sizeof( buf ) );
+		   for  (  index  = 0;  index  <  nField;  index  ++  )  {
+				TRY  {
+				 	 ls.GetFieldValue(  index,  varValue  );
+				 	 tmpStr  =  varValue.m_pstring->GetBuffer(  0  );
+			 		}
+			 	CATCH(  CDBException,  e  )  {			
+				 	  break;				
+			 		}
+			 	END_CATCH
+		
+			 	switch  (  index  )  {
+						case 0:
+							   sprintf( buf, "%s%s", tmpStr, "$");		
+							   break;
+						case 1:
+							   sprintf( buf, "%s%s%s", buf, tmpStr, "$");				
+							   break;
+			 			default:			
+								break;
+				}			
+		   }
+
+		   if  (  fprintf(  fp,  "%s\n",  buf  )  <  0  )  goto  errLabel;
+		   
+		   ls.MoveNext( );
+
+	}
+
+	iErr = 0;
+
+errLabel:
+
+	if  (  ls.IsOpen(  )  )  ls.Close( );
+
+	if  (  fp  )  {  fclose(  fp  );  fp  =  NULL;  }
+
+	return iErr;		
+
+}
+
+ 
+
+ int  SaveDBGrpUsrRelations( char * dsnName, CString name )
+{
+	int			iErr			=			-1;
+	int			i, k;
+	FILE	*	fp				=			NULL;
+	char		buf[256];
+	CDatabase	pDb;
+	char		grpNameBuf[256];
+	char		usrNameBuf[256];  
+	
+	if  ( ( fp = fopen( name, "r" ) ) == NULL )  {
+		debugLog( "SaveProVer(): fopen() failed." );
+	 	goto errLabel;
+	}
+
+	TRY{
+		if( !pDb.Open( dsnName ) )
+			goto errLabel;
+	}
+	CATCH( CDBException, e ) {
+		debugLog( "SaveProVer( ) caught err is:%s", e->m_strError );
+		goto errLabel;
+	}
+	END_CATCH
+
+	while ( 1 ) {		
+		memset( buf, 0, sizeof( buf ) );
+		if( !fgets( buf, sizeof( buf ), fp ) ) break;
+
+		i  =  0;
+		memset(  grpNameBuf,  0,  sizeof(  grpNameBuf  )  );
+		while  (  buf[i]  !=  '$'  )  {
+			   grpNameBuf[i] = buf[i];
+			   i ++;
+		}
+		grpNameBuf[i] = '\0';
+
+		i  ++  ;
+		k  =  i;
+		memset(  usrNameBuf,  0,  sizeof(  usrNameBuf  )  );
+		while  (  buf[i]  !=  '$'  )  {
+			   usrNameBuf[i - k] = buf[i];
+			   i  ++  ;
+		}
+		usrNameBuf[i - k] = '\0';
+		
+		sprintf(  buf, "INSERT INTO qyGrpUsrRelationTab( grpName, usrName ) VALUES( \'%s\', \'%s\' )",  grpNameBuf,  usrNameBuf  );
+		TRY{
+			pDb.ExecuteSQL( buf );
+		}
+		CATCH( CDBException, e ){
+			debugLog( "SaveDBGrpUsrRelations() caught err is:%s", e->m_strError );
+			continue;
+		}
+		END_CATCH		
+	}
+
+	iErr = 0;
+	
+errLabel:
+
+	if( pDb.IsOpen() )	pDb.Close();
+
+	if ( fp ) { fclose( fp ); fp = NULL; }
+
+	DeleteFile( name );
+
+	return iErr;
+
+}
+
+
+ int SaveDBUsrs( char *dsnName, CString name )
+{
+	int			iErr			=			-1;
+	int			i, k;
+	FILE	*	fp				=			NULL;
+	char		buf[256];
+	CDatabase	pDb;
+	char		usrNameBuf[256];  
+	char		passwdBuf[256];
+
+	if  ( ( fp = fopen( name, "r" ) ) == NULL )  {
+		debugLog( "SaveProVer(): fopen() failed." );
+	 	goto errLabel;
+	}
+
+	TRY{
+		if( !pDb.Open( dsnName ) )
+			goto errLabel;
+	}
+	CATCH( CDBException, e ) {
+		debugLog( "SaveProVer( ) caught err is:%s", e->m_strError );
+		goto errLabel;
+	}
+	END_CATCH
+
+	while ( 1 ) {		
+		memset( buf, 0, sizeof( buf ) );
+		if( !fgets( buf, sizeof( buf ), fp ) ) break;
+
+		memset(  usrNameBuf,  0,  sizeof(  usrNameBuf  )  );
+		i  =  0;
+		while  (  buf[i]  !=  '$'  )  {
+			   usrNameBuf[i] = buf[i];
+			   i ++;
+		}
+		usrNameBuf[i] = '\0';
+
+		i  ++  ;
+		k  =  i;
+		memset(  passwdBuf,  0,  sizeof(  passwdBuf  )  );
+		while  (  buf[i]  !=  '$'  )  {
+			   passwdBuf[i - k] = buf[i];
+			   i  ++  ;
+		}
+		passwdBuf[i - k] = '\0';
+		
+		sprintf(  buf, "INSERT INTO qyUsrTab( name, passwd ) VALUES( \'%s\', \'%s\' )",  usrNameBuf,  passwdBuf  );
+		TRY{
+			pDb.ExecuteSQL( buf );
+		}
+		CATCH( CDBException, e ){
+			debugLog( "SaveProVer() caught err is:%s", e->m_strError );
+			continue;
+		}
+		END_CATCH		
+	}
+
+	iErr = 0;
+	
+errLabel:
+
+	if( pDb.IsOpen() )	pDb.Close();
+
+	if ( fp ) { fclose( fp ); fp = NULL; }
+
+	DeleteFile( name );
+
+	return iErr;
+
+}

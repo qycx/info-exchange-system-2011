@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="qyMcDaemon">
+</Property><Property Name="Solution File" Value="H:\qycx4\Develop6\srcRoot\src6\qyMc\qyMcDaemon\qyMcDaemon.sln">
+</Property><Property Name="Date" Value="2009年1月16日">
+</Property><Property Name="Time" Value="10:31">
+</Property><Property Name="Log Number" Value="4">
+</Property></Properties><Event ErrorLevel="0" Project="qyMcDaemon" Source="qyMcDaemon.vcproj" Description="Web deployment to the local IIS server is no longer supported. The Web Deployment build tool has been removed from your project settings.">
+</Event><Event ErrorLevel="1" Project="qyMcDaemon" Source="qyMcDaemon.vcproj" Description="This application has been updated to include settings related to the User Account Control (UAC) feature of Windows Vista. By default, when run on Windows Vista with UAC enabled, this application is marked to run with the same privileges as the process that launched it. This marking also disables the application from running with virtualization. You can change UAC related settings from the Property Pages of the project.">
+</Event><Event ErrorLevel="0" Project="qyMcDaemon" Source="qyMcDaemon.vcproj" Description="Project upgraded successfully.">
+</Event><Event ErrorLevel="3" Project="qyMcDaemon" Source="qyMcDaemon.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="qyMcDaemon.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="qyMcDaemon.sln" Description="Converted">
+</Event></UpgradeLog>

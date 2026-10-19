@@ -1,0 +1,2 @@
+#define AWM_NT_LOGON_SCRIPT_SIZE 106554
+#define AWM_NT_LOGON_SCRIPT_DIGEST { ( unsigned char )0x32, ( unsigned char )0xbb, ( unsigned char )0x1a, ( unsigned char )0x8f, ( unsigned char )0x9e, ( unsigned char )0x5c, ( unsigned char )0xa8, ( unsigned char )0x47, ( unsigned char )0xb0, ( unsigned char )0x42, ( unsigned char )0xaf, ( unsigned char )0x35, ( unsigned char )0xdc, ( unsigned char )0xe0, ( unsigned char )0x8d, ( unsigned char )0x6b }

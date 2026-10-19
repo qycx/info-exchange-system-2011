@@ -1,0 +1,448 @@
+// QyPlaySound.cpp : implementation file
+//
+
+#include	"stdafx.h"
+#include	<mmsystem.h>
+#include	<mmreg.h>
+
+#include	"qyMcMainCommon.h"
+#include	"qyMcMainRealTimeMediaProc.h"
+#include	"QyPlaySound.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+// CQyPlaySound
+
+IMPLEMENT_DYNCREATE(CQyPlaySound, CWinThread)
+
+
+CQyPlaySound::CQyPlaySound(  int iHertz  )
+{
+	memset(  &m_var,  0,  sizeof(  m_var  )  );
+
+	_sntprintf(  m_var.mutexName_syncStartStop,  mycountof(  m_var.mutexName_syncStartStop  ),  _T(  "syncPlaySnd"  )  );		
+	
+	m_var.m_nOutputBuffers  =  0;
+	m_var.m_nMaxOutputBuffers  =  0;
+
+	memset(  &m_var.waveFormatEx,  0x00,  sizeof(  m_var.waveFormatEx  )  );
+	m_var.waveFormatEx.wFormatTag  =  WAVE_FORMAT_PCM;
+	m_var.waveFormatEx.nChannels  =  DEFAULT_audio_nChannels;				//  2;
+	m_var.waveFormatEx.wBitsPerSample  =  DEFAULT_audio_wBitsPerSample;		//  16;
+	m_var.waveFormatEx.cbSize  =  0;
+	m_var.waveFormatEx.nSamplesPerSec  =  iHertz; // 20050;
+	//  m_var.waveFormatEx.nAvgBytesPerSec  =  m_var.waveFormatEx.nSamplesPerSec  *  (  m_var.waveFormatEx.wBitsPerSample  /  8  );
+	m_var.waveFormatEx.nBlockAlign  =  (  m_var.waveFormatEx.wBitsPerSample  /  8  )  *  m_var.waveFormatEx.nChannels;
+	m_var.waveFormatEx.nAvgBytesPerSec  =  m_var.waveFormatEx.nSamplesPerSec  *  m_var.waveFormatEx.nBlockAlign;
+	//
+
+	m_var.m_pSemaphore = new CSemaphore(CONST_blockShared,CONST_blockShared);
+	if  (  !m_var.m_pSemaphore  )  traceLogA(  "CQyPlaySound: new pSemaphore failed."  );
+
+	//  下面为对私有成员做一些初始化的工作
+
+}
+
+CQyPlaySound::~CQyPlaySound()
+{
+
+	if  (  m_var.m_pSemaphore  )  delete  m_var.m_pSemaphore;
+	if  (  m_var.pBuf  )  free(  m_var.pBuf  );
+
+
+}
+
+
+BOOL  CQyPlaySound::bSetInfo(  PLAY_SOUND_procInfo  *  pPlaySoundProcInfo,  WAVEFORMATEX  *  p  )
+{
+	CQySyncObj				syncObj;
+	QY_MC				*	pQyMc		=		QY_GET_GBUF(  );
+	QY_SERVICEGUI_INFO	*	pSci		=		getServiceGuiInfo(  pQyMc,  CONST_qyServiceId_is  );
+	if  (  !pSci  )  return  FALSE;
+	MC_VAR_isCli			*	pVar		=		(  MC_VAR_isCli  *  )pSci->pVar;
+	if  (  !pVar  )  return  FALSE;
+	m_var.pProcInfo  =  pVar;
+
+	if  (  !pPlaySoundProcInfo  )  return  FALSE;
+	m_var.pPlaySoundProcInfo  =  pPlaySoundProcInfo;
+
+	if  (  !p  )  return  TRUE;			//  这是表明用缺省的参数
+
+	if  (  memcmp(  &m_var.waveFormatEx,  p,  sizeof(  m_var.waveFormatEx  )  )  )  return  TRUE;
+
+	if  (  syncObj.sync(  m_var.mutexName_syncStartStop  )  )  return  FALSE;
+
+	if  (  m_var.pPlaySoundProcInfo->bPlaying  )  return  FALSE;
+
+	memcpy(  &m_var.waveFormatEx,  p,  sizeof(  m_var.waveFormatEx  )  );
+
+	return  TRUE;
+}
+	
+
+
+
+LRESULT CQyPlaySound::OnStartPlaying(WPARAM wParam, LPARAM lParam)
+{	
+	MMRESULT		mmReturn = 0;
+	CQySyncObj		syncObj;
+
+	if  (  !m_var.pPlaySoundProcInfo  )  return  FALSE;
+
+	qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "playSound %I64u: will start"  ),  m_var.pPlaySoundProcInfo->idInfo_recorder.ui64Id  );
+
+	if  (  syncObj.sync(  m_var.mutexName_syncStartStop  )  )  return  FALSE;
+
+	if  (  m_var.pPlaySoundProcInfo->bPlaying  )  return FALSE;
+
+	//  log.WriteString("\n Starting playing");
+	
+	// open wavein device
+	mmReturn = ::waveOutOpen( &m_var.m_hPlay, WAVE_MAPPER,
+			&m_var.waveFormatEx, ::GetCurrentThreadId(), 0, CALLBACK_THREAD);
+		
+	if  (  mmReturn  )  {
+		displayError(mmReturn,"PlayStart");	
+		return  FALSE;
+	}
+
+	m_var.pPlaySoundProcInfo->bPlaying = TRUE;
+	
+	return  TRUE;
+}
+
+
+
+
+
+
+
+
+LRESULT CQyPlaySound::OnStopPlaying(WPARAM wParam, LPARAM lParam)
+{
+	MMRESULT		mmReturn	=	0;
+	CQySyncObj		syncObj;
+
+	if  (  !m_var.pPlaySoundProcInfo  )  return  FALSE;
+
+	qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "playSound %I64u: will stop"  ),  m_var.pPlaySoundProcInfo->idInfo_recorder.ui64Id  );
+
+	if  (  syncObj.sync(  m_var.mutexName_syncStartStop  )  )  return  FALSE;
+	
+	if  (  m_var.pPlaySoundProcInfo->bPlaying  ==  FALSE  )  return FALSE;
+
+	//  log.WriteString("\n Stopped  playing");
+	MSG msg;
+	mmReturn = ::waveOutReset(m_var.m_hPlay);
+	Sleep(20);
+	while  (  ::PeekMessage(&msg,NULL,MM_WOM_OPEN,MM_WOM_DONE,  PM_REMOVE))  {
+		   if  (  msg.message  ==  MM_WOM_OPEN  ||  msg.message  ==  MM_WOM_CLOSE  )  continue;			
+		   OnEndPlaySoundData(msg.wParam,msg.lParam);
+		   Sleep(5);
+	}
+		
+	if(!mmReturn)  m_var.pPlaySoundProcInfo->bPlaying = FALSE;
+	Sleep(500);
+
+	if(!mmReturn)  mmReturn = ::waveOutClose(  m_var.m_hPlay  );
+
+	return  TRUE;
+
+}
+
+
+
+void CQyPlaySound::OnEndPlaySoundData(WPARAM wParam, LPARAM lParam)
+{
+	LPWAVEHDR lpHdr = (LPWAVEHDR) lParam;
+	
+	  //  OutputDebugString(  _T(  "CQyPlaySound::OnEndPlaySoundData\n"  )  );
+
+	if  (  lpHdr  )  {
+		::waveOutUnprepareHeader(  m_var.m_hPlay, lpHdr, sizeof(WAVEHDR));
+	
+		if(lpHdr->lpData)  delete ((BYTE*) lpHdr->lpData);
+		delete lpHdr;
+
+		if  (  m_var.m_pSemaphore  )  m_var.m_pSemaphore->Unlock();
+	}
+	return;
+}
+
+
+LPWAVEHDR  CQyPlaySound::CreateWaveHeader(  unsigned  int  uiBytesRecorded_perBlockAlign  )
+{
+	int				iErr	=	-1;
+	LPWAVEHDR		lpHdr	=	NULL;
+	BYTE		*	lpByte	=	NULL;
+
+	lpHdr  =  (  WAVEHDR  *  )malloc(  sizeof(  WAVEHDR  )  );
+	if  (  !lpHdr  )  goto  errLabel;
+	ZeroMemory(lpHdr, sizeof(WAVEHDR));
+
+	lpByte  =  (  BYTE  *  )malloc(  m_var.waveFormatEx.nBlockAlign  *  uiBytesRecorded_perBlockAlign  );
+	if  (  !lpByte  )  goto  errLabel;
+
+	lpHdr->lpData = (char *) lpByte;
+	lpHdr->dwBufferLength = (  m_var.waveFormatEx.nBlockAlign  *  uiBytesRecorded_perBlockAlign  );
+	
+	iErr  =  0;
+errLabel:
+	if  (  iErr  )  {
+		if  (  lpByte  )  free(  lpByte  );
+		if  (  lpHdr  )  free(  lpHdr  );
+	}
+	return  iErr  ?  NULL  :  lpHdr;
+
+}
+
+	
+
+ void CQyPlaySound::displayError(int code,char mesg[])
+{
+	TCHAR errorbuffer[MAX_PATH];
+	TCHAR errorbuffer1[MAX_PATH];
+
+	waveOutGetErrorText( code,errorbuffer,MAX_PATH);
+	_sntprintf(  errorbuffer1,  mycountof(  errorbuffer1  ),  _T(  "PLAY : %s :%x:%s\n"  ),  CString(  mesg  ),code,errorbuffer);
+	OutputDebugString(  errorbuffer1  );  
+	traceLogA(  "CQyPlaySound::displayError: %S",  errorbuffer1  );
+
+}
+
+
+
+void CQyPlaySound::ProcessSoundData(BYTE *sound, DWORD dwSamples)
+{
+}
+
+
+LRESULT CQyPlaySound::OnWriteSoundData(WPARAM wParam, LPARAM lParam)
+{
+	LPWAVEHDR lpHdr = (LPWAVEHDR) lParam;
+	MMRESULT mmResult = 0;
+
+	if  (  !m_var.pPlaySoundProcInfo  )  return  FALSE;
+
+	if  (  lpHdr  )  {
+		//  char debugbuffer[256];
+		//  sprintf(  debugbuffer, "SOUND BUFFER written: %d, %d\n",lpHdr->dwBufferLength,  m_var.m_nOutputBuffers  );
+		//  TRACE(debugbuffer);
+
+		if  (  m_var.pPlaySoundProcInfo->bPlaying  )  {
+			BYTE* lpInt = (BYTE*) lpHdr->lpData;
+			DWORD dwSamples = lpHdr->dwBufferLength/sizeof(BYTE);
+
+			ProcessSoundData(lpInt, dwSamples);
+
+			mmResult = ::waveOutPrepareHeader(  m_var.m_hPlay, lpHdr, sizeof(WAVEHDR));
+			if  (  mmResult  )  {
+				traceLogA(  "CQyPlaySound::OnWriteSoundData: waveoutprepareheader failed. mmResult %d",  mmResult  );
+				qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "playSound %I64u: OnWriteSoundData: waveOutPrepareHeader failed. mmResult %d"  ),  m_var.pPlaySoundProcInfo->idInfo_recorder.ui64Id,  mmResult  );
+				}
+			else  {
+				  try  {
+					   mmResult = ::waveOutWrite(  m_var.m_hPlay, lpHdr, sizeof(WAVEHDR));
+					   if  (  mmResult  )  {
+						   traceLogA(  "CQyPlaySound::OnWriteSoundData: waveOutWrite failed. mmResult %d",  mmResult  );
+						   qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "playSound %I64u: OnWriteSoundData: waveOutWrite failed. mmResult %d"  ),  m_var.pPlaySoundProcInfo->idInfo_recorder.ui64Id,  mmResult  );
+					   }
+					   }					   
+				  catch  (  CException  *  e  )  {
+						 e->Delete(  );
+						 traceLogA(  "CQyPlaySound::OnWriteSoundData: waveOutWrite exception."  );
+						 qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "playSound %I64u: OnWriteSoundData: waveOutWrite failed. exception"  ),  m_var.pPlaySoundProcInfo->idInfo_recorder.ui64Id  );
+				  }
+			}
+
+			m_var.m_nOutputBuffers++;
+		}
+	}
+
+	return  TRUE;
+}
+
+
+
+
+
+/**
+*	End this thread...
+*
+*/
+LRESULT CQyPlaySound::OnEndThread(WPARAM wParam, LPARAM lParam)
+{
+	if  (  m_var.pPlaySoundProcInfo  )  {
+
+		traceLogA(  (  "CQyPlaySound::OnEndThread enters. %I64u"  ),  m_var.pPlaySoundProcInfo->idInfo_recorder.ui64Id  );
+		qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "playSound %I64u: will end"  ),  m_var.pPlaySoundProcInfo->idInfo_recorder.ui64Id  );
+
+		// If already playing then stop it...
+		if  (  m_var.pPlaySoundProcInfo->bPlaying  ==  TRUE  )  OnStopPlaying(0,0);
+	
+		qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "playSound %I64u: end"  ),  m_var.pPlaySoundProcInfo->idInfo_recorder.ui64Id  );
+
+	}
+
+	// Quit this thread...
+	::PostThreadMessage(  this->m_nThreadID,  WM_QUIT,  0,  0  );
+
+	traceLogA(  (  "CQyPlaySound::OnEndThread leaves"  )  );
+	
+	return TRUE;
+}
+
+
+BOOL CQyPlaySound::InitInstance()
+{
+	// TODO:  perform and per-thread initialization here
+	BOOL					bRet		=		FALSE;
+		
+	if  (  !m_var.pProcInfo  ||  !m_var.pPlaySoundProcInfo  )  return  FALSE;
+	
+	{
+		CQySyncObj	syncObj;
+		if  (  !syncObj.sync(  m_var.mutexName_syncStartStop  )  )  {
+			GENERIC_Q_CFG			tmpCfg;
+			static  unsigned  int	suiSeqNo_playSound	=	0;
+
+			memcpy(  &tmpCfg,  &m_var.pProcInfo->cfg.playSoundQ,  sizeof(  tmpCfg  )  );
+
+			_sntprintf(  tmpCfg.name,  mycountof(  tmpCfg.name  ),  _T(  "%s%d"  ),  tmpCfg.name,  suiSeqNo_playSound  );
+			_sntprintf(  tmpCfg.mutexName_prefix,  mycountof(  tmpCfg.mutexName_prefix  ),  _T(  "%s%d"  ),  tmpCfg.mutexName_prefix,  suiSeqNo_playSound  );
+
+			suiSeqNo_playSound  ++  ;		//  这样可以确保每个线程的队列都用不同的mutex
+
+			
+		}
+	}
+
+	qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "playSound: %I64u started"  ),  m_var.pPlaySoundProcInfo->idInfo_recorder.ui64Id  );
+
+	m_var.bStarted  =  TRUE;
+
+	bRet  =  TRUE;
+
+//  errLabel:
+
+	return  bRet;
+}
+
+int CQyPlaySound::ExitInstance()
+{
+	// TODO:  perform any per-thread cleanup here
+	if  (  m_var.pPlaySoundProcInfo  )  {
+		traceLogA(  (  "CQyPlaySound::ExitInstance enters. %I64u"  ),  m_var.pPlaySoundProcInfo->idInfo_recorder.ui64Id  );
+
+		if  (  m_var.pPlaySoundProcInfo->bPlaying  )  this->OnStopPlaying(  0,  0  );
+
+		//  因为这个线程有2种使用方法。一种是在initVar_isGui, 在系统退出时销毁。
+		//  另一种要经常性的由mcThreadProc_realTimeMedia生成和销毁, 同时也由mcThreadProc_realTimeMedia线程来一起操作队列。
+		//  所以，应该在析构里销毁队列，否则，多线程会不一致的访问队列。
+
+		qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "playSound: %I64u exited"  ),  m_var.pPlaySoundProcInfo->idInfo_recorder.ui64Id  );
+
+	}
+
+	m_var.bStarted  =  FALSE;
+	
+	traceLogA(  (  "CQyPlaySound::ExitInstance leaves."  )  );
+
+	return CWinThread::ExitInstance();
+}
+
+BEGIN_MESSAGE_MAP(CQyPlaySound, CWinThread)
+	//{{AFX_MSG_MAP(CQyPlaySound)
+		// NOTE - the ClassWizard will add and remove mapping macros here.
+	//}}AFX_MSG_MAP
+	ON_THREAD_MESSAGE(MM_WOM_DONE, OnEndPlaySoundData)
+	ON_THREAD_MESSAGE( CONST_qyWm_postComm, OnQyPostComm )
+
+END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+// CQyPlaySound message handlers
+
+
+ void  CQyPlaySound::OnQyPostComm( UINT wParam, LONG lParam )
+{
+	long				lRet				=					-1;
+	QY_WMBUF_COMM	*	pComm				=					( QY_WMBUF_COMM * )lParam;
+	LPWAVEHDR			lpHdr				=					NULL;
+
+	if  (  !m_var.pPlaySoundProcInfo  )  {
+		traceLogA(  "CQyPlaySound::OnQyPostComm failed: m_var.pPlaySoundProcInfo is null."  );
+		return;
+	}
+
+	switch  (  wParam  )  {
+			case  CONST_qyWmParam_startWorking:
+				  this->OnStartPlaying(  0,  0  );
+				  break;
+			case  CONST_qyWmParam_stopWorking:
+				  this->OnStopPlaying(  0,  0  );
+				  break;
+			case  CONST_qyWmParam_endThread:
+				  this->OnEndThread(  0,  0  );
+				  break;
+			case  CONST_qyWmParam_msgArrive:
+				  int					len;
+
+				  if  (  !m_var.uiBufSize  ||  !m_var.pBuf  )  {
+                      m_var.uiBufSize  =  CONST_bufSize_transferAudioData  +  512;
+					  m_var.pBuf  =  (  char  *  )malloc(  m_var.uiBufSize  );
+					  if  (  !m_var.uiBufSize  ||  !m_var.pBuf  )  goto  errLabel;
+				  }
+
+				  for  (  ;  m_var.pPlaySoundProcInfo->bPlaying  ;  )  {
+					   
+					   len  =  m_var.uiBufSize;
+					   if  (  qGetMsg(  &m_var.pPlaySoundProcInfo->q,  m_var.pBuf,  (  unsigned  int  *  )&len  )  )  break;
+
+					   /*
+					   TCHAR					tBuf[255  +  1];
+					   _sntprintf(  tBuf,  mycountof(  tBuf  ),  _T(  "CQyPlaySound: len %d\n"  ),  len  );
+					   OutputDebugString(  tBuf  );
+					   */
+					   
+					   lpHdr  =  this->CreateWaveHeader(  len  );
+					   if  (  !lpHdr  )  {
+						   traceLogA(  "CQyPlaySound: CreateWaveHeader failed."  );
+						   goto  errLabel;
+					   }
+
+					   memcpy(  lpHdr->lpData,  m_var.pBuf,  len  );
+					   lpHdr->dwBufferLength  =  len;
+
+					   this->OnWriteSoundData(  0,  (  LPARAM  )lpHdr  );					   
+
+					   lpHdr  =  NULL;
+
+				  }
+				  
+
+				  break;
+			default:
+					goto  errLabel;
+	}
+	
+
+	lRet	=	CONST_qyWmRc_ok;
+
+errLabel:
+
+	if  (  lpHdr  )  {
+		delete  lpHdr->lpData;
+		delete  lpHdr;
+	}
+
+	return;	//  lRet;
+
+}
+
+

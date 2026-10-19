@@ -1,0 +1,483 @@
+﻿Build started 2012/9/13 8:18:05.
+     1>Project "D:\qycx4\develop6\srcRoot\src6\qyMc\Main\win32\default_isCli\QyMc_isCli.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Template\QyMc_isCli.unsuccessfulbuild".
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W1 /WX- /O2 /Oy- /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Template\\" /Fd"Template\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt DlgCfgWmv.cpp DlgListView.cpp DlgListView_db.cpp DlgMcLogon.cpp DlgMessengerIsClient.cpp DlgPropImGrp.cpp DlgPropImMsg.cpp DlgPropImTask.cpp DlgPropMessenger.cpp DlgPtzControl.cpp DlgQnmEditPcUsrInfo.cpp DlgQyBar.cpp DlgQyMenu.cpp DlgSelect.cpp DlgShhgPcProperties.cpp LeftView.cpp MainFrm.cpp PpClearupEventCond.cpp PpQnmClearup.cpp PtzSettings.cpp qnmMainProc_isClient_new.cpp QyMc.cpp QyMcDoc.cpp QyRcdset.cpp stdafx.cpp ..\..\qyMcMainPublic\capImageProc.cpp ..\..\qyMcMainPublic\DlgCfgVideoConference.cpp ..\..\qyMcMainPublic\DlgDesktopsMon.cpp ..\..\qyMcMainPublic\DlgDynBmps.cpp ..\..\qyMcMainPublic\DlgImObjRule.cpp ..\..\qyMcMainPublic\DlgInstantAssistant.cpp ..\..\qyMcMainPublic\DlgMcClientLogon.cpp ..\..\qyMcMainPublic\DlgMessenger.cpp ..\..\qyMcMainPublic\dlgObjsProc.cpp ..\..\qyMcMainPublic\DlgPolicyAv.cpp ..\..\qyMcMainPublic\DlgPolicyIsClient.cpp ..\..\qyMcMainPublic\DlgProgress.cpp ..\..\qyMcMainPublic\DlgQnmCfgOptionsIsClient.cpp ..\..\qyMcMainPublic\DlgSelectAvDev.cpp ..\..\qyMcMainPublic\DlgShareDynBmps.cpp ..\..\qyMcMainPublic\dlgTalk_videoConference.cpp ..\..\qyMcMainPublic\dlgTalkProc.cpp ..\..\qyMcMainPublic\DlgToolboxSketchpad.cpp ..\..\qyMcMainPublic\DlgVideoCompressors.cpp ..\..\qyMcMainPublic\DlgVideos.cpp ..\..\qyMcMainPublic\findOrgMsgAndProcess_is.cpp ..\..\qyMcMainPublic\getObjId.cpp ..\..\qyMcMainPublic\mcThread_io.cpp ..\..\qyMcMainPublic\mcThread_io_iocp.cpp ..\..\qyMcMainPublic\netAlert.cpp ..\..\qyMcMainPublic\qmcAcm.cpp ..\..\qyMcMainPublic\qmcCmdParams.cpp ..\..\qyMcMainPublic\qmcCmdProc.cpp ..\..\qyMcMainPublic\qmcCrypt.cpp ..\..\qyMcMainPublic\qmcDirectX.cpp ..\..\qyMcMainPublic\qmcDispatch.cpp ..\..\qyMcMainPublic\qmcDmo.cpp ..\..\qyMcMainPublic\qmcDmoAudio.cpp ..\..\qyMcMainPublic\qmcDxSurface.cpp ..\..\qyMcMainPublic\qmcDynBmp.cpp ..\..\qyMcMainPublic\qmcGps_testData.cpp ..\..\qyMcMainPublic\qmcGpsCoordTransform.cpp ..\..\qyMcMainPublic\qmcGpsProc.cpp ..\..\qyMcMainPublic\qmcGuid.cpp ..\..\qyMcMainPublic\qmcPlayAudio.cpp ..\..\qyMcMainPublic\qmcPlayVideo.cpp ..\..\qyMcMainPublic\qmcPreTransform.cpp ..\..\qyMcMainPublic\qmcShadowProc.cpp ..\..\qyMcMainPublic\qmcShare.cpp ..\..\qyMcMainPublic\qmcShareMediaDevice.cpp ..\..\qyMcMainPublic\qmcShareMediaFile.cpp ..\..\qyMcMainPublic\qmcSound_dx.cpp ..\..\qyMcMainPublic\qmcSoundProc.cpp ..\..\qyMcMainPublic\qmcTransform.cpp ..\..\qyMcMainPublic\qmcVideoCapture.cpp ..\..\qyMcMainPublic\qmcVideoCapture_dx.cpp ..\..\qyMcMainPublic\qmcVWall.cpp ..\..\qyMcMainPublic\qnmMainCustom.cpp ..\..\qyMcMainPublic\qnmMainProc.cpp ..\..\qyMcMainPublic\qnmMainProc_mis.cpp ..\..\qyMcMainPublic\qnmMainProc_mis1.cpp ..\..\qyMcMainPublic\qnmTrayProc.cpp ..\..\qyMcMainPublic\qyAvRecord.cpp ..\..\qyMcMainPublic\qyAvRecord_dx.cpp ..\..\qyMcMainPublic\qyBoundWnd.cpp ..\..\qyMcMainPublic\qyCustSite.cpp ..\..\qyMcMainPublic\qyDropTarget.cpp ..\..\qyMcMainPublic\QyFile.cpp ..\..\qyMcMainPublic\qyIdisImp.cpp ..\..\qyMcMainPublic\qyMcInputMgr.cpp ..\..\qyMcMainPublic\qyMcLogon.cpp ..\..\qyMcMainPublic\qyMcMainAssetReport.cpp ..\..\qyMcMainPublic\qyMcMainCfg.cpp ..\..\qyMcMainPublic\qyMcMainCommon.cpp ..\..\qyMcMainPublic\qyMcMainCommonObj.cpp ..\..\qyMcMainPublic\qyMcMainCusModule.cpp ..\..\qyMcMainPublic\qyMcMainDaemon_isCli.cpp ..\..\qyMcMainPublic\qyMcMainDaemon_isCli_display.cpp ..\..\qyMcMainPublic\qyMcMainDaemon_isCli_mgr.cpp ..\..\qyMcMainPublic\qyMcMainDaemon_isCli_scheduler.cpp ..\..\qyMcMainPublic\qyMcMainDaemon_netMc.cpp ..\..\qyMcMainPublic\qyMcMainDb.cpp ..\..\qyMcMainPublic\qyMcMainMediaProc.cpp ..\..\qyMcMainPublic\qyMcMainMediaProc_decVideo.cpp ..\..\qyMcMainPublic\qyMcMainMediaProc_enc.cpp ..\..\qyMcMainPublic\qyMcMainMediaProc_toShareVideo_post.cpp ..\..\qyMcMainPublic\qyMcMainMediaProc_vpp.cpp ..\..\qyMcMainPublic\qyMcMainMediaReceiver.cpp ..\..\qyMcMainPublic\qyMcMainMediaSender.cpp ..\..\qyMcMainPublic\qyMcMainMenu.cpp ..\..\qyMcMainPublic\qyMcMainObj.cpp ..\..\qyMcMainPublic\qyMcMainProc.cpp ..\..\qyMcMainPublic\qyMcMainProc1.cpp ..\..\qyMcMainPublic\qyMcMainRealTimeMediaProc.cpp ..\..\qyMcMainPublic\qyMcMainRobotProc_misClient.cpp ..\..\qyMcMainPublic\qyMcMainSender.cpp ..\..\qyMcMainPublic\qyMcMainTemp.cpp ..\..\qyMcMainPublic\qyMcMainWndProc.cpp ..\..\qyMcMainPublic\QyPlaySound_wave.cpp ..\..\qyMcMainPublic\QyRecordSound_wave.cpp ..\..\qyMcMainPublic\QyStatic.cpp ..\..\qyMcMainPublic\rgb565rgb.cpp ..\..\qyMcMainPublic\v210rgb.cpp ..\..\qyMcMainPublic\yuy2rgb.cpp ..\..\..\..\..\qyCusSrc\cusProjects\qyMcMainShell\dlgInstantAssistant_shell.cpp ..\..\..\..\..\qyCusSrc\cusProjects\qyMcMainShell\dlgMcClientLogon_shell.cpp ..\..\..\..\..\qyCusSrc\cusProjects\qyMcMainShell\dlgObjs_shell.cpp ..\..\..\..\..\qyCusSrc\cusProjects\qyMcMainShell\dlgQnmCfgOptionsIsClient_shell.cpp ..\..\..\..\qyCommProc\dxTmpFunc.cpp ..\..\..\..\qyCommProc\genericqueue.cpp ..\..\..\..\qyCommProc\qnmAssetsTemp.cpp ..\..\..\..\qyCommProc\qnmChkCommProc.cpp ..\..\..\..\qyCommProc\qnmCommProc.cpp ..\..\..\..\qyCommProc\qnmCommProc1.cpp ..\..\..\..\qyCommProc\QnmDb.cpp ..\..\..\..\qyCommProc\qnmFwCommProc.cpp ..\..\..\..\qyCommProc\qnmGuiCommProc.cpp ..\..\..\..\qyCommProc\qnmHotKeys.cpp ..\..\..\..\qyCommProc\qnmOsAuditCommProc.cpp ..\..\..\..\qyCommProc\qnmsCommProc.cpp ..\..\..\..\qyCommProc\qnmWarnCommProc.cpp ..\..\..\..\qyCommProc\qwmDjCommProc.cpp ..\..\..\..\qyCommProc\qwmDynFunc.cpp ..\..\..\..\qyCommProc\qwmNetworkStatusCommProc.cpp ..\..\..\..\qyCommProc\qwmStreamCommProc.cpp ..\..\..\..\qyCommProc\qyCommProc.cpp ..\..\..\..\qyCommProc\qyDmItemCommProc.cpp ..\..\..\..\qyCommProc\qyImcLogFunc.cpp ..\..\..\..\qyCommProc\qyImcPublic.cpp ..\..\..\..\qyCommProc\qyLangCommProc.cpp ..\..\..\..\qyCommProc\qyModuleFunc.cpp ..\..\..\..\qyCommProc\qyMtSock.cpp ..\..\..\..\qyCommProc\qySharedQ.cpp ..\..\..\..\qyCommProc\qyShowHintCommProc.cpp ..\..\..\..\qyCommProc\qyShowInfoCommProc.cpp ..\..\..\..\qyCommProc\qySqlFunc_odbc.cpp ..\..\..\..\qyCommProc\qySqlFuncPublic.cpp ..\..\..\..\qyCommProc\qyString.cpp ..\..\..\..\qyCommProc\qySyncCommProc.cpp ..\..\..\..\qyCommProc\qyTCharCommProc.cpp ..\..\..\..\qyCommProc\qyThread.cpp ..\..\..\..\qyCommProc\qyTmpMemory.cpp ..\..\..\..\qyCommProc\qyWnd.cpp ..\..\..\..\qyCommProc\tmpCeLib.cpp ..\..\..\..\qyCommProc\tmpLib.cpp ..\..\..\..\qyCustom\qnmAllHints.cpp ..\..\..\..\qyCustom\qnmCustomComm.cpp ..\..\..\..\qyCustom\qnmCustomRegTool.cpp ..\..\..\..\qyCustom\qyCusResHelp.cpp ..\..\..\..\qyCustom\qyCustom.cpp ..\..\..\qymcPublic\myDb.cpp ..\..\..\qymcPublic\qmCommonDbFunc.cpp ..\..\..\qymcPublic\qmCommondbFunc_mis.cpp ..\..\..\qymcPublic\qmCommonFunc.cpp ..\..\..\qymcPublic\qmCommonProc.cpp ..\..\..\qymcPublic\qmCrypt.cpp ..\..\..\qymcPublic\qmDynMenu.cpp ..\..\..\qymcPublic\qmObjQProc.cpp ..\..\..\qymcPublic\qmStr.cpp ..\..\..\qymcPublic\qmUiFunc.cpp ..\..\..\qymcPublic\QyPs.cpp qyMc_func_isCli.cpp ..\public\DlgImMsgSearch.cpp ..\public\DlgMenuIsCli.cpp ..\public\DlgMsgList.cpp ..\public\DlgNotification.cpp ..\public\DlgObjs_ts.cpp ..\public\DlgQnmEventSearch.cpp ..\public\DlgQnmSearch.cpp ..\public\DlgStatusCli.cpp ..\public\DlgTalk.cpp ..\public\DlgWalls.cpp ..\public\myHtmlEditCtrl.cpp ..\public\qyMcMainHook.cpp ..\..\..\..\qyCommProc_mis\isProtocolFunc.cpp ..\..\..\..\qyCommProc_mis\isTmpFunc.cpp ..\..\..\..\qyCommProc_mis\qnmCommProc_mis.cpp ..\..\..\..\qyCommProc_mis\qyComPortEx.cpp ..\..\..\..\qyCommProc_mis\qyMsgFunc.cpp ..\..\..\..\qyCommProc_mis\qyMsgFunc_iocp.cpp ..\..\..\..\qyCommProc_mis\qyq2.cpp ..\..\..\..\qyCommProc_mis\qyTick.cpp ..\..\..\..\qyCommProc_mis\qyWmComm_is.cpp ..\..\..\..\..\qyOpen\qyCommProc_open\qySyncObj.cpp ..\..\..\..\qyProjShare\sketchpadProj\issameplacespobj.cpp ..\..\..\..\qyProjShare\sketchpadProj\isspobjselected.cpp ..\..\..\..\qyProjShare\sketchpadProj\opsp.cpp ..\..\..\..\qyProjShare\sketchpadProj\preopsp.cpp ..\..\..\..\qyProjShare\sketchpadProj\spconstruct.cpp ..\..\..\..\qyProjShare\sketchpadProj\spdiscmd.cpp ..\..\..\..\qyProjShare\sketchpadProj\spdisplay.cpp ..\..\..\..\qyProjShare\sketchpadProj\spfunc.cpp ..\..\..\..\qyProjShare\sketchpadProj\spmain.cpp ..\..\..\..\qyProjShare\sketchpadProj\spproc.cpp ..\..\..\..\qyProjShare\sketchpadProj\spreflect.cpp ..\..\..\..\qyProjShare\sketchpadProj\sprotate.cpp ..\..\..\..\qyProjShare\sketchpadProj\sptransform.cpp ..\..\..\..\qyProjShare\sketchpadProj\tempsp.cpp ..\..\..\..\qyProjShare\ptzPublic\BitmapBtn.cpp ..\..\..\..\qyProjShare\ptzPublic\myButton.cpp ..\..\..\..\qyProjShare\ptzPublic\Pelco_D.cpp ..\..\..\..\qyProjShare\ptzPublic\Pelco_P.cpp ..\..\..\..\qyProjShare\ptzPublic\stageLens.cpp ..\..\..\..\qyCommProc_mfc\QyRestrictEdit.cpp
+         DlgCfgWmv.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         DlgListView.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         DlgListView_db.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         DlgMcLogon.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         DlgMessengerIsClient.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         DlgPropImGrp.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         DlgPropImMsg.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         DlgPropImTask.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         DlgPropMessenger.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         DlgPtzControl.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         DlgQnmEditPcUsrInfo.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         DlgQyBar.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         DlgQyMenu.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         DlgSelect.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         DlgShhgPcProperties.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         LeftView.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         MainFrm.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         PpClearupEventCond.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         PpQnmClearup.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         PtzSettings.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         Generating Code...
+         Compiling...
+         qnmMainProc_isClient_new.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         QyMc.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         QyMcDoc.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         QyRcdset.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         stdafx.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         capImageProc.cpp
+     1>..\..\qyMcMainPublic\capImageProc.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgCfgVideoConference.cpp
+     1>..\..\qyMcMainPublic\DlgCfgVideoConference.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgDesktopsMon.cpp
+     1>..\..\qyMcMainPublic\DlgDesktopsMon.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgDynBmps.cpp
+     1>..\..\qyMcMainPublic\DlgDynBmps.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgImObjRule.cpp
+     1>..\..\qyMcMainPublic\DlgImObjRule.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgInstantAssistant.cpp
+     1>..\..\qyMcMainPublic\DlgInstantAssistant.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgMcClientLogon.cpp
+     1>..\..\qyMcMainPublic\DlgMcClientLogon.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgMessenger.cpp
+     1>..\..\qyMcMainPublic\DlgMessenger.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         dlgObjsProc.cpp
+     1>..\..\qyMcMainPublic\dlgObjsProc.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgPolicyAv.cpp
+     1>..\..\qyMcMainPublic\DlgPolicyAv.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgPolicyIsClient.cpp
+     1>..\..\qyMcMainPublic\DlgPolicyIsClient.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgProgress.cpp
+     1>..\..\qyMcMainPublic\DlgProgress.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgQnmCfgOptionsIsClient.cpp
+     1>..\..\qyMcMainPublic\DlgQnmCfgOptionsIsClient.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgSelectAvDev.cpp
+     1>..\..\qyMcMainPublic\DlgSelectAvDev.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgShareDynBmps.cpp
+     1>..\..\qyMcMainPublic\DlgShareDynBmps.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         Generating Code...
+         Compiling...
+         dlgTalk_videoConference.cpp
+     1>..\..\qyMcMainPublic\dlgTalk_videoConference.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         dlgTalkProc.cpp
+     1>..\..\qyMcMainPublic\dlgTalkProc.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgToolboxSketchpad.cpp
+     1>..\..\qyMcMainPublic\DlgToolboxSketchpad.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgVideoCompressors.cpp
+     1>..\..\qyMcMainPublic\DlgVideoCompressors.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgVideos.cpp
+     1>..\..\qyMcMainPublic\DlgVideos.cpp(5): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         findOrgMsgAndProcess_is.cpp
+     1>..\..\qyMcMainPublic\findOrgMsgAndProcess_is.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         getObjId.cpp
+     1>..\..\qyMcMainPublic\getObjId.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         mcThread_io.cpp
+     1>..\..\qyMcMainPublic\mcThread_io.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         mcThread_io_iocp.cpp
+     1>..\..\qyMcMainPublic\mcThread_io_iocp.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         netAlert.cpp
+     1>..\..\qyMcMainPublic\netAlert.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcAcm.cpp
+     1>..\..\qyMcMainPublic\qmcAcm.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcCmdParams.cpp
+     1>..\..\qyMcMainPublic\qmcCmdParams.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcCmdProc.cpp
+     1>..\..\qyMcMainPublic\qmcCmdProc.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcCrypt.cpp
+     1>..\..\qyMcMainPublic\qmcCrypt.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcDirectX.cpp
+     1>..\..\qyMcMainPublic\qmcDirectX.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcDispatch.cpp
+     1>..\..\qyMcMainPublic\qmcDispatch.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcDmo.cpp
+     1>..\..\qyMcMainPublic\qmcDmo.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcDmoAudio.cpp
+     1>..\..\qyMcMainPublic\qmcDmoAudio.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcDxSurface.cpp
+     1>..\..\qyMcMainPublic\qmcDxSurface.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcDynBmp.cpp
+     1>..\..\qyMcMainPublic\qmcDynBmp.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         Generating Code...
+         Compiling...
+         qmcGps_testData.cpp
+     1>..\..\qyMcMainPublic\qmcGps_testData.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcGpsCoordTransform.cpp
+     1>..\..\qyMcMainPublic\qmcGpsCoordTransform.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcGpsProc.cpp
+     1>..\..\qyMcMainPublic\qmcGpsProc.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcGuid.cpp
+     1>..\..\qyMcMainPublic\qmcGuid.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcPlayAudio.cpp
+     1>..\..\qyMcMainPublic\qmcPlayAudio.cpp(5): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcPlayVideo.cpp
+     1>..\..\qyMcMainPublic\qmcPlayVideo.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcPreTransform.cpp
+     1>..\..\qyMcMainPublic\qmcPreTransform.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcShadowProc.cpp
+     1>..\..\qyMcMainPublic\qmcShadowProc.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcShare.cpp
+     1>..\..\qyMcMainPublic\qmcShare.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcShareMediaDevice.cpp
+     1>..\..\qyMcMainPublic\qmcShareMediaDevice.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcShareMediaFile.cpp
+     1>..\..\qyMcMainPublic\qmcShareMediaFile.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcSound_dx.cpp
+     1>..\..\qyMcMainPublic\qmcSound_dx.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcSoundProc.cpp
+     1>..\..\qyMcMainPublic\qmcSoundProc.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcTransform.cpp
+     1>..\..\qyMcMainPublic\qmcTransform.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcVideoCapture.cpp
+     1>..\..\qyMcMainPublic\qmcVideoCapture.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcVideoCapture_dx.cpp
+     1>..\..\qyMcMainPublic\qmcVideoCapture_dx.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmcVWall.cpp
+     1>..\..\qyMcMainPublic\qmcVWall.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qnmMainCustom.cpp
+     1>..\..\qyMcMainPublic\qnmMainCustom.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qnmMainProc.cpp
+     1>..\..\qyMcMainPublic\qnmMainProc.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qnmMainProc_mis.cpp
+     1>..\..\qyMcMainPublic\qnmMainProc_mis.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         Generating Code...
+         Compiling...
+         qnmMainProc_mis1.cpp
+     1>..\..\qyMcMainPublic\qnmMainProc_mis1.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qnmTrayProc.cpp
+     1>..\..\qyMcMainPublic\qnmTrayProc.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyAvRecord.cpp
+     1>..\..\qyMcMainPublic\qyAvRecord.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyAvRecord_dx.cpp
+     1>..\..\qyMcMainPublic\qyAvRecord_dx.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyBoundWnd.cpp
+     1>..\..\qyMcMainPublic\qyBoundWnd.cpp(6): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyCustSite.cpp
+     1>..\..\qyMcMainPublic\qyCustSite.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyDropTarget.cpp
+     1>..\..\qyMcMainPublic\qyDropTarget.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         QyFile.cpp
+     1>..\..\qyMcMainPublic\QyFile.cpp(5): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyIdisImp.cpp
+     1>..\..\qyMcMainPublic\qyIdisImp.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcInputMgr.cpp
+     1>..\..\qyMcMainPublic\qyMcInputMgr.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcLogon.cpp
+     1>..\..\qyMcMainPublic\qyMcLogon.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainAssetReport.cpp
+     1>..\..\qyMcMainPublic\qyMcMainAssetReport.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainCfg.cpp
+     1>..\..\qyMcMainPublic\qyMcMainCfg.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainCommon.cpp
+     1>..\..\qyMcMainPublic\qyMcMainCommon.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainCommonObj.cpp
+     1>..\..\qyMcMainPublic\qyMcMainCommonObj.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainCusModule.cpp
+     1>..\..\qyMcMainPublic\qyMcMainCusModule.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainDaemon_isCli.cpp
+     1>..\..\qyMcMainPublic\qyMcMainDaemon_isCli.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainDaemon_isCli_display.cpp
+     1>..\..\qyMcMainPublic\qyMcMainDaemon_isCli_display.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainDaemon_isCli_mgr.cpp
+     1>..\..\qyMcMainPublic\qyMcMainDaemon_isCli_mgr.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainDaemon_isCli_scheduler.cpp
+     1>..\..\qyMcMainPublic\qyMcMainDaemon_isCli_scheduler.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         Generating Code...
+         Compiling...
+         qyMcMainDaemon_netMc.cpp
+     1>..\..\qyMcMainPublic\qyMcMainDaemon_netMc.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainDb.cpp
+     1>..\..\qyMcMainPublic\qyMcMainDb.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainMediaProc.cpp
+     1>..\..\qyMcMainPublic\qyMcMainMediaProc.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainMediaProc_decVideo.cpp
+     1>..\..\qyMcMainPublic\qyMcMainMediaProc_decVideo.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainMediaProc_enc.cpp
+     1>..\..\qyMcMainPublic\qyMcMainMediaProc_enc.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainMediaProc_toShareVideo_post.cpp
+     1>..\..\qyMcMainPublic\qyMcMainMediaProc_toShareVideo_post.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainMediaProc_vpp.cpp
+     1>..\..\qyMcMainPublic\qyMcMainMediaProc_vpp.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainMediaReceiver.cpp
+     1>..\..\qyMcMainPublic\qyMcMainMediaReceiver.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainMediaSender.cpp
+     1>..\..\qyMcMainPublic\qyMcMainMediaSender.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainMenu.cpp
+     1>..\..\qyMcMainPublic\qyMcMainMenu.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainObj.cpp
+     1>..\..\qyMcMainPublic\qyMcMainObj.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainProc.cpp
+     1>..\..\qyMcMainPublic\qyMcMainProc.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainProc1.cpp
+     1>..\..\qyMcMainPublic\qyMcMainProc1.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainRealTimeMediaProc.cpp
+     1>..\..\qyMcMainPublic\qyMcMainRealTimeMediaProc.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainRobotProc_misClient.cpp
+     1>..\..\qyMcMainPublic\qyMcMainRobotProc_misClient.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainSender.cpp
+     1>..\..\qyMcMainPublic\qyMcMainSender.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainTemp.cpp
+     1>..\..\qyMcMainPublic\qyMcMainTemp.cpp : warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+     1>..\..\qyMcMainPublic\qyMcMainTemp.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainWndProc.cpp
+     1>..\..\qyMcMainPublic\qyMcMainWndProc.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         QyPlaySound_wave.cpp
+     1>..\..\qyMcMainPublic\QyPlaySound_wave.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         QyRecordSound_wave.cpp
+     1>..\..\qyMcMainPublic\QyRecordSound_wave.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         Generating Code...
+         Compiling...
+         QyStatic.cpp
+     1>..\..\qyMcMainPublic\QyStatic.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         rgb565rgb.cpp
+     1>..\..\qyMcMainPublic\rgb565rgb.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         v210rgb.cpp
+     1>..\..\qyMcMainPublic\v210rgb.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         yuy2rgb.cpp
+     1>..\..\qyMcMainPublic\yuy2rgb.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         dlgInstantAssistant_shell.cpp
+     1>..\..\..\..\..\qyCusSrc\cusProjects\qyMcMainShell\dlgInstantAssistant_shell.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         dlgMcClientLogon_shell.cpp
+     1>..\..\..\..\..\qyCusSrc\cusProjects\qyMcMainShell\dlgMcClientLogon_shell.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         dlgObjs_shell.cpp
+     1>..\..\..\..\..\qyCusSrc\cusProjects\qyMcMainShell\dlgObjs_shell.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         dlgQnmCfgOptionsIsClient_shell.cpp
+     1>..\..\..\..\..\qyCusSrc\cusProjects\qyMcMainShell\dlgQnmCfgOptionsIsClient_shell.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         dxTmpFunc.cpp
+     1>..\..\..\..\qyCommProc\dxTmpFunc.cpp(2): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         genericqueue.cpp
+     1>..\..\..\..\qyCommProc\genericqueue.cpp(10): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         qnmAssetsTemp.cpp
+     1>..\..\..\..\qyCommProc\qnmAssetsTemp.cpp(5): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         qnmChkCommProc.cpp
+     1>..\..\..\..\qyCommProc\qnmChkCommProc.cpp(8): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         qnmCommProc.cpp
+     1>..\..\..\..\qyCommProc\qnmCommProc.cpp(2): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qnmCommProc1.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         QnmDb.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         qnmFwCommProc.cpp
+     1>..\..\..\..\qyCommProc\qnmFwCommProc.cpp(5): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         qnmGuiCommProc.cpp
+     1>..\..\..\..\qyCommProc\qnmGuiCommProc.cpp(3): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qnmHotKeys.cpp
+     1>..\..\..\..\qyCommProc\qnmHotKeys.cpp(7): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         qnmOsAuditCommProc.cpp
+     1>..\..\..\..\qyCommProc\qnmOsAuditCommProc.cpp(6): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         qnmsCommProc.cpp
+     1>..\..\..\..\qyCommProc\qnmsCommProc.cpp(5): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         Generating Code...
+         Compiling...
+         qnmWarnCommProc.cpp
+     1>..\..\..\..\qyCommProc\qnmWarnCommProc.cpp(5): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         qwmDjCommProc.cpp
+     1>..\..\..\..\qyCommProc\qwmDjCommProc.cpp(5): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         qwmDynFunc.cpp
+     1>..\..\..\..\qyCommProc\qwmDynFunc.cpp(2): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qwmNetworkStatusCommProc.cpp
+     1>..\..\..\..\qyCommProc\qwmNetworkStatusCommProc.cpp(3): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qwmStreamCommProc.cpp
+     1>..\..\..\..\qyCommProc\qwmStreamCommProc.cpp(6): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         qyCommProc.cpp
+     1>..\..\..\..\qyCommProc\qyCommProc.cpp(5): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         qyDmItemCommProc.cpp
+     1>..\..\..\..\qyCommProc\qyDmItemCommProc.cpp(4): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         qyImcLogFunc.cpp
+     1>..\..\..\..\qyCommProc\qyImcLogFunc.cpp(6): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         qyImcPublic.cpp
+     1>..\..\..\..\qyCommProc\qyImcPublic.cpp(5): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         qyLangCommProc.cpp
+     1>..\..\..\..\qyCommProc\qyLangCommProc.cpp(4): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         qyModuleFunc.cpp
+     1>..\..\..\..\qyCommProc\qyModuleFunc.cpp(3): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         qyMtSock.cpp
+     1>..\..\..\..\qyCommProc\qyMtSock.cpp(2): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qySharedQ.cpp
+     1>..\..\..\..\qyCommProc\qySharedQ.cpp(2): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qyShowHintCommProc.cpp
+     1>..\..\..\..\qyCommProc\qyShowHintCommProc.cpp(2): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qyShowInfoCommProc.cpp
+     1>..\..\..\..\qyCommProc\qyShowInfoCommProc.cpp(2): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qySqlFunc_odbc.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         qySqlFuncPublic.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         qyString.cpp
+     1>..\..\..\..\qyCommProc\qyString.cpp(4): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         qySyncCommProc.cpp
+     1>..\..\..\..\qyCommProc\qySyncCommProc.cpp(2): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qyTCharCommProc.cpp
+     1>..\..\..\..\qyCommProc\qyTCharCommProc.cpp(4): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         Generating Code...
+         Compiling...
+         qyThread.cpp
+     1>..\..\..\..\qyCommProc\qyThread.cpp(5): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         qyTmpMemory.cpp
+     1>..\..\..\..\qyCommProc\qyTmpMemory.cpp(2): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qyWnd.cpp
+     1>..\..\..\..\qyCommProc\qyWnd.cpp(4): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         tmpCeLib.cpp
+     1>..\..\..\..\qyCommProc\tmpCeLib.cpp(2): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         tmpLib.cpp
+     1>..\..\..\..\qyCommProc\tmpLib.cpp(2): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qnmAllHints.cpp
+     1>..\..\..\..\qyCustom\qnmAllHints.cpp(4): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         qnmCustomComm.cpp
+     1>..\..\..\..\qyCustom\qnmCustomComm.cpp(2): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qnmCustomRegTool.cpp
+     1>..\..\..\..\qyCustom\qnmCustomRegTool.cpp(3): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qyCusResHelp.cpp
+     1>..\..\..\..\qyCustom\qyCusResHelp.cpp(2): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qyCustom.cpp
+     1>..\..\..\..\qyCustom\qyCustom.cpp(5): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         myDb.cpp
+     1>..\..\..\qymcPublic\myDb.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmCommonDbFunc.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         qmCommondbFunc_mis.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         qmCommonFunc.cpp
+     1>..\..\..\qymcPublic\qmCommonFunc.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmCommonProc.cpp
+     1>..\..\..\qymcPublic\qmCommonProc.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmCrypt.cpp
+     1>..\..\..\qymcPublic\qmCrypt.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmDynMenu.cpp
+     1>..\..\..\qymcPublic\qmDynMenu.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmObjQProc.cpp
+     1>..\..\..\qymcPublic\qmObjQProc.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmStr.cpp
+     1>..\..\..\qymcPublic\qmStr.cpp(3): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qmUiFunc.cpp
+     1>..\..\..\qymcPublic\qmUiFunc.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         Generating Code...
+         Compiling...
+         QyPs.cpp
+     1>..\..\..\qymcPublic\QyPs.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMc_func_isCli.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         DlgImMsgSearch.cpp
+     1>..\public\DlgImMsgSearch.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgMenuIsCli.cpp
+     1>..\public\DlgMenuIsCli.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgMsgList.cpp
+     1>..\public\DlgMsgList.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgNotification.cpp
+     1>..\public\DlgNotification.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgObjs_ts.cpp
+     1>..\public\DlgObjs_ts.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgQnmEventSearch.cpp
+     1>..\public\DlgQnmEventSearch.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgQnmSearch.cpp
+     1>..\public\DlgQnmSearch.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgStatusCli.cpp
+     1>..\public\DlgStatusCli.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgTalk.cpp
+     1>..\public\DlgTalk.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         DlgWalls.cpp
+     1>..\public\DlgWalls.cpp(4): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         myHtmlEditCtrl.cpp
+     1>..\public\myHtmlEditCtrl.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMcMainHook.cpp
+     1>..\public\qyMcMainHook.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         isProtocolFunc.cpp
+     1>..\..\..\..\qyCommProc_mis\isProtocolFunc.cpp(3): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         isTmpFunc.cpp
+     1>..\..\..\..\qyCommProc_mis\isTmpFunc.cpp(3): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qnmCommProc_mis.cpp
+     1>..\..\..\..\qyCommProc_mis\qnmCommProc_mis.cpp(2): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qyComPortEx.cpp
+     1>..\..\..\..\qyCommProc_mis\qyComPortEx.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         qyMsgFunc.cpp
+     1>..\..\..\..\qyCommProc_mis\qyMsgFunc.cpp(2): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qyMsgFunc_iocp.cpp
+     1>..\..\..\..\qyCommProc_mis\qyMsgFunc_iocp.cpp(6): fatal error C1083: Cannot open include file: 'qyCommon.h': No such file or directory
+         Generating Code...
+         Compiling...
+         qyq2.cpp
+     1>..\..\..\..\qyCommProc_mis\qyq2.cpp(3): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qyTick.cpp
+     1>..\..\..\..\qyCommProc_mis\qyTick.cpp(3): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qyWmComm_is.cpp
+     1>..\..\..\..\qyCommProc_mis\qyWmComm_is.cpp(2): fatal error C1083: Cannot open include file: 'qyPrecomp.h': No such file or directory
+         qySyncObj.cpp
+     1>..\..\..\..\..\qyOpen\qyCommProc_open\qySyncObj.cpp(3): fatal error C1083: Cannot open include file: 'qySyncObj.h': No such file or directory
+         issameplacespobj.cpp
+     1>..\..\..\..\qyProjShare\sketchpadProj\issameplacespobj.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         isspobjselected.cpp
+     1>..\..\..\..\qyProjShare\sketchpadProj\isspobjselected.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         opsp.cpp
+     1>..\..\..\..\qyProjShare\sketchpadProj\opsp.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         preopsp.cpp
+     1>..\..\..\..\qyProjShare\sketchpadProj\preopsp.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         spconstruct.cpp
+     1>..\..\..\..\qyProjShare\sketchpadProj\spconstruct.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         spdiscmd.cpp
+     1>..\..\..\..\qyProjShare\sketchpadProj\spdiscmd.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         spdisplay.cpp
+     1>..\..\..\..\qyProjShare\sketchpadProj\spdisplay.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         spfunc.cpp
+     1>..\..\..\..\qyProjShare\sketchpadProj\spfunc.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         spmain.cpp
+     1>..\..\..\..\qyProjShare\sketchpadProj\spmain.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         spproc.cpp
+     1>..\..\..\..\qyProjShare\sketchpadProj\spproc.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         spreflect.cpp
+     1>..\..\..\..\qyProjShare\sketchpadProj\spreflect.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         sprotate.cpp
+     1>..\..\..\..\qyProjShare\sketchpadProj\sprotate.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         sptransform.cpp
+     1>..\..\..\..\qyProjShare\sketchpadProj\sptransform.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         tempsp.cpp
+     1>..\..\..\..\qyProjShare\sketchpadProj\tempsp.cpp(2): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         BitmapBtn.cpp
+     1>..\..\..\..\qyProjShare\ptzPublic\BitmapBtn.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         myButton.cpp
+     1>..\..\..\..\qyProjShare\ptzPublic\myButton.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         Generating Code...
+         Compiling...
+         Pelco_D.cpp
+     1>..\..\..\..\qyProjShare\ptzPublic\Pelco_D.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         Pelco_P.cpp
+     1>..\..\..\..\qyProjShare\ptzPublic\Pelco_P.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         stageLens.cpp
+     1>..\..\..\..\qyProjShare\ptzPublic\stageLens.cpp(1): fatal error C1083: Cannot open include file: 'stdafx.h': No such file or directory
+         QyRestrictEdit.cpp
+     1>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(24): fatal error C1189: #error :  Building MFC application with /MD[d] (CRT dll version) requires MFC shared dll version. Please #define _AFXDLL or do not use /MD[d]
+         Generating Code...
+     1>Done Building Project "D:\qycx4\develop6\srcRoot\src6\qyMc\Main\win32\default_isCli\QyMc_isCli.vcxproj" (build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:14.12

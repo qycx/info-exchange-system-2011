@@ -1,0 +1,20 @@
+//
+// SECCHKFACTORY.RC2 - resources Microsoft Visual C++ does not edit directly
+//
+
+#ifdef APSTUDIO_INVOKED
+	#error this file is not editable by Microsoft Visual C++
+#endif //APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Add manually edited resources here...
+
+/////////////////////////////////////////////////////////////////////////////
+
+
+#ifdef  _DEBUG
+		IDR_DATA_qrtForSecChk	RCDATA  DISCARDABLE     "..\\..\\..\\debug\\bin\\qyRegToolForSecChk.exe"
+#else
+		IDR_DATA_qrtForSecChk	RCDATA  DISCARDABLE     "..\\..\\..\\release\\bin\\qyRegToolForSecChk.exe"
+#endif

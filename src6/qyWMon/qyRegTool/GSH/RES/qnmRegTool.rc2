@@ -1,0 +1,35 @@
+//
+// QYREGTOOL.RC2 - resources Microsoft Visual C++ does not edit directly
+//
+
+#ifdef APSTUDIO_INVOKED
+	#error this file is not editable by Microsoft Visual C++
+#endif //APSTUDIO_INVOKED
+
+#include	"qyPreCustom.h"
+#include	"qyCustom.h"
+#include	"qnmSysCustom.h"
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Add manually edited resources here...
+
+/////////////////////////////////////////////////////////////////////////////
+// DATA 
+
+#ifndef  __X64__
+		#ifdef  _DEBUG
+				IDR_DATA_qwm            RCDATA  DISCARDABLE     "..\\..\\..\\..\\..\\win32\\debug\\bin\\qywmonsvr2k.exe"
+		#else
+				IDR_DATA_qwm            RCDATA  DISCARDABLE     "..\\..\\..\\..\\..\\win32\\release\\bin\\qywmonsvr2k.exe"
+		#endif
+#else
+		#ifdef  _DEBUG
+				IDR_DATA_qwm            RCDATA  DISCARDABLE     "..\\..\\..\\..\\..\\x64\\debug\\bin\\qywmonsvr2k.exe"
+		#else
+				IDR_DATA_qwm            RCDATA  DISCARDABLE     "..\\..\\..\\..\\..\\x64\\release\\bin\\qywmonsvr2k.exe"
+		#endif
+#endif
+
+
+

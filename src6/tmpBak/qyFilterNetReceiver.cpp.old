@@ -1,0 +1,121 @@
+
+
+#include	"stdafx.h"
+
+#include	"streams.h"
+
+#include	"qySampleGrabberPublic.h"
+
+#include	"qyFilterNetReceiver.h"
+
+
+CFilterNetReceiver::CFilterNetReceiver(  LPUNKNOWN  punk,  HRESULT  *  phr  )  :
+CBaseFilter(  NAME(  "Receiver"  ),  punk,  &m_filterLock,  CLSID_NetReceiver_is  )
+{
+	m_pOutputPin  =  new  CNetOutputPin(  this,  phr,  L"Out"  );
+	m_isVideo  =  TRUE;
+	m_pSample  =  NULL;
+
+	m_audioBytesPerSecond  =  0;
+	m_lastSampleTime  =  0;
+
+	//  mReceiver.SetOwnerFilter(  this  );
+}
+
+CFilterNetReceiver::~CFilterNetReceiver(  )
+{
+	if  (  m_pSample  )  {		
+		m_pSample->Release(  );
+		m_pSample  =  NULL;
+	}
+
+	delete  m_pOutputPin;
+}
+
+
+int  CFilterNetReceiver::GetPinCount(  )
+{
+	return  1;
+}
+
+CBasePin  *  CFilterNetReceiver::GetPin(  int  n  )
+{
+	if  (  n  ==  0  )  {
+		return  m_pOutputPin;		
+	}
+
+	return  NULL;
+}
+
+STDMETHODIMP  CFilterNetReceiver::Stop(  )
+{
+	CAutoLock	lck(  &m_filterLock  );
+
+	if  (  m_pSample  )  {
+		m_pSample->Release(  );
+		m_pSample  =  NULL;
+	}
+	return  CBaseFilter::Stop(  );
+}
+
+void  CFilterNetReceiver::SetAudioBytesPerSecond(long inBytes)
+{
+	m_audioBytesPerSecond  =  inBytes;
+}
+
+BOOL  CFilterNetReceiver::GetSampleBuffer(PBYTE *outBuffer)
+{
+	if  (  m_pSample  )  {
+		m_pSample->Release(  );
+		m_pSample  =  NULL;
+	}
+
+	HRESULT  hr  =  m_pOutputPin->GetDeliveryBuffer(  &m_pSample,  NULL,  NULL,  0  );
+	if  (  m_pSample  )  {
+		m_pSample->GetPointer(  outBuffer  );
+	}
+
+	return  SUCCEEDED(  hr  );
+}
+
+BOOL  CFilterNetReceiver::DeliverHoldingSample(  long  inSampleSize  )
+{
+	if  (  m_pSample  )  {
+		m_pSample->SetActualDataLength(  inSampleSize  );
+		m_pSample->SetSyncPoint(  TRUE  );
+		if  (  m_isVideo  )  {
+			m_pSample->SetTime(  NULL,  NULL  );
+			}
+		else  {
+			  REFERENCE_TIME  rtStart  =  m_lastSampleTime;
+			  m_lastSampleTime  +=  (  UNITS  *  inSampleSize  /  m_audioBytesPerSecond  );
+			  REFERENCE_TIME  rtEnd  =  m_lastSampleTime;
+			  m_pSample->SetTime(  &rtStart,  &rtEnd  );
+		}
+
+		HRESULT  hr  =  m_pOutputPin->Deliver(  m_pSample  );
+		m_pSample->Release(  );
+		m_pSample  =  NULL;
+		return  SUCCEEDED(  hr  );
+	}
+	return  TRUE;
+}
+
+void  CFilterNetReceiver::SetupMediaType(  long  inType,  char  *  inFormat,  long  inLength  )
+{
+#if  0
+	if  (  inType  ==  PT_VideoMediaType  )  {
+		m_isVideo  =  TRUE;
+		}
+	else  {
+		  m_isVideo  =  FALSE;
+	}
+#else
+	m_isVideo  =  TRUE;
+#endif
+
+	m_pOutputPin->SetupMediaType(  inType,  inFormat,  inLength  );
+	//  Broadcast(  msg_MediaTypeReceived,  &m_isVideo  );
+}
+
+

@@ -1,0 +1,650 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Template|Win32">
+      <Configuration>Template</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E0CC90A1-026A-4BEB-9CBD-FFA8A240E35A}</ProjectGuid>
+    <RootNamespace>QyMc_isCli</RootNamespace>
+    <Keyword>MFCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\..\..\$(Platform)\$(Configuration)\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\..\..\$(Platform)\o\qyMc_isCli\$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\..\..\$(Platform)\$(Configuration)\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\..\..\$(Platform)\o\qyMc_isCli\$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">..\..\..\..\$(Platform)\$(Configuration)\bin\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">..\..\..\..\$(Platform)\o\qyMc_isCli\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\qyInclude;..\..\qyEncLib\include;..\..\qyMcInclude;..\..\qyMcMainInclude;.;..\..\qyCustom\include;..\..\tmpInclude;..\..\..\qyCusSrc\qyCusRes\include;..\..\qyCommProc\include;..\..\qyCommProc_mfc\include;..\..\qyCommProc_mis\include;..\..\..\qyOpen\include;..\..\..\qyOpen\qmShell_open\include;..\qyProjShare_isCli\sketchpadProj\include;..\qyProjShare_isCli\ptzPublic\include;..\qyMcMainPublic_isCli\qySampleGrabber\include;..\qyMcMainPublic_isCli\include;..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\include;..\qyMcMainPublic_isCli\isCliProcs\soundProc_wave\include;..\qyMcMainPublic_isCli\isCliD3d\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;WINVER=0x0500;__APP_qyMc__;__isCli__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>odbc32.lib;netapi32.lib;vfw32.lib;Winmm.lib;qyPublic.lib;qyEncLib.lib;htmlhelp.lib;libDes.lib;Msacm32.lib;strmiids.lib;Dmoguids.lib;msdmo.lib;wmcodecdspuuid.lib;dsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\..\$(Platform)\$(Configuration)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\..\qyInclude;..\..\qyEncLib\include;..\..\qyMcInclude;..\..\qyMcMainInclude;.;..\..\qyCustom\include;..\..\tmpInclude;..\..\..\qyCusSrc\qyCusRes\include;..\..\qyCommProc\include;..\..\qyCommProc_mfc\include;..\..\qyCommProc_mis\include;..\..\..\qyOpen\include;..\..\..\qyOpen\qmShell_open\include;..\qyProjShare_isCli\sketchpadProj\include;..\qyProjShare_isCli\ptzPublic\include;..\qyMcMainPublic_isCli\qySampleGrabber\include;..\qyMcMainPublic_isCli\include;..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\include;..\qyMcMainPublic_isCli\isCliProcs\soundProc_wave\include;..\qyMcMainPublic_isCli\isCliD3d\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;WINVER=0x0500;__APP_qyMc__;__isCli__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>odbc32.lib;netapi32.lib;vfw32.lib;Winmm.lib;qyPublic.lib;qyEncLib.lib;htmlhelp.lib;libDes.lib;Msacm32.lib;strmiids.lib;Dmoguids.lib;msdmo.lib;wmcodecdspuuid.lib;dsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\..\$(Platform)\$(Configuration)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\qyInclude;..\..\qyEncLib\include;..\..\qyMcInclude;..\..\qyMcMainInclude;.;..\..\qyCustom\include;..\..\tmpInclude;..\..\..\qyCusSrc\qyCusRes\include;..\..\qyCommProc\include;..\..\qyCommProc_mfc\include;..\..\qyCommProc_mis\include;..\..\..\qyOpen\include;..\..\..\qyOpen\qmShell_open\include;..\qyProjShare_isCli\sketchpadProj\include;..\qyProjShare_isCli\ptzPublic\include;..\qyMcMainPublic_isCli\qySampleGrabber\include;..\qyMcMainPublic_isCli\include;..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\include;..\qyMcMainPublic_isCli\isCliProcs\soundProc_wave\include;..\qyMcMainPublic_isCli\isCliD3d\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>..\..\..\..\$(Platform)\$(Configuration)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\qyCusSrc\cusProjects\qyMcMainShell\dlgInstantAssistant_shell.cpp" />
+    <ClCompile Include="..\..\..\qyCusSrc\cusProjects\qyMcMainShell\dlgMcClientLogon_shell.cpp" />
+    <ClCompile Include="..\..\..\qyCusSrc\cusProjects\qyMcMainShell\dlgQnmCfgOptionsIsClient_shell.cpp" />
+    <ClCompile Include="..\..\..\qyOpen\qyCommProc_open\qySyncObj.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\qyOpen\qyCommProc_open\yv12rgb.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\genericqueue.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qnmAssetsTemp.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qnmChkCommProc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qnmCommProc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qnmCommProc1.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\QnmDb.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qnmFwCommProc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qnmGuiCommProc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qnmHotKeys.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qnmOsAuditCommProc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qnmsCommProc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qnmWarnCommProc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qwmDjCommProc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qwmDynFunc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qwmNetworkStatusCommProc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qwmStreamCommProc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyCommProc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyDmItemCommProc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyImcLogFunc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyImcPublic.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyLangCommProc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyModuleFunc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyMtSock.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qySharedQ.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyShowHintCommProc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyShowInfoCommProc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qySqlFuncPublic.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyString.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qySyncCommProc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyTCharCommProc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyThread.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyTmpMemory.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\qyWnd.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\tmpCeLib.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc\tmpLib.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc_db\qySqlFunc_odbc.cpp" />
+    <ClCompile Include="..\..\qyCommProc_mfc\QyRestrictEdit.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc_mis\isProtocolFunc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc_mis\isTmpFunc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc_mis\qnmCommProc_mis.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc_mis\qyComPortEx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc_mis\qyMsgFunc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc_mis\qyMsgFunc_iocp.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc_mis\qyq2.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc_mis\qyTick.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCommProc_mis\qyWmComm_is.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCustom\customApp\qisCustomAppAvLevel.cpp" />
+    <ClCompile Include="..\..\qyCustom\qnmAllHints.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCustom\qnmCustomComm.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCustom\qyCusResHelp.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyCustom\qyCustom.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyMcMainPublic\dxTmpFunc.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\leftViewProc.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\netAlert.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qmcCmdParams.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qmcCrypt.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qmcDirectX.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qmcGuid.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qnmMainCustom.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qnmMainProc.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qnmMainProc_mis.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qnmMainProc_mis1.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qnmTrayProc.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyFileProc_myDb.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyFileProc_odbc.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcInputMgr.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcLogon.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainCfg.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainCommon.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainCommonObj.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainCusModule.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainDb.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainFunc.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainHook.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainObj.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainProc.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainProc2.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainTemp.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic_mfc\QyFile.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic_mfc\QyRcdset.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic_mfc\QyStatic.cpp" />
+    <ClCompile Include="..\..\qyMcPublic\myDb.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyMcPublic\qmCommonDbFunc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyMcPublic\qmCommonDbFunc_mis.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyMcPublic\qmCommonFunc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyMcPublic\qmCrypt.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyMcPublic\qmDbFuncs_global.cpp" />
+    <ClCompile Include="..\..\qyMcPublic\qmDynMenu.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyMcPublic\qmStr.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\qyMcPublic\QyPs.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\qyMcMainPublic_isCli\addTxtToPic.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\capImageProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\dlgDynBmpsProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\DlgMcClientLogon.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\DlgQnmCfgOptionsIsClient.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\dlgShareDynBmpsProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\dlgTalkProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\dlgTalk_videoConference.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\findOrgMsgAndProcess_is.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\funcsForIsCliHelp.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\AecKsBinder.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\AecSound.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\aecSoundDeviceSelection.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\aecWin32Sound.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_dSound\audioRecorder_dsound.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_dx\audioRecorder_dx.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_wave\QyRecordSound_wave.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\mcThread_io.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\mcThread_io_iocp.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\mmDeviceProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\policyIsClientFunc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\policyIsClient_globals.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcAcm.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcCmdProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcConferenceWall.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcDispatch.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcDmo.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcDmoAudio.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcDmoFunc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcDmoVideo.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcDmo_help.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcDxSurface.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcFunc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcGpsCoordTransform.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcGpsFunc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcGpsProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcPlayAudio.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcPlayVideo.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcPreTransform.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcRecordSound.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcShadowProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcShare.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcShareMediaDevice.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcShareMediaFile.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcSoundFunc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcSoundProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcSound_dx.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcTransform.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcVideoCapture.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcVideoCapture_dx.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcVideoFunc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcVmrProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcVWall.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainDaemon_isCli.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainDaemon_isCli_display.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainDaemon_isCli_mgr.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainDaemon_isCli_scheduler.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainMediaProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainMediaProc_decVideo.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainMediaProc_enc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainMediaProc_toShareVideo_post.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainMediaProc_vpp.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainMediaReceiver.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainMediaSender.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainMenu_isCli.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainProc1_isCli.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainRealTimeMediaProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainRobotProc_misClient.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainSender.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainWndProc2_isCli.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainWndProc_isCli.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\QyPlaySound_wave.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyVk.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\rgb565rgb.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\v210rgb.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\yuy2rgb.cpp" />
+    <ClCompile Include="LeftView.cpp" />
+    <ClCompile Include="leftViewProc_isCli_odbc.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="qnmMainProc_isClient_new.cpp" />
+    <ClCompile Include="QyMc.cpp" />
+    <ClCompile Include="QyMcDoc.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="qyMc_func_isCli.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\qyCommProc\INCLUDE\QnmDb.h" />
+    <ClInclude Include="..\..\qyCommProc\INCLUDE\qySharedQ.h" />
+    <ClInclude Include="..\qyMcInclude\myDb.h" />
+    <ClInclude Include="..\qyMcMainInclude\QyRcdset.h" />
+    <ClInclude Include="..\qyMcMainPublic_isCli\include\dlgShareDynBmpsProc.h" />
+    <ClInclude Include="..\qyMcMainPublic_isCli\include\funcsForIsCliHelp.h" />
+    <ClInclude Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\include\aecSoundDeviceSelection.h" />
+    <ClInclude Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\include\AecKsBinder.h" />
+    <ClInclude Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\include\MediaBuf.h" />
+    <ClInclude Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\include\sqWin32AEC.h" />
+    <ClInclude Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_wave\include\QyRecordSound_wave.h" />
+    <ClInclude Include="DlgPtzControl.h" />
+    <ClInclude Include="LeftView.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="PtzSettings.h" />
+    <ClInclude Include="QyMc.h" />
+    <ClInclude Include="QyMcDoc.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\autoScan.bmp" />
+    <None Include="res\autoScan_sel.bmp" />
+    <None Include="res\bitmap1.bmp" />
+    <None Include="res\bmp00001.bmp" />
+    <None Include="res\bmp00002.bmp" />
+    <None Include="res\bmp00003.bmp" />
+    <None Include="res\bottomLeft.bmp" />
+    <None Include="res\bottomLeft_sel.bmp" />
+    <None Include="res\bottomRight.bmp" />
+    <None Include="res\bottomRight_sel.bmp" />
+    <None Include="res\down.bmp" />
+    <None Include="res\down_sel.bmp" />
+    <None Include="res\ico00002.ico" />
+    <None Include="res\ico00003.ico" />
+    <None Include="res\IDR_TRAY_offline.ico" />
+    <None Include="res\IDR_TRAY_online.ico" />
+    <None Include="res\largeico.bmp" />
+    <None Include="res\left.bmp" />
+    <None Include="res\left_sel.bmp" />
+    <None Include="res\mainfram.bmp" />
+    <None Include="res\qyMc.ico" />
+    <None Include="res\QyMc_isCli.ico" />
+    <None Include="res\QyMc_isCli.rc2" />
+    <None Include="res\QyMc_isCliDoc.ico" />
+    <None Include="res\rainBrush.bmp" />
+    <None Include="res\rainBrush_sel.bmp" />
+    <None Include="res\right.bmp" />
+    <None Include="res\right_sel.bmp" />
+    <None Include="res\searchLight.bmp" />
+    <None Include="res\searchLight_sel.bmp" />
+    <None Include="res\smallico.bmp" />
+    <None Include="res\Toolbar.bmp" />
+    <None Include="res\topLeft.bmp" />
+    <None Include="res\topLeft_sel.bmp" />
+    <None Include="res\topRight.bmp" />
+    <None Include="res\topRight_sel.bmp" />
+    <None Include="res\up.bmp" />
+    <None Include="res\up_sel.bmp" />
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="QyMc_isCli.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\qyMcMainPublic_isCli\avCapHelp\avCapHelp.vcxproj">
+      <Project>{e17d7606-dc5a-4e4c-9d4d-9b877ab05607}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\qyMcMainPublic_isCli\isCliD3d\isCliD3d.vcxproj">
+      <Project>{624f1753-076d-42ea-9300-9365206bd2fd}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\qyMcMainPublic_isCli\isCliHelp\isCliHelp.vcxproj">
+      <Project>{256f9ad3-1478-468d-bc54-d3431b2e93b5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\qyMcMainPublic_isCli\qyHookHelp\qyHookHelp.vcxproj">
+      <Project>{57405b3e-00aa-4e07-9d65-a20ec79b2f8e}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="QyMc_isCli.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

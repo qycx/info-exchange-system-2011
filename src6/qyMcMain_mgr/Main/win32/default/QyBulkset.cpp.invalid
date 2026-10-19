@@ -1,0 +1,301 @@
+// QyBulkset.cpp : implementation file
+//
+
+#include	"stdafx.h"
+#include	<afxtempl.h>
+#include	"qyCommon.h"
+#include	"qyGuiCommon.h"
+#include	"qyCommProc.h"
+#include	"qyMcMainCommon.h"
+#include	"QyBulkset.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+// CQyBulkset
+
+IMPLEMENT_DYNAMIC(CQyBulkset, CRecordset)
+
+CQyBulkset::CQyBulkset(CDatabase* pdb)
+	: CRecordset(pdb)
+{
+	//{{AFX_FIELD_INIT(CQyBulkset)
+	//}}AFX_FIELD_INIT
+	m_nDefaultType = snapshot;
+	m_ppvData = NULL;
+	m_ppvLengths = NULL;
+}
+
+CQyBulkset::~CQyBulkset(  )
+{
+	if  (  m_ppvData  )  delete [] m_ppvData;
+	if  (  m_ppvLengths  )  delete []  m_ppvLengths;
+
+}
+
+ int  CQyBulkset::Initialize(  unsigned int nFields,  QY_COLUMNINFO * pColumns  )
+{
+	int					iErr	=	-1;
+	void			*	pVar	=	NULL;
+	
+	if  (  nFields > QY_MAXCOLS  )  return  -1;
+	
+
+	for  (  m_nFields  =  0;  m_nFields  <  nFields;  m_nFields  ++  )  {
+		m_arrayName.Add(  pColumns[m_nFields].label  );
+		m_nColsWidth[m_nFields]  =  max(  pColumns[m_nFields].nMaxBytes, lstrlen(  pColumns[m_nFields].label  )  );
+		
+		// data types defined in sql.h and sqlext.h
+		m_nDataType[m_nFields]  =  pColumns[m_nFields].iDataType;
+	}
+
+	m_ppvData = new void*[m_nFields];
+	if  (  !m_ppvData  )	goto  errLabel;
+	memset(m_ppvData, 0, sizeof(void*) * m_nFields);
+	m_ppvLengths = new void*[m_nFields];
+	if  (  !m_ppvLengths  )  goto  errLabel;
+	memset(m_ppvLengths, 0, sizeof(void*) * m_nFields);
+	
+	iErr	=	0;
+
+errLabel:
+
+	return  iErr;
+
+}
+
+
+void CQyBulkset::Close()
+{
+	CRecordset::Close();
+
+	delete [] m_ppvData;	m_ppvData		=  NULL;
+	delete [] m_ppvLengths;	m_ppvLengths	=  NULL;
+}
+
+CString CQyBulkset::GetDefaultConnect()
+{
+	return _T("ODBC;DSN=");
+}
+
+CString CQyBulkset::GetDefaultSQL()
+{
+	return _T("");
+}
+
+
+/*
+ void showFetchedRows(  CQyBulkset * m_prs )
+{
+	ASSERT(m_prs->IsOpen());
+	
+	// Validate that there is data
+	if (m_prs->IsEOF() && m_prs->IsBOF())
+		return;
+
+	long* rgLength;
+	LPSTR rgData;
+
+	// Need to use this to convert LPSTR to UNICODE
+	CString strData;
+
+	int nFields = m_prs->GetODBCFieldCount();
+	int nRowsFetched = m_prs->GetRowsFetched();
+
+	// Display 1 rowset of data by field
+	for (int nField = 0; nField < nFields; nField++)
+	{
+		// set up the correct data and length arrays
+		rgData = (LPSTR)m_prs->m_ppvData[nField];
+		rgLength = (long*)m_prs->m_ppvLengths[nField];
+
+		for (int nRow = 0; nRow < nRowsFetched; nRow++)
+		{
+			int nStatus = m_prs->GetRowStatus(nRow + 1);
+
+			// Get the string to display
+			if (nStatus == SQL_ROW_DELETED)
+				strData = _T("<DELETED>");
+			else if (nStatus == SQL_ROW_NOROW)
+				// Shouldn't get this since rows fetched is checked
+				strData = _T("<NO_ROW>");
+			else if (rgLength[nRow] == SQL_NULL_DATA)
+				strData = _T("<NULL>");
+			else
+				// strData = &rgData[nRow * MAX_TEXT_LEN];
+				strData = &rgData[nRow * m_prs->m_nColsWidth[nField]];
+
+			traceLogA(  "strData is [%s]",  strData  );
+			
+		}
+	}
+}
+*/
+
+ void showFetchedRows(  CQyBulkset * m_prs, int nField )
+{
+	ASSERT(m_prs->IsOpen());
+	
+	// Validate that there is data
+	if (m_prs->IsEOF() && m_prs->IsBOF())
+		return;
+
+	long* rgLength;
+	LPSTR rgData;
+
+	// Need to use this to convert LPSTR to UNICODE
+	CString strData;
+
+	int nRowsFetched = m_prs->GetRowsFetched();
+
+	
+	// set up the correct data and length arrays
+	rgData = (LPSTR)m_prs->m_ppvData[nField];
+	rgLength = (long*)m_prs->m_ppvLengths[nField];
+
+	for (int nRow = 0; nRow < nRowsFetched; nRow++)	{
+			int nStatus = m_prs->GetRowStatus(nRow + 1);
+
+			// Get the string to display
+			if (nStatus == SQL_ROW_DELETED)
+				strData = _T("<DELETED>");
+			else if (nStatus == SQL_ROW_NOROW)
+				// Shouldn't get this since rows fetched is checked
+				strData = _T("<NO_ROW>");
+			else if (rgLength[nRow] == SQL_NULL_DATA)
+				strData = _T("<NULL>");
+			else
+				// strData = &rgData[nRow * MAX_TEXT_LEN];
+				strData = &rgData[nRow * m_prs->m_nColsWidth[nField]];
+
+			traceLogA(  "strData is [%s]",  strData  );
+			
+		}
+}
+
+
+void CQyBulkset::DoFieldExchange(CFieldExchange* pFX)
+{
+	traceLogA(  "DoFieldExchanged(  )."  );
+	//{{AFX_FIELD_MAP(CQyBulkset)
+	//}}AFX_FIELD_MAP
+}
+
+void CQyBulkset::DoBulkFieldExchange(CFieldExchange* pFX)
+{
+	if  (  !m_nFields  )  return;
+	// Should never get to here without field buffer allocation
+	ASSERT( m_ppvData != 0);
+
+	pFX->SetFieldType(CFieldExchange::outputColumn);
+	
+	for  (  int  i  =  0;  i  <  (  int  )m_nFields;  i  ++  )  {
+		switch  (  m_nDataType[i]  )  {
+			case  SQL_BIT:
+				RFX_Bool_Bulk(  pFX,  m_arrayName[i],  ( BOOL ** )&m_ppvData[i], ( LONG_PTR ** )&m_ppvLengths[i]  );
+				break;
+			case  SQL_TINYINT:
+				RFX_Byte_Bulk(  pFX, m_arrayName[i],  ( BYTE ** )&m_ppvData[i],  (  LONG_PTR  **  )&m_ppvLengths[i]  );
+				break;
+			case  SQL_SMALLINT:
+				RFX_Int_Bulk(  pFX,  m_arrayName[i],  ( int ** )&m_ppvData[i],  (  LONG_PTR  **  )&m_ppvLengths[i]  );
+				break;
+			case  SQL_INTEGER:
+				RFX_Long_Bulk(  pFX,  m_arrayName[i],  ( long ** )&m_ppvData[i],  (  LONG_PTR  **  )&m_ppvLengths[i]  );
+				break;
+			case  SQL_REAL:
+				RFX_Single_Bulk(  pFX,  m_arrayName[i],  ( float ** )&m_ppvData[i],  (  LONG_PTR  **  )&m_ppvLengths[i]  );
+				break;
+			case  SQL_FLOAT:
+			case  SQL_DOUBLE:
+				RFX_Double_Bulk(  pFX,  m_arrayName[i],  ( double ** )&m_ppvData[i],  (  LONG_PTR  **  )&m_ppvLengths[i]  );
+				break;
+			case  SQL_DATE:
+			case  SQL_TIME:
+			case  SQL_TIMESTAMP:
+				RFX_Date_Bulk(  pFX,  m_arrayName[i],  (  TIMESTAMP_STRUCT **  )&m_ppvData[i],  (  LONG_PTR  **  )&m_ppvLengths[i]  );
+				break;
+			case  SQL_BINARY:
+			case  SQL_VARBINARY:
+				RFX_Binary_Bulk(  pFX,  m_arrayName[i],  ( BYTE ** )&m_ppvData[i],  (  LONG_PTR  **  )&m_ppvLengths[i],  m_nColsWidth[i]  );
+				break;
+			case  SQL_DECIMAL:
+			case  SQL_NUMERIC:
+			case  SQL_CHAR:
+			case  SQL_VARCHAR:
+				RFX_Text_Bulk(  pFX,  m_arrayName[i],  ( LPSTR * )&m_ppvData[i],  (  LONG_PTR  **  )&m_ppvLengths[i],  m_nColsWidth[i]  );
+				showFetchedRows(  this, i );
+				break;
+			case  SQL_LONGVARCHAR:
+			case  SQL_LONGVARBINARY:
+				traceLogA(  "error."  );
+				goto  errLabel;
+			default:
+				goto  errLabel;
+		}
+	}
+
+errLabel:
+
+	;
+
+}
+
+void CQyBulkset::CheckRowsetError(RETCODE nRetCode)
+{
+	// Always IGNORE data truncated warnings, as the code
+	// purposely truncates text to 40 chars...
+
+	if (nRetCode == SQL_SUCCESS_WITH_INFO)
+	{
+		CDBException e(nRetCode);
+		// Build the error string but don't send nuisance output to TRACE window
+		e.BuildErrorString(m_pDatabase, m_hstmt, FALSE);
+
+		if (e.m_strStateNativeOrigin.Find(_T("State:01004")) >= 0)
+		{
+			// Do nothing here for this app
+		}
+		else if (e.m_strStateNativeOrigin.Find(_T("State:01S01")) >= 0)
+		{
+			e.Empty();
+			TRACE0("Error: fetching row from server.\n");
+			ThrowDBException(AFX_SQL_ERROR_ROW_FETCH);
+		}
+		else
+		{
+#ifdef _DEBUG
+			// Not a truncation or row fetch warning so send debug output
+			if (afxTraceFlags & traceDatabase)
+			{
+				TRACE0("Warning: ODBC Success With Info, ");
+				e.TraceErrorMessage(e.m_strError);
+				e.TraceErrorMessage(e.m_strStateNativeOrigin);
+			}
+#endif // _DEBUG
+		}
+	}
+	else if (!Check(nRetCode))
+		ThrowDBException(nRetCode);
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
+// CQyBulkset diagnostics
+
+#ifdef _DEBUG
+void CQyBulkset::AssertValid() const
+{
+	CRecordset::AssertValid();
+}
+
+void CQyBulkset::Dump(CDumpContext& dc) const
+{
+	CRecordset::Dump(dc);
+}
+#endif //_DEBUG
+

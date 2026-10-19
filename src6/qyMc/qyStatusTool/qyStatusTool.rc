@@ -1,0 +1,330 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (Simplified, PRC) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\qyStatusTool.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\qyStatusTool.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 2,54,3,0
+ PRODUCTVERSION 2,54,3,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "FileDescription", "Qycx Monitor"
+            VALUE "FileVersion", "2.54.3.0"
+            VALUE "InternalName", "qyStatusTool"
+            VALUE "LegalCopyright", "版权所有 (C) 2003"
+            VALUE "OriginalFilename", "qyStatusTool.EXE"
+            VALUE "ProductName", "qyStatusTool 应用程序"
+            VALUE "ProductVersion", "2.54.3.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_ABOUTBOX            "关于 qyStatusTool(&A)..."
+    IDP_SOCKETS_INIT_FAILED "Windows 通信端口初始化失败。"
+END
+
+#endif    // Chinese (Simplified, PRC) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG 0, 0, 235, 55
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 qyStatusTool"
+FONT 9, "Tahoma"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "qyStatusTool 1.0 版",IDC_STATIC_ver,40,10,119,8,SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2003",IDC_STATIC_qycxCopyRight,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_scanningIpStatus DIALOG 0, 0, 395, 250
+STYLE DS_SETFONT | WS_CHILD | WS_CAPTION
+CAPTION "扫描检测IP"
+FONT 9, "Tahoma"
+BEGIN
+    LTEXT           "即将显示扫描主机状态",IDC_STATIC_scanningIp,28,71,342,11,SS_CENTERIMAGE
+    LTEXT           "即将显示扫描检测网段",IDC_STATIC_scanningNetworkSegment,28,57,342,11,SS_CENTERIMAGE
+    LTEXT           "即将显示IP扫描检测控制状态",IDC_STATIC_ipScan,28,43,342,11,SS_CENTERIMAGE
+    LTEXT           "即将显示应用系统服务状态",IDC_STATIC_serviceStatus_netMc,28,29,342,11,SS_CENTERIMAGE
+    LTEXT           "即将显示拨号检测的扫描进程",IDC_STATIC_bhbScanningNetworkSegment,28,85,342,11,SS_CENTERIMAGE
+END
+
+IDD_qwmCommStatus DIALOGEX 0, 0, 550, 254
+STYLE DS_SETFONT | WS_CHILD | WS_CAPTION | WS_THICKFRAME
+CAPTION "通信状况"
+FONT 9, "Tahoma", 0, 0, 0x0
+BEGIN
+    COMBOBOX        IDC_COMBO_select,34,43,98,42,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CTEXT           "filter0",IDC_STATIC_filter0,314,43,71,12,SS_CENTERIMAGE | SS_SUNKEN | NOT WS_VISIBLE
+    LISTBOX         IDC_LIST_display,15,60,520,170,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "即将显示管理控制状态",IDC_STATIC_nm,34,30,454,9
+    LTEXT           "即将显示应用系统服务状态",IDC_STATIC_serviceStatus_netMc,34,8,454,9
+    CONTROL         "满2500条自动清空",IDC_CHECK_autoClearup,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,236,508,11
+    LTEXT           "即将显示管理服务运行状态",IDC_STATIC_serviceStatus_is,34,19,454,9
+    CTEXT           "filter1",IDC_STATIC_filter1,396,43,71,12,SS_CENTERIMAGE | SS_SUNKEN | NOT WS_VISIBLE
+    CTEXT           "clientIp0",IDC_STATIC_clientIp0,150,43,71,12,SS_CENTERIMAGE | SS_SUNKEN | NOT WS_VISIBLE
+    CTEXT           "clientIp1",IDC_STATIC_clientIp1,231,43,71,12,SS_CENTERIMAGE | SS_SUNKEN | NOT WS_VISIBLE
+END
+
+IDD_qnmChkingStatus DIALOGEX 0, 0, 551, 253
+STYLE DS_SETFONT | WS_CHILD | WS_CAPTION
+CAPTION "审核检查"
+FONT 9, "Tahoma", 0, 0, 0x0
+BEGIN
+    LISTBOX         IDC_LIST_display,15,53,520,174,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "即将显示管理控制状态",IDC_STATIC_nm,34,23,444,9
+    LTEXT           "即将显示应用系统服务状态",IDC_STATIC_serviceStatus_netMc,34,12,444,9
+    CONTROL         "满2500条自动清空",IDC_CHECK_autoClearup,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,230,510,11
+    COMBOBOX        IDC_COMBO_select,34,36,98,167,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_ip DIALOG 0, 0, 187, 91
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "输入将监视的IP"
+FONT 9, "Tahoma"
+BEGIN
+    CONTROL         "IPAddress1",IDC_IP,"SysIPAddress32",WS_TABSTOP,47,21,92,15
+    DEFPUSHBUTTON   "确定",IDOK,31,55,50,14
+    PUSHBUTTON      "取消",IDCANCEL,106,55,50,14
+END
+
+IDD_filters DIALOG 0, 0, 187, 206
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "filters"
+FONT 9, "Tahoma"
+BEGIN
+    EDITTEXT        IDC_EDIT_clientIp0,90,18,69,16,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_clientIp1,90,38,69,16,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_filter0,90,57,69,16,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_filter1,90,77,69,16,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_filter2,90,97,69,16,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_filter3,90,117,69,16,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,26,150,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,109,150,50,14
+    LTEXT           "filter0:",IDC_STATIC_staticFilter0,35,57,39,16,SS_CENTERIMAGE
+    LTEXT           "filter1:",IDC_STATIC_staticFilter1,35,77,49,16,SS_CENTERIMAGE
+    LTEXT           "clientIp0:",IDC_STATIC_clientIp0,35,18,39,16,SS_CENTERIMAGE
+    LTEXT           "clientIp1:",IDC_STATIC_clientIp1,35,38,39,16,SS_CENTERIMAGE
+    LTEXT           "content filter2:",IDC_STATIC_staticFilter2,35,97,49,16,SS_CENTERIMAGE
+    LTEXT           "content filter3:",IDC_STATIC_staticFilter3,35,117,49,16,SS_CENTERIMAGE
+END
+
+IDD_qyCommStatus DIALOGEX 0, 0, 550, 254
+STYLE DS_SETFONT | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+CAPTION "Dialog"
+FONT 9, "Tahoma", 0, 0, 0x0
+BEGIN
+    COMBOBOX        IDC_COMBO_select,34,43,98,42,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "qwmComm",IDC_RADIO_qwmComm,"Button",BS_AUTORADIOBUTTON,440,8,85,9
+    CONTROL         "qnmChking",IDC_RADIO_qnmChking,"Button",BS_AUTORADIOBUTTON,440,19,85,9
+    CONTROL         "scanningIp",IDC_RADIO_scanningIp,"Button",BS_AUTORADIOBUTTON,440,30,85,9
+    CTEXT           "filter0",IDC_STATIC_filter0,297,43,54,12,SS_CENTERIMAGE | SS_SUNKEN | NOT WS_VISIBLE
+    LISTBOX         IDC_LIST_display,7,60,535,170,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "即将显示管理控制状态",IDC_STATIC_nm,34,30,403,9
+    LTEXT           "即将显示应用系统服务状态",IDC_STATIC_serviceStatus_netMc,34,8,403,9
+    CONTROL         "满2500条自动清空",IDC_CHECK_autoClearup,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,236,515,11
+    LTEXT           "即将显示管理服务运行状态",IDC_STATIC_serviceStatus_is,34,19,403,9
+    CTEXT           "filter1",IDC_STATIC_filter1,356,43,54,12,SS_CENTERIMAGE | SS_SUNKEN | NOT WS_VISIBLE
+    CTEXT           "clientIp0",IDC_STATIC_clientIp0,144,43,71,12,SS_CENTERIMAGE | SS_SUNKEN | NOT WS_VISIBLE
+    CTEXT           "clientIp1",IDC_STATIC_clientIp1,220,43,71,12,SS_CENTERIMAGE | SS_SUNKEN | NOT WS_VISIBLE
+    CTEXT           "contentFilter2",IDC_STATIC_contentFilter2,415,43,54,12,SS_CENTERIMAGE | SS_SUNKEN | NOT WS_VISIBLE
+    CTEXT           "contentFilter3",IDC_STATIC_contentFilter3,474,43,54,12,SS_CENTERIMAGE | SS_SUNKEN | NOT WS_VISIBLE
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_scanningIpStatus, DIALOG
+    BEGIN
+        RIGHTMARGIN, 389
+        BOTTOMMARGIN, 220
+    END
+
+    IDD_qwmCommStatus, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 543
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 247
+    END
+
+    IDD_qnmChkingStatus, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 544
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 246
+    END
+
+    IDD_ip, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 180
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 84
+    END
+
+    IDD_filters, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 180
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 199
+    END
+
+    IDD_qyCommStatus, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 543
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 247
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\qyStatusTool.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

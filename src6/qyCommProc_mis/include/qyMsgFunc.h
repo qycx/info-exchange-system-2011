@@ -1,0 +1,63 @@
+
+
+#ifndef  __QYMSGFUNC_H__
+#define  __QYMSGFUNC_H__  //  {
+
+#ifdef  __cplusplus
+ extern  "C"  {
+#endif
+
+//  QY_COMM_HEAD
+//
+#if  0	//  2011/01/25.
+typedef  struct  __qyMsgHead_t						{
+				 unsigned  short					usCode;				// 
+				 unsigned  char						ucFlg;				//  2007/04/22, 
+				 char								reserved[1];		//  
+				 unsigned  short					usLen;				//  
+				 char								reserved1[2];		//  
+				 __int64							i64StartTime;		//  2007/05/07, 
+				 unsigned  int						uiTranNo;			//  2007/05/02
+				 unsigned  int						uiSeqNo;			//  2007/05/02
+}		 QY_MSG_HEAD_023523;
+#endif
+
+//  2011/01/25
+typedef  struct  __qyMsgHead_t						{
+				 unsigned  short					usCode;				// 
+				 unsigned  char						ucFlg;				//  2007/04/22
+				 char								reserved[1];		//  
+				 unsigned  int						uiLen;				//  
+				 __int64							i64StartTime;		//  2007/05/07, 
+				 unsigned  int						uiTranNo;			//  2007/05/02
+				 unsigned  short					usSeqNo;			//  2007/05/02
+				 char								reserved1[2];		//  				 
+}		 QY_MSG_HEAD;
+
+
+
+int  qyWaitForRead(  int  fd,  int  timeout  );
+int  qyWaitForWrite(  int  fd,  int  timeout  );
+
+
+int  qyRecvMsg(  QY_COMM_SESSION  *  pSession,  QY_SOCK  *  pSock,  SOCK_TIMEOUT  *  pTo,  QY_MSG_HEAD * pMsgHead,  char  *  dataBuf,  unsigned  int  bufSize  );
+int  qySendMsg(  QY_COMM_SESSION  *  pSession,  QY_SOCK  *  pSock,  SOCK_TIMEOUT  *  pTo,  unsigned  char  ucFlg,  unsigned  short  cmdCode,  time_t  uiStartTime,  unsigned  int  uiTranNo,  unsigned  short  usSeqNo,  char  *  data,  unsigned  int  dataLen  );
+
+
+
+#define		MACRO_prepareForTran(  )							time_t  tStartTran;  unsigned  int	uiTranNo;  mytime(  &tStartTran  );  if  (  (  uiTranNo  =  getuiNextTranNo(  0,  0,  0  )  )  ==  -1  )  traceLogA(  "getNextuiTranNo failed."  );
+
+
+//  int  qyTellService_msg(  unsigned  int  serviceId,  char * version,  unsigned  short  usCmd,  void  *  pCommEncCtx,  char * data,  int dataLen,  QY_SOCK * pSock,  SOCK_TIMEOUT * pTo,  QY_COMM_SESSION * pSession );
+int  qyTellService_msg(  unsigned  int  serviceId,  char * version,  void  *  pCommEncCtx,  unsigned  short  usCmd,  time_t  tStartTime,  unsigned  int  uiTranNo,  char * data,  int dataLen,  QY_SOCK * pSock,  SOCK_TIMEOUT * pTo,  QY_COMM_SESSION * pSession );
+void  qnmCloseSession_msg(  QY_COMM_SESSION  *  pSession,  QY_SOCK  *  pSock,  SOCK_TIMEOUT  *  pTo  );
+
+#ifdef  __cplusplus
+ }
+#endif
+
+
+
+#endif  //  }
+
+

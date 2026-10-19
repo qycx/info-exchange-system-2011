@@ -1,0 +1,44 @@
+//
+// AWMCHKSECURITY.RC2 - resources Microsoft Visual C++ does not edit directly
+//
+
+#ifdef APSTUDIO_INVOKED
+	#error this file is not editable by Microsoft Visual C++
+#endif //APSTUDIO_INVOKED
+
+#include	"qyPreCustom.h"
+#include	"qyCustom.h"
+#include	"qnmCustom.h"
+
+/////////////////////////////////////////////////////////////////////////////
+// Add manually edited resources here...
+
+/////////////////////////////////////////////////////////////////////////////
+
+//
+// Data
+//
+
+/*
+#ifdef  _DEBUG
+		//  IDR_DATA_qwm            RCDATA  DISCARDABLE     "..\\..\\..\\debug\\bin\\qywmonsvr2k.exe"
+		IDR_DATA_qrt			RCDATA  DISCARDABLE     "..\\..\\..\\debug\\bin\\qyRegTool.exe"
+		IDR_DATA_qrtForNms		RCDATA  DISCARDABLE     "..\\..\\..\\debug\\bin\\qyRegToolForNms.exe"
+		IDR_DATA_qrt98			RCDATA  DISCARDABLE     "..\\..\\..\\debug\\bin\\qyRegTool98.exe"
+		IDR_DATA_qrtForNms98	RCDATA  DISCARDABLE     "..\\..\\..\\debug\\bin\\qyRegToolForNms98.exe"
+		IDR_DATA_qnmCgi			RCDATA  DISCARDABLE     "..\\..\\..\\debug\\bin\\qnm.cgi"
+		IDR_DATA_myCapture		RCDATA  DISCARDABLE     "..\\..\\..\\debug\\bin\\myCapture.exe"
+
+#else
+		//  IDR_DATA_qwm            RCDATA  DISCARDABLE     "..\\..\\..\\release\\bin\\qywmonsvr2k.exe"
+		IDR_DATA_qrt			RCDATA  DISCARDABLE     "..\\..\\..\\release\\bin\\qyRegTool.exe"
+		IDR_DATA_qrtForNms		RCDATA  DISCARDABLE     "..\\..\\..\\release\\bin\\qyRegToolForNms.exe"
+		IDR_DATA_qrt98			RCDATA  DISCARDABLE     "..\\..\\..\\release\\bin\\qyRegTool98.exe"
+		IDR_DATA_qrtForNms98	RCDATA  DISCARDABLE     "..\\..\\..\\release\\bin\\qyRegToolForNms98.exe"
+		IDR_DATA_qnmCgi			RCDATA  DISCARDABLE     "..\\..\\..\\release\\bin\\qnm.cgi"
+		IDR_DATA_myCapture		RCDATA  DISCARDABLE     "..\\..\\..\\release\\bin\\myCapture.exe"
+
+#endif
+*/
+
+

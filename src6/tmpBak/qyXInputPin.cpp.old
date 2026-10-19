@@ -1,0 +1,144 @@
+
+#include	"stdafx.h"
+
+#include	<tchar.h>
+
+#include	"streams.h"
+#include	"qyFilterNetSender.h"
+#include	"qyXInputPin.h"
+
+//
+//  Definition of CXInputPin
+//
+CXInputPin::CXInputPin(CFilterNetSender *pFilter,  HRESULT *phr):
+			  CRenderedInputPin(NAME("CXInputPin"),
+                  pFilter,                   // Filter
+                  &pFilter->mFilterLock,                     // Locking
+                  phr,                       // Return code
+                  L"Input")                 // Pin name
+{
+	m_pFilter  =  pFilter;
+	this->m_tLast  =  0;
+}
+
+
+CXInputPin::~CXInputPin(  )
+{
+}
+
+
+
+//
+// Receive
+//
+// Do something with this media sample
+//
+STDMETHODIMP CXInputPin::Receive(IMediaSample *pSample)
+{
+    CheckPointer(pSample,E_POINTER);
+
+    CAutoLock lock(&m_receiveLock);
+	HRESULT	hr  =  CRenderedInputPin::Receive(  pSample  );
+	if  (  SUCCEEDED(  hr  )  )  {
+		if  (  m_SampleProps.dwStreamId  ==  AM_STREAM_MEDIA  )  {
+			PBYTE pbData;
+
+			REFERENCE_TIME tStart, tStop;
+			pSample->GetTime(&tStart, &tStop);
+
+			DbgLog((LOG_TRACE, 1, TEXT("tStart(%s), tStop(%s), Diff(%d ms), Bytes(%d)"),
+				(LPCTSTR) CDisp(tStart),
+				(LPCTSTR) CDisp(tStop),
+				(LONG)((tStart - m_tLast) / 10000),
+				pSample->GetActualDataLength()));
+
+			m_tLast = tStart;
+
+			// Copy the data to the file
+
+			HRESULT hr = pSample->GetPointer(&pbData);
+			if (SUCCEEDED(hr)) {
+			}
+		}
+	}
+    
+	return  hr;
+
+}
+
+
+
+//
+// EndOfStream
+//
+STDMETHODIMP CXInputPin::EndOfStream(void)
+{
+    CAutoLock lock(&m_receiveLock);
+    return CRenderedInputPin::EndOfStream();
+
+} // EndOfStream
+
+STDMETHODIMP CXInputPin::BeginFlush(  void  )
+{
+	CAutoLock	lock(  m_pFilter->m_pLock  );
+	return  CRenderedInputPin::BeginFlush(  );
+}
+
+STDMETHODIMP CXInputPin::EndFlush(  void  )
+{
+	CAutoLock	lock(  m_pFilter->m_pLock  );
+	return  CRenderedInputPin::EndFlush(  );
+}
+
+//
+// CheckMediaType
+//
+// Check if the pin can support this specific proposed type and format
+//
+void WINAPI myDisplayType(LPSTR label, const AM_MEDIA_TYPE *pmtIn);
+
+HRESULT CXInputPin::CheckMediaType(const CMediaType * mt)
+{
+	OutputDebugString(  _T(  "CXInputPin: CheckMediaType\n"  )  );
+
+	DisplayType(  _T(  "CheckMediaType"  ),  mt  );
+
+	if  (  mt->formattype  ==  FORMAT_VideoInfo  ||
+		mt->formattype  ==  FORMAT_WaveFormatEx  )
+	{
+		return  S_OK;
+	}
+	
+    return E_FAIL;
+}
+
+EXTERN_GUID(WMCMEDIASUBTYPE_WMV3, 
+0x33564D57, 0x0000, 0x0010, 0x80, 0x00, 0x00, 0xAA, 0x00, 0x38, 0x9B, 0x71); 
+
+#if  0
+HRESULT CXInputPin::GetMediaType(int iPosition, __inout CMediaType *pMediaType)
+{
+	if  (  iPosition  ==  0  )  {
+		pMediaType->InitMediaType(  );
+		pMediaType->SetType(  &MEDIATYPE_Video  );
+		//  pMediaType->SetSubtype(  &TIME_FORMAT_NONE  );
+		pMediaType->SetSubtype(  &WMCMEDIASUBTYPE_WMV3  );
+		return  S_OK;
+	}
+
+	return  VFW_S_NO_MORE_ITEMS;
+}
+#endif
+
+
+//
+// ReceiveCanBlock
+//
+// We don't hold up source threads on Receive
+//
+STDMETHODIMP CXInputPin::ReceiveCanBlock()
+{
+    return S_FALSE;
+}
+
+

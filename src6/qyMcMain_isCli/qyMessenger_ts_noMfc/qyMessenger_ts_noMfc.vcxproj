@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9D3C3859-DF79-4D28-A79A-61D69663EDEF}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>qyMessenger_ts_noMfc</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\..\..\..\$(Platform)\$(Configuration)\bin\</OutDir>
+    <IntDir>..\..\..\..\$(Platform)\o\qyMessenger_ts_noMfc\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\..\..\..\$(Platform)\$(Configuration)\bin\</OutDir>
+    <IntDir>..\..\..\..\$(Platform)\o\qyMessenger_ts_noMfc\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;__APP_qyMc_touchscreen__;__isCli__;__noMfc__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\qyInclude;..\..\qyEncLib\include;..\..\qyMcInclude;..\..\qyMcMainInclude;.;..\..\qyCustom\include;..\..\tmpInclude;..\..\..\qyCusSrc\qyCusRes\include;..\..\qyCommProc\include;..\..\qyCommProc_mfc\include;..\..\qyCommProc_mis\include;..\..\..\qyOpen\include;..\qyProjShare_isCli\sketchpadProj\include;..\qyProjShare_isCli\ptzPublic\include;..\qyMcMainPublic_isCli\qySampleGrabber\include;..\qyMcMainPublic_isCli\include;..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\include;..\qyMcMainPublic_isCli\isCliProcs\soundProc_wave\include;..\qyMcMainPublic_isCli\isCliD3d\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\..\..\..\$(Platform)\$(Configuration)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>comctl32.lib;qyPublicNoMfc.lib;qyEncLibNoMfc.lib;ws2_32.lib;winmm.lib;vfw32.lib;strmiids.lib;Dmoguids.lib;msdmo.lib;wmcodecdspuuid.lib;dsound.lib;Msacm32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;__APP_qyMc_touchscreen__;__isCli__;__noMfc__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\qyInclude;..\..\qyEncLib\include;..\..\qyMcInclude;..\..\qyMcMainInclude;.;..\..\qyCustom\include;..\..\tmpInclude;..\..\..\qyCusSrc\qyCusRes\include;..\..\qyCommProc\include;..\..\qyCommProc_mfc\include;..\..\qyCommProc_mis\include;..\..\..\qyOpen\include;..\qyProjShare_isCli\sketchpadProj\include;..\qyProjShare_isCli\ptzPublic\include;..\qyMcMainPublic_isCli\qySampleGrabber\include;..\qyMcMainPublic_isCli\include;..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\include;..\qyMcMainPublic_isCli\isCliProcs\soundProc_wave\include;..\qyMcMainPublic_isCli\isCliD3d\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>..\..\..\..\$(Platform)\$(Configuration)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>comctl32.lib;qyPublicNoMfc.lib;qyEncLibNoMfc.lib;ws2_32.lib;winmm.lib;vfw32.lib;strmiids.lib;Dmoguids.lib;msdmo.lib;wmcodecdspuuid.lib;dsound.lib;Msacm32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="qyMessenger_ts_noMfc.ico" />
+    <None Include="ReadMe.txt" />
+    <None Include="res\bitmap1.bmp" />
+    <None Include="res\ico00002.ico" />
+    <None Include="res\ico00003.ico" />
+    <None Include="RES\IDR_TRAY_offline.ico" />
+    <None Include="RES\IDR_TRAY_online.ico" />
+    <None Include="res\largeico.bmp" />
+    <None Include="res\qyMc.ico" />
+    <None Include="res\qymessen.ico" />
+    <None Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\include\AecKsBinder.h" />
+    <ClInclude Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\include\aecSoundDeviceSelection.h" />
+    <ClInclude Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\include\MediaBuf.h" />
+    <ClInclude Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\include\sqWin32AEC.h" />
+    <ClInclude Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_wave\include\QyRecordSound_wave.h" />
+    <ClInclude Include="qyMc_tsDlg_noMfc.h" />
+    <ClInclude Include="qyMessenger_ts_noMfc.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\qyCusSrc\cusProjects\qyMcMainShell\dlgInstantAssistant_shell.cpp" />
+    <ClCompile Include="..\..\..\qyCusSrc\cusProjects\qyMcMainShell\dlgMcClientLogon_shell.cpp" />
+    <ClCompile Include="..\..\..\qyCusSrc\cusProjects\qyMcMainShell\dlgQnmCfgOptionsIsClient_shell.cpp" />
+    <ClCompile Include="..\..\..\qyOpen\qyCommProc_open\qySyncObj.cpp" />
+    <ClCompile Include="..\..\..\qyOpen\qyCommProc_open\yv12rgb.cpp" />
+    <ClCompile Include="..\..\qyCommProc\genericqueue.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qnmAssetsTemp.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qnmChkCommProc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qnmCommProc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qnmCommProc1.cpp" />
+    <ClCompile Include="..\..\qyCommProc\QnmDb.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qnmFwCommProc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qnmGuiCommProc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qnmHotKeys.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qnmOsAuditCommProc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qnmsCommProc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qnmWarnCommProc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qwmDjCommProc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qwmDynFunc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qwmNetworkStatusCommProc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qwmStreamCommProc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qyCommProc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qyDmItemCommProc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qyImcLogFunc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qyImcPublic.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qyLangCommProc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qyModuleFunc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qyMtSock.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qySharedQ.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qyShowHintCommProc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qyShowInfoCommProc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qySqlFuncPublic.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qyString.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qySyncCommProc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qyTCharCommProc.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qyThread.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qyTmpMemory.cpp" />
+    <ClCompile Include="..\..\qyCommProc\qyWnd.cpp" />
+    <ClCompile Include="..\..\qyCommProc\tmpCeLib.cpp" />
+    <ClCompile Include="..\..\qyCommProc\tmpLib.cpp" />
+    <ClCompile Include="..\..\qyCommProc_mis\isProtocolFunc.cpp" />
+    <ClCompile Include="..\..\qyCommProc_mis\isTmpFunc.cpp" />
+    <ClCompile Include="..\..\qyCommProc_mis\qnmCommProc_mis.cpp" />
+    <ClCompile Include="..\..\qyCommProc_mis\qyComPortEx.cpp" />
+    <ClCompile Include="..\..\qyCommProc_mis\qyMsgFunc.cpp" />
+    <ClCompile Include="..\..\qyCommProc_mis\qyMsgFunc_iocp.cpp" />
+    <ClCompile Include="..\..\qyCommProc_mis\qyq2.cpp" />
+    <ClCompile Include="..\..\qyCommProc_mis\qyTick.cpp" />
+    <ClCompile Include="..\..\qyCommProc_mis\qyWmComm_is.cpp" />
+    <ClCompile Include="..\..\qyCustom\customApp\qisCustomAppAvLevel.cpp" />
+    <ClCompile Include="..\..\qyCustom\qnmAllHints.cpp" />
+    <ClCompile Include="..\..\qyCustom\qnmCustom.cpp" />
+    <ClCompile Include="..\..\qyCustom\qnmCustomComm.cpp" />
+    <ClCompile Include="..\..\qyCustom\qnmCustomRegTool.cpp" />
+    <ClCompile Include="..\..\qyCustom\qyCusResHelp.cpp" />
+    <ClCompile Include="..\..\qyCustom\qyCustom.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\dxTmpFunc.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\netAlert.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qmcCmdParams.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qmcCrypt.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qmcDirectX.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qmcGuid.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qnmMainProc_mis1.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qnmTrayProc.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcInputMgr.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcLogon.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainCfg.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainCommon.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainCommonObj.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainCusModule.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainDb.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainFunc.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainHook.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainInternalBak.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainObj.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainProc.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainProc2.cpp" />
+    <ClCompile Include="..\..\qyMcMainPublic\qyMcMainTemp.cpp" />
+    <ClCompile Include="..\..\qyMcPublic\myDb.cpp" />
+    <ClCompile Include="..\..\qyMcPublic\qmCommonFunc.cpp" />
+    <ClCompile Include="..\..\qyMcPublic\qmCrypt.cpp" />
+    <ClCompile Include="..\..\qyMcPublic\qmDbFuncs_global.cpp" />
+    <ClCompile Include="..\..\qyMcPublic\qmStr.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\addTxtToPic.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\capImageProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\dlgDynBmpsProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\dlgMcClientDevAuth.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\DlgMcClientLogon.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\DlgQnmCfgOptionsIsClient.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\dlgTalkProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\dlgTalk_videoConference.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\dlgWallD3dProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\findOrgMsgAndProcess_is.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\funcsForIsCliHelp.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\AecKsBinder.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\AecSound.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\aecSoundDeviceSelection.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_aec\aecWin32Sound.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_dSound\audioRecorder_dsound.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_dx\audioRecorder_dx.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\isCliProcs\soundProc_wave\QyRecordSound_wave.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\mcThread_io.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\mcThread_io_iocp.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\mmDeviceProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\policyIsClientFunc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\policyIsClient_globals.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcAcm.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcCmdProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcDispatch.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcDmo.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcDmoAudio.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcDmoFunc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcDmoVideo.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcDmo_help.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcDxSurface.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcFunc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcGpsCoordTransform.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcGpsFunc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcGpsProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcPlayAudio.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcPlayVideo.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcPreTransform.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcRecordSound.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcShadowProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcShareMediaDevice.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcShareMediaFile.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcSoundFunc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcSoundProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcSound_dx.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcTransform.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcVideoCapture.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcVideoCapture_dx.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcVideoFunc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qmcVWall.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainDaemon_isCli.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainDaemon_isCli_display.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainDaemon_isCli_mgr.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainDaemon_isCli_scheduler.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainMediaProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainMediaProc_decVideo.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainMediaProc_enc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainMediaProc_toShareVideo_post.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainMediaProc_vpp.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainMediaReceiver.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainMediaSender.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainRealTimeMediaProc.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainRobotProc_misClient.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainSender.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainWndProc2_isCli.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\qyMcMainWndProc_isCli.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\QyPlaySound_wave.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\rgb565rgb.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\v210rgb.cpp" />
+    <ClCompile Include="..\qyMcMainPublic_isCli\yuy2rgb.cpp" />
+    <ClCompile Include="qyMc_func_ts_noMfc.cpp" />
+    <ClCompile Include="qyMc_tsDlg_noMfc.cpp" />
+    <ClCompile Include="qyMessenger_ts_noMfc.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="qyMessenger_ts_noMfc.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\qyMcMainPublic_isCli\avCapHelp\avCapHelp.vcxproj">
+      <Project>{e17d7606-dc5a-4e4c-9d4d-9b877ab05607}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\qyMcMainPublic_isCli\isCliD3d\isCliD3d.vcxproj">
+      <Project>{624f1753-076d-42ea-9300-9365206bd2fd}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\qyMcMainPublic_isCli\isCliHelp\isCliHelp.vcxproj">
+      <Project>{256f9ad3-1478-468d-bc54-d3431b2e93b5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\qyMcMainPublic_isCli\qyHookHelp\qyHookHelp.vcxproj">
+      <Project>{57405b3e-00aa-4e07-9d65-a20ec79b2f8e}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

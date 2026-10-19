@@ -1,0 +1,612 @@
+// QyRecordSound.cpp : implementation file
+//
+
+#include	"stdafx.h"
+#include	<mmsystem.h>
+#include	<mmreg.h>
+
+#include	"qyMcMainCommon.h"
+#include	"qyMcMainRealTimeMediaProc.h"
+#include	"QyRecordSound.h"
+#include	"qmcAcm.h"
+#include	"qmcVideoCapture.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+// CQyRecordSound
+
+IMPLEMENT_DYNCREATE(CQyRecordSound, CWinThread)
+
+CQyRecordSound::CQyRecordSound(  int iHertz  )
+{
+	memset(  &m_var,  0,  sizeof(  m_var  )  );
+	
+	/*
+	//Setting WAVEFORMATEX  structure for the audio input
+	memset(  &m_var.m_WaveFormatEx,  0x00,  sizeof(m_var.m_WaveFormatEx)  );	
+	m_var.m_WaveFormatEx.wFormatTag			=	WAVE_FORMAT_PCM;
+	m_var.m_WaveFormatEx.nChannels			=	DEFAULT_audio_nChannels;		//  2;
+	m_var.m_WaveFormatEx.wBitsPerSample		=	DEFAULT_audio_wBitsPerSample;	//  16;
+	m_var.m_WaveFormatEx.cbSize				=	0;
+	m_var.m_WaveFormatEx.nSamplesPerSec		=	iHertz;  //  22.05 KHz
+
+	m_var.m_WaveFormatEx.nBlockAlign		=	(  m_var.m_WaveFormatEx.wBitsPerSample  /  8  )  *  m_var.m_WaveFormatEx.nChannels;
+	//  m_var.m_WaveFormatEx.nAvgBytesPerSec	=	m_var.m_WaveFormatEx.nSamplesPerSec  *  (  m_var.m_WaveFormatEx.wBitsPerSample  /  8  );
+	m_var.m_WaveFormatEx.nAvgBytesPerSec	=	m_var.m_WaveFormatEx.nSamplesPerSec  *  m_var.m_WaveFormatEx.nBlockAlign;
+	*/
+	//
+
+}
+
+CQyRecordSound::~CQyRecordSound()
+{
+
+	OutputDebugString(  _T(  "CQyRecordSound::~CQyRecordSound(  )\n"  )  );
+
+}
+
+
+
+
+void CALLBACK OnCallbackBlock(HWAVEIN hwl,UINT uMsg,
+				DWORD dwInstance,
+				DWORD dwParam1, DWORD dwParam2)
+{
+	CQyRecordSound*pCallback = (CQyRecordSound*)dwInstance;
+	if  (  pCallback  )  pCallback->OnSoundData(hwl,uMsg,dwInstance,dwParam1,dwParam2);
+}
+
+void CQyRecordSound::displayError(int mmReturn,char errmsg[])
+{
+	TCHAR errorbuffer[MAX_PATH];
+	TCHAR errorbuffer1[MAX_PATH];
+
+	waveInGetErrorText(  mmReturn,  errorbuffer,  mycountof(  errorbuffer  )  );
+	_sntprintf(  errorbuffer1,  mycountof(  errorbuffer1  ),  _T(  "RECORD: %s : %x : %s\n"  ), CString(  errmsg  ),  mmReturn,  errorbuffer);
+	//  AfxMessageBox(errorbuffer1);  
+	OutputDebugString(  errorbuffer1  );
+}
+
+
+ LPWAVEHDR  CQyRecordSound::CreateWaveHeader(  unsigned  int  uiBytesRecorded_perBlockAlign  )
+{
+	int				iErr	=	-1;
+	LPWAVEHDR		lpHdr	=	NULL;
+	BYTE		*	lpByte  =	NULL;
+    
+	lpHdr  =  (  LPWAVEHDR  )malloc(  sizeof(  WAVEHDR  )  );	
+	if  (  !lpHdr  )  goto  errLabel;
+	ZeroMemory(  lpHdr, sizeof(  WAVEHDR  )  );
+
+	lpByte  =  (  BYTE  *  )malloc(  m_var.pProcInfo->av.localAv.recordSoundProcInfo.waveFormatEx.nBlockAlign  *  uiBytesRecorded_perBlockAlign  );
+	if  (  !lpByte  )  goto  errLabel;
+	
+	lpHdr->lpData  =  (  char  *  )lpByte;
+	lpHdr->dwBufferLength  =  m_var.pProcInfo->av.localAv.recordSoundProcInfo.waveFormatEx.nBlockAlign  *  uiBytesRecorded_perBlockAlign;   
+
+	iErr  =  0;
+
+errLabel:
+	
+	if  (  iErr  )  {
+		if  (  lpByte  )  free(  lpByte  );
+		if  (  lpHdr  )  free(  lpHdr  );		
+		traceLogA(  "CQyRecordSound CreateWaveHeader failed."  );
+	}
+
+	return   iErr  ?  NULL  :  lpHdr;
+
+}
+
+
+ void  CQyRecordSound::AllocateBuffers(  int  nBuffers,  unsigned  int  uiBytesRecorded_perBlockAlign  )
+{
+    int  i;
+	for  (  i  =  0;  i  <  nBuffers;  i  ++  )  {
+ 		 LPWAVEHDR lpWaveHdr = CreateWaveHeader(  uiBytesRecorded_perBlockAlign  );
+		 if  (  !lpWaveHdr  )  {
+			 qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "recordSound: Create Wave Header failed"  )  );
+			 goto  errLabel;
+		 }
+		 ::waveInPrepareHeader(  m_var.m_hRecord,  lpWaveHdr,  sizeof(  WAVEHDR  )  );
+		 ::waveInAddBuffer(  m_var.m_hRecord,  lpWaveHdr,  sizeof(  WAVEHDR  )  );			
+		 m_var.m_iSoundBuffers  ++  ;
+	}
+
+errLabel:
+	return;
+}
+
+
+
+LRESULT CQyRecordSound::OnStartRecording(WPARAM wp,LPARAM lp)
+{
+	BOOL	bRet	=	FALSE;
+	DWORD	mmReturn = 0;
+	
+	qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "recordSound: will start"  )  );
+
+	if  (  m_var.pProcInfo->av.localAv.recordSoundProcInfo.bRecording  )  return  FALSE;
+
+	//  这里要启动压缩初始化
+	if  (  initAudioCompress(  m_var.pProcInfo,  &m_var.pProcInfo->av.localAv.recordSoundProcInfo  )  )  return  FALSE;
+	
+	mmReturn = ::waveInOpen( &m_var.m_hRecord, WAVE_MAPPER,
+			&m_var.pProcInfo->av.localAv.recordSoundProcInfo.waveFormatEx, (DWORD) &OnCallbackBlock, (DWORD)this, CALLBACK_FUNCTION);
+	
+	//Error has occured while opening device
+		
+	if  (  mmReturn  !=  MMSYSERR_NOERROR  )  {
+		displayError(  mmReturn, "Open"  );  goto  errLabel;
+	}		
+				
+
+	AllocateBuffers(  MAX_inputBuffers,  m_var.pProcInfo->av.localAv.recordSoundProcInfo.uiBytesRecorded_perBlockAlign_expected  );
+	
+	mmReturn = ::waveInStart(m_var.m_hRecord);
+			
+	if  (  mmReturn  !=  MMSYSERR_NOERROR  )  {
+		displayError(mmReturn,"Start");
+		goto  errLabel;
+	}
+	
+	m_var.pProcInfo->av.localAv.recordSoundProcInfo.bRecording  =  TRUE;
+
+	bRet  =  TRUE;
+
+errLabel:
+
+	if  (  !bRet  )  {
+	}
+
+	return  bRet;
+}
+
+	
+
+
+
+
+LRESULT CQyRecordSound::OnStopRecording(WPARAM wp,LPARAM lp)
+{
+	MMRESULT mmReturn = 0;
+
+	qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "recordSound: will stop"  )  );
+	
+	if  (  !m_var.pProcInfo->av.localAv.recordSoundProcInfo.bRecording  )  return FALSE;
+		
+	//  mmReturn = ::waveInStop(m_var.m_hRecord);
+	if  (  !mmReturn  )  {
+		m_var.pProcInfo->av.localAv.recordSoundProcInfo.bRecording = FALSE;
+		mmReturn = ::waveInReset(m_var.m_hRecord);  
+	}		
+		
+	Sleep(  500  ); 
+	
+	if  (  !mmReturn  )  mmReturn = ::waveInClose(m_var.m_hRecord);
+	
+	exitAudioCompress(  m_var.pProcInfo,  &m_var.pProcInfo->av.localAv.recordSoundProcInfo  );
+
+	return  mmReturn;
+
+}
+
+
+void CQyRecordSound::ProcessSoundData(BYTE* sound, DWORD dwSamples)
+{
+}
+
+
+
+void CQyRecordSound::OnSoundData(HWAVEIN hwl,UINT uMsg,  DWORD dwInstance,  DWORD dwParam1, DWORD dwParam2)
+{
+
+	int						iRet						=	-1;
+	int						i							=	0;
+
+			
+	//  OutputDebugString(  _T(  "CQyRecordSound::onSoundData enters.\n"  )  );
+
+	LPWAVEHDR		lpWaveHdr	=	(  LPWAVEHDR  )dwParam1;
+	BYTE		*	lpInt		=	NULL;
+			
+	if  (  lpWaveHdr  &&  uMsg  ==  WIM_DATA  )  {
+		
+		//
+		lpInt									=	(  BYTE  *  )lpWaveHdr->lpData;
+
+		//
+		DWORD		iRecorded					=	lpWaveHdr->dwBytesRecorded;
+		
+		char	*	pInput						=	lpWaveHdr->lpData;
+		DWORD		dwBytes_input				=	lpWaveHdr->dwBytesRecorded;		
+
+		char	*	pInput_forLocal				=	lpWaveHdr->lpData;
+		DWORD		dwBytes_input_forLocal		=	lpWaveHdr->dwBytesRecorded;
+
+
+		if  (  m_var.pProcInfo->av.localAv.recordSoundProcInfo.bRecording  )  
+		{
+			::waveInUnprepareHeader(  m_var.m_hRecord,  lpWaveHdr,  sizeof(WAVEHDR)  );
+		}
+       
+		ProcessSoundData(lpInt, iRecorded/sizeof(BYTE));
+	
+		m_var.m_iSoundBuffers  --  ;
+
+		#ifdef  __DEBUG__	//  为了测试，将时间放慢一点
+				if  (  0  )  {
+					Sleep(  1000  );				
+					OutputDebugString(  _T(  "CQyRecordSound::OnSoundData: 用Sleep(  5000  )来降低频率。Release要去除。\n"  )  );
+				}
+		#endif
+
+		if  (  m_var.pProcInfo->av.localAv.recordSoundProcInfo.bRecording  )  AllocateBuffers(  1,  m_var.pProcInfo->av.localAv.recordSoundProcInfo.uiBytesRecorded_perBlockAlign_expected  );
+
+		if  (  lpInt  !=  NULL  &&  m_var.pProcInfo->av.localAv.recordSoundProcInfo.bRecording  )  {
+
+			MACRO_prepareForTran(  );
+			unsigned  char				ucFlg						=	0;
+			int							lenInBytes					=	0;
+			//
+			unsigned  int				uiChannelType				=	CONST_channelType_realTimeMedia;
+			unsigned  char				ucbNeedShowFrameInfo		=	FALSE;
+
+
+			
+			if  (  m_var.pProcInfo->av.localAv.recordSoundProcInfo.tLastTime_sendAudio  !=  tStartTran  )  {		//  表明是一秒的开始
+				m_var.pProcInfo->av.localAv.recordSoundProcInfo.tLastTime_sendAudio  =  tStartTran;
+
+				//  定期向客户端下发帧速信息		
+				if  (  (  int  )(  tStartTran  -  m_var.pProcInfo->av.localAv.recordSoundProcInfo.tLastTime_showFrameInfo  )  >  m_var.pProcInfo->cfg.usNeedShowFrameInfoIntervalInS  )  {
+					//
+					ucbNeedShowFrameInfo  =  TRUE;
+				}
+				#ifdef  __DEBUG__	//  for test
+						ucbNeedShowFrameInfo  =  TRUE;						
+				#endif
+
+				//  2008/05/13, 不用调整了，用固定设置值
+
+				unsigned  int  uiBytesRecorded_perBlockAlign;	uiBytesRecorded_perBlockAlign  =  m_var.pProcInfo->cfg.policy.audio.uiBytesRecorded_perBlockAlign;
+				if  (  uiBytesRecorded_perBlockAlign  >=  MIN_uiBytesRecorded_perBlockAlign  &&  uiBytesRecorded_perBlockAlign  <=  MAX_uiBytesRecorded_perBlockAlign  )  {
+                    m_var.pProcInfo->av.localAv.recordSoundProcInfo.uiBytesRecorded_perBlockAlign_expected  =  uiBytesRecorded_perBlockAlign;
+				}
+
+			}
+		
+			BOOL  bQWarning  =  isQWarning(  &m_var.pProcInfo->realTimeMediaQ,  CONST_uiQNodes_warningInterval_mediaQ  );
+			if  (  bQWarning  )  qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "Warning:  realTimeMediaQ too many nodes. audio data will be lossed"  )  );					
+						
+			TRANSFER_AUDIO_DATA  *  pReq  =  (  TRANSFER_AUDIO_DATA  *  )m_var.pProcInfo->av.localAv.recordSoundProcInfo.pReqCache;
+			if  (  pReq  &&  !bQWarning  )  {
+				memset(  pReq,  0,  offsetof(  TRANSFER_AUDIO_DATA,  mems  )  );
+				pReq->uiType  =  CONST_imCommType_transferAudioData;
+				pReq->uiTranNo_openAvDev  =  m_var.pProcInfo->av.localAv.recordSoundProcInfo.cur_uiTranNo_openAvDev;					
+
+				m_var.pProcInfo->av.localAv.recordSoundProcInfo.usCnt_pkts  ++  ;
+				if  (  ucbNeedShowFrameInfo  )  {
+					ucFlg  |=  CONST_commFlg_routeTalkData;
+					if  (  m_var.pProcInfo->av.localAv.recordSoundProcInfo.tRecvTime_resp_fromCli  >=  m_var.pProcInfo->av.localAv.recordSoundProcInfo.tFirstTime_showFrameInfo_withoutResp  )  {	//  这是为了超时
+						m_var.pProcInfo->av.localAv.recordSoundProcInfo.tFirstTime_showFrameInfo_withoutResp  =  tStartTran;							  
+					}
+					pReq->tLastTime_showFrameInfo_020534  =  m_var.pProcInfo->av.localAv.recordSoundProcInfo.tLastTime_showFrameInfo;							//  设置标记						
+					pReq->usCnt_pkts  =  m_var.pProcInfo->av.localAv.recordSoundProcInfo.usCnt_pkts;
+					//
+					m_var.pProcInfo->av.localAv.recordSoundProcInfo.tLastTime_showFrameInfo  =  tStartTran;												
+					m_var.pProcInfo->av.localAv.recordSoundProcInfo.usCnt_pkts  =  0;
+					//
+					qyShowInfo(  CONST_qyShowType_debug,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "tn %d, %d bytes audio data. %s"  ),  uiTranNo,  lpWaveHdr->dwBytesRecorded,  ucbNeedShowFrameInfo  ?  _T(  "含音频取样信息"  )  :  _T(  ""  )  );					
+				}
+
+				#ifdef  __DEBUG__
+						if  (  lpWaveHdr->dwBytesRecorded  >  sizeof(  pReq->mems[0].buf  )  )  {
+							qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "sizeof(  audioBuf  ) %d too small, should be >= %d"  ),  CONST_bufSize_transferAudioData,  lpWaveHdr->dwBytesRecorded  );					
+						}
+				#endif
+
+				if  (  m_var.pProcInfo->av.localAv.recordSoundProcInfo.bCompressInited  )  {				
+					if  (  !m_var.pProcInfo->av.localAv.recordSoundProcInfo.waveFormatEx.nAvgBytesPerSec  ||  !m_var.pProcInfo->av.localAv.recordSoundProcInfo.pWfPcm->nAvgBytesPerSec  ||  !m_var.pProcInfo->av.localAv.recordSoundProcInfo.pWfDst->nAvgBytesPerSec  )  goto  errLabel;
+					DWORD	dwPcmBytes		=	(  DWORD  )(  dwBytes_input  *  m_var.pProcInfo->av.localAv.recordSoundProcInfo.pWfPcm->nAvgBytesPerSec  *  1.  /  (  m_var.pProcInfo->av.localAv.recordSoundProcInfo.waveFormatEx.nAvgBytesPerSec  )  );
+					if  (  !m_var.pProcInfo->av.localAv.recordSoundProcInfo.pPcmBuf  ||  dwPcmBytes  >=  m_var.pProcInfo->av.localAv.recordSoundProcInfo.dwPcmBufSize  )  {
+						if  (  m_var.pProcInfo->av.localAv.recordSoundProcInfo.pPcmBuf  )  {
+							free(  m_var.pProcInfo->av.localAv.recordSoundProcInfo.pPcmBuf  );  m_var.pProcInfo->av.localAv.recordSoundProcInfo.pPcmBuf  =  NULL;
+						}
+						m_var.pProcInfo->av.localAv.recordSoundProcInfo.dwPcmBufSize  =  dwPcmBytes  *  3  /  2  +  256;
+						m_var.pProcInfo->av.localAv.recordSoundProcInfo.pPcmBuf  =  (  char  *  )malloc(  m_var.pProcInfo->av.localAv.recordSoundProcInfo.dwPcmBufSize  );
+						if  (  !m_var.pProcInfo->av.localAv.recordSoundProcInfo.pPcmBuf  )  goto  errLabel;
+					}
+					DWORD	dwDstBytes		=	m_var.pProcInfo->av.localAv.recordSoundProcInfo.pWfDst->nAvgBytesPerSec  *  dwPcmBytes  /  (  m_var.pProcInfo->av.localAv.recordSoundProcInfo.pWfPcm->nAvgBytesPerSec  );
+					if  (  !m_var.pProcInfo->av.localAv.recordSoundProcInfo.pDstBuf  ||  dwDstBytes  >=  m_var.pProcInfo->av.localAv.recordSoundProcInfo.dwDstBufSize  )  {
+						if  (  m_var.pProcInfo->av.localAv.recordSoundProcInfo.pDstBuf  )  {
+							free(  m_var.pProcInfo->av.localAv.recordSoundProcInfo.pDstBuf  );  m_var.pProcInfo->av.localAv.recordSoundProcInfo.pDstBuf  =  NULL;
+						}
+						m_var.pProcInfo->av.localAv.recordSoundProcInfo.dwDstBufSize  =  dwDstBytes  *  3  /  2  +  256;
+						m_var.pProcInfo->av.localAv.recordSoundProcInfo.pDstBuf  =  (  char  *  )malloc(  m_var.pProcInfo->av.localAv.recordSoundProcInfo.dwDstBufSize  );
+						if  (  !m_var.pProcInfo->av.localAv.recordSoundProcInfo.pDstBuf  )  goto  errLabel;
+					}
+					//
+
+					dwDstBytes  =  m_var.pProcInfo->av.localAv.recordSoundProcInfo.dwDstBufSize;
+					if  (  convertAudio(  m_var.pProcInfo->av.localAv.recordSoundProcInfo.hadid,  &m_var.pProcInfo->av.localAv.recordSoundProcInfo.waveFormatEx,  (  BYTE  *  )pInput,  dwBytes_input,  m_var.pProcInfo->av.localAv.recordSoundProcInfo.pWfPcm,  (  BYTE  *  )m_var.pProcInfo->av.localAv.recordSoundProcInfo.pPcmBuf,  m_var.pProcInfo->av.localAv.recordSoundProcInfo.dwPcmBufSize,  m_var.pProcInfo->av.localAv.recordSoundProcInfo.pWfDst,  (  BYTE  *  )m_var.pProcInfo->av.localAv.recordSoundProcInfo.pDstBuf,  &dwDstBytes  )  )  {
+						qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "convertAudio failed"  )  );					
+						goto  errLabel;
+					}
+
+					pInput  =  m_var.pProcInfo->av.localAv.recordSoundProcInfo.pDstBuf;
+					dwBytes_input  =  dwDstBytes;
+
+
+					#ifdef  __DEBUG__		//  for test
+							/*
+							if  (  0  )  {
+								static  char decBuf[100000];
+								DWORD  decBytes;
+								decBytes  =  mycountof(  decBuf  );
+								if  (  convertAudio(  m_var.hadid,  m_var.pWfDst,  (  BYTE  *  )m_var.pDstBuf,  dwDstBytes,  m_var.pWfPcm,  (  BYTE  *  )m_var.pPcmBuf,  m_var.dwPcmBufSize,  &m_var.m_WaveFormatEx,  (  BYTE  *  )decBuf,  &decBytes  )  )  {
+									traceLogA(  "convertAudio dec failed."  );
+									goto  errLabel;
+								}
+								pInput_forLocal			=  decBuf;
+								dwBytes_input_forLocal  =  decBytes;
+							}
+							*/
+					#endif
+
+
+				}
+
+				i  =  0;
+				memset(  &pReq->mems[i],  0,  sizeof(  pReq->mems[i]  )  );				
+				pReq->mems[i].uiLen  =  min(  sizeof(  pReq->mems[i].buf  ),  dwBytes_input  );
+				memcpy(  pReq->mems[i].buf,  pInput,  pReq->mems[i].uiLen  );
+				pReq->usCnt  ++  ;
+
+				lenInBytes  =  offsetof(  TRANSFER_AUDIO_DATA,  mems  )  +  pReq->usCnt  *  sizeof(  pReq->mems[0]  );
+				//			
+				unsigned  char		ucbHaveMsgrs_sendLocalAv	=	FALSE;
+				COMPRESS_VIDEO	*	pCompressVideo				=	NULL;	
+				MIS_CNT			*	pMisCnt						=	NULL;		
+
+				/*
+				for  (  i  =  0;  i  <  mycountof(  m_var.pProcInfo->misCnts  );  i  ++  )  {
+					 //							   
+					 pMisCnt  =  &m_var.pProcInfo->misCnts[i];				
+					 if  (  !pMisCnt->cfg.dynCfg.cnt.usCntPort  )  continue;
+											   
+					 if  (  pMisCnt->curRoute_sendLocalAv.route.uiMsgRouteId  !=  pMisCnt->route_sendLocalAv.route.uiMsgRouteId  )  {				
+						 CQySyncObj	syncObj;								   
+						 if  (  !syncObj.sync(  m_var.pProcInfo->cfg.mutexName_syncAv,  0  )  )  {									   
+							 memcpy(  &pMisCnt->curRoute_sendLocalAv,  &pMisCnt->route_sendLocalAv,  sizeof(  pMisCnt->curRoute_sendLocalAv  )  );									   
+						 }
+					 }							   					
+					 //							   
+				 
+					 #ifdef  __DEBUG__
+							 //  test为了测试
+							 //  if  (  (  uiTranNo  %  30  )  )  break;
+					 #endif
+
+					 if  (  ucbNeedShowFrameInfo  )  {	//  2008/05/16									 
+						 pMisCnt->curRoute_sendLocalAv.route.debugInfo.dwTickCnt_me_start  =  GetTickCount(  );
+						 time_t		tNow;	time(  &tNow  );	pMisCnt->curRoute_sendLocalAv.route.debugInfo.tTime_start  =  tNow;
+					 }
+
+					 if  (  pMisCnt->curRoute_sendLocalAv.videoConference_idInfo_to.ui64Id  )  {	//  对于视频会议，则将数据发到队列中. 因为带宽限制的缘故。只能对
+						 ucbHaveMsgrs_sendLocalAv  =  TRUE;
+						 if  (  postMsg2Mgr_mc(  (  QY_MC  *  )m_var.pProcInfo->pQyMcParam,  (  QY_SERVICEGUI_INFO  *  )m_var.pProcInfo->pSgiParam,  pMisCnt,  &pMisCnt->curRoute_sendLocalAv.route,  CONST_misMsgType_task,  ucFlg,  CONST_qyCmd_sendMedia, tStartTran,  uiTranNo,  0,  (  char  *  )pReq,  lenInBytes,  &pMisCnt->curRoute_sendLocalAv.videoConference_idInfo_to,  0,  uiChannelType  )  )  {
+							 traceLogA(  "CQyRecordSound::OnSoundData: postMsg2Mgr_mc to videoConference failed"  );		//  不能有goto , 因为很多动态分配是在不同的函数进行的
+						 }
+						 continue;
+					 }
+
+					 if  (  !pMisCnt->curRoute_sendLocalAv.route.idInfo_to.ui64Id  )  continue;							   
+					 ucbHaveMsgrs_sendLocalAv  =  TRUE;
+					 if  (  postMsg2Mgr_mc(  (  QY_MC  *  )m_var.pProcInfo->pQyMcParam,  (  QY_SERVICEGUI_INFO  *  )m_var.pProcInfo->pSgiParam,  pMisCnt,  &pMisCnt->curRoute_sendLocalAv.route,  CONST_misMsgType_outputTask,  ucFlg,  CONST_qyCmd_sendMedia, tStartTran,  uiTranNo,  0,  (  char  *  )pReq,  lenInBytes,  0,  0,  uiChannelType  )  )  {
+						 traceLogA(  "CQyRecordSound::OnSoundData: postMsg2Mgr_mc failed"  );		//  不能有goto , 因为很多动态分配是在不同的函数进行的
+					 }
+		
+				}
+				*/
+
+				pCompressVideo  =  getSharedObjByIndex(  m_var.pProcInfo->av.iIndex_compressVideo  );
+				if  (  pCompressVideo  )  {
+
+					pMisCnt  =  getMisCntByIndex(  0,  m_var.pProcInfo,  pCompressVideo->curRoute_sendLocalAv.iIndex_misCnt  );
+					if  (  pMisCnt  &&  pMisCnt->cfg.dynCfg.cnt.usCntPort  )  {
+											   
+						//  这里的将配置换成当前的方式不好，应该将curRoute_sendLocalAv放在m_var里。这样，就用同步可以确保数据一致性了.暂时不改
+						if  (  pCompressVideo->curRoute_sendLocalAv.route.uiMsgRouteId  !=  pCompressVideo->route_sendLocalAv.route.uiMsgRouteId  )  {				
+							CQySyncObj	syncObj;								   
+							if  (  !syncObj.sync(  m_var.pProcInfo->cfg.mutexName_syncAv,  0  )  )  {									   
+								memcpy(  &pCompressVideo->curRoute_sendLocalAv,  &pCompressVideo->route_sendLocalAv,  sizeof(  pCompressVideo->curRoute_sendLocalAv  )  );									   
+							}
+						}							   					
+				
+						//							   
+						#ifdef  __DEBUG__
+								//  test为了测试
+								//  if  (  (  uiTranNo  %  30  )  )  break;
+						#endif
+				
+						pCompressVideo->curRoute_sendLocalAv.route.debugInfo.dwTickCnt_me_start  =  GetTickCount(  );
+						if  (  ucbNeedShowFrameInfo  )  {	//  2008/05/16									 
+							time_t		tNow;	time(  &tNow  );	pCompressVideo->curRoute_sendLocalAv.route.debugInfo.tTime_start  =  tNow;
+						}
+
+						if  (  pCompressVideo->curRoute_sendLocalAv.videoConference_idInfo_to.ui64Id  )  {	//  对于视频会议，则将数据发到队列中. 因为带宽限制的缘故。只能对
+							ucbHaveMsgrs_sendLocalAv  =  TRUE;
+							if  (  postMsg2Mgr_mc(  m_var.pProcInfo,  pMisCnt,  &pCompressVideo->curRoute_sendLocalAv.route,  CONST_misMsgType_task,  ucFlg,  CONST_qyCmd_sendMedia, tStartTran,  uiTranNo,  0,  (  char  *  )pReq,  lenInBytes,  &pCompressVideo->curRoute_sendLocalAv.videoConference_idInfo_to,  0,  uiChannelType  )  )  {
+								traceLogA(  "CQyRecordSound::OnSoundData: postMsg2Mgr_mc to videoConference failed"  );		//  不能有goto , 因为很多动态分配是在不同的函数进行的
+							}
+							}
+						else  {
+							  if  (  pCompressVideo->curRoute_sendLocalAv.route.idInfo_to.ui64Id  )  {
+								  ucbHaveMsgrs_sendLocalAv  =  TRUE;
+								  if  (  postMsg2Mgr_mc(  m_var.pProcInfo,  pMisCnt,  &pCompressVideo->curRoute_sendLocalAv.route,  CONST_misMsgType_outputTask,  ucFlg,  CONST_qyCmd_sendMedia, tStartTran,  uiTranNo,  0,  (  char  *  )pReq,  lenInBytes,  0,  0,  uiChannelType  )  )  {
+									  traceLogA(  "CQyRecordSound::OnSoundData: postMsg2Mgr_mc failed"  );		//  不能有goto , 因为很多动态分配是在不同的函数进行的
+								  }
+							  }
+						}
+					}
+				}
+
+				//
+				//
+				//
+
+				if  (  !ucbHaveMsgrs_sendLocalAv  &&  !m_var.pProcInfo->av.localAv.recordSoundProcInfo.bLocalAudioPlaying  )  {
+					/*
+					CWnd						*		pMainWnd						=	AfxGetApp(  )->m_pMainWnd;
+
+					traceLogA(  "CQyRecordSound::OnSoundData: 这里触发消息，要求关闭av"  );
+					if  (  pMainWnd  )  PostMessage(  pMainWnd->m_hWnd,  CONST_qyWm_postComm,  CONST_qyWmParam_applyForClosingAv_qmc,  0  );    
+					*/
+					qyShowInfo(  CONST_qyShowType_qwmComm,  NULL,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "Warning: no messenger need to be sent, audio shall be stopped."  )  );
+				}
+			}
+			
+			
+
+			//  下面用来可以测试本地录音是否正常.
+			if  (  m_var.pProcInfo->av.localAv.recordSoundProcInfo.bLocalAudioPlaying  )  { 
+				//
+				//  注意这里： playSound和recordSound的WAVEFORMATEX要一致，才可以直接发过去的。暂时用固定一致的，所以可以直接发
+				//
+
+				if  (  m_var.pProcInfo->av.localAv.playSoundProcInfo.dwThreadId  )  {	//  if thread is active
+					qPostMsgAndTrigger_playSound(  pInput_forLocal,  dwBytes_input_forLocal,  &m_var.pProcInfo->av.localAv.playSoundProcInfo  );					
+					qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "本地播放 %d, %d bytes audio data."  ),  lpWaveHdr->dwBytesRecorded,  dwBytes_input  );					
+				}
+				
+			}
+		
+			//
+		}
+
+		//  char debugbuffer[256];		
+		//  sprintf(debugbuffer, "SOUND BUFFER returned: %d,%d\n",iRecorded,  m_var.m_iSoundBuffers  );
+		//  TRACE(debugbuffer);
+	
+	}
+
+
+	iRet  =  0;
+
+errLabel:			//  上面有内存需要释放，所以，不能有goto  errLabel, 以防止不释放了
+
+	if  (  lpInt  )  delete  lpInt;
+	if  (  lpWaveHdr  )  delete  lpWaveHdr;
+	
+	return;
+
+}
+
+
+
+ LRESULT CQyRecordSound::OnEndThread(WPARAM wp,LPARAM lp)
+{
+	traceLogA(  (  "CQyRecordSound::OnEndThread enters"  )  );
+	qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "recordSound: will end"  )  );
+	
+	if  (  m_var.pProcInfo->av.localAv.recordSoundProcInfo.bRecording  )  OnStopRecording(0,0);
+
+	//  ::PostQuitMessage(0);
+	::PostThreadMessage(  this->m_nThreadID,  WM_QUIT,  0,  0  );
+	
+	qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "recordSound: end"  )  );
+	traceLogA(  (  "CQyRecordSound::OnEndThread leaves"  )  );
+
+	return  TRUE;
+}
+
+
+
+
+
+
+
+BOOL CQyRecordSound::InitInstance()
+{
+	// TODO:  perform and per-thread initialization here
+	OutputDebugString(  _T(  "CQyRecordSound::InitInstancs.\n"  )  );
+
+	QY_MC				*	pQyMc		=		QY_GET_GBUF(  );
+	QY_SERVICEGUI_INFO	*	pSci		=		getServiceGuiInfo(  pQyMc,  CONST_qyServiceId_is  );
+	if  (  !pSci  )  return  -1;
+	MC_VAR_isCli			*	pVar		=		(  MC_VAR_isCli  *  )pSci->pVar;
+	if  (  !pVar  )  return  -1;
+
+	m_var.pProcInfo  =  pVar;
+
+
+	m_var.bStarted  =  TRUE; 
+
+	qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "recordSound: started"  )  );
+
+	return TRUE;
+}
+
+int CQyRecordSound::ExitInstance()
+{
+	// TODO:  perform any per-thread cleanup here
+	traceLogA(  (  "CQyRecordSound::ExitInstancs enters"  )  );
+
+	if  (  m_var.pProcInfo->av.localAv.recordSoundProcInfo.bRecording  )  this->OnStopRecording(  0,  0  );
+
+	m_var.bStarted  =  FALSE;
+
+	qyShowInfo(  CONST_qyShowType_qwmComm,  0,  "",  m_var.pProcInfo->who_showInfo,  0,  _T(  ""  ),  _T(  ""  ),  _T(  "recordSound: exited"  )  );
+	traceLogA(  (  "CQyRecordSound::ExitInstancs leaves."  )  );
+
+	return CWinThread::ExitInstance();
+}
+
+BEGIN_MESSAGE_MAP(CQyRecordSound, CWinThread)
+	//{{AFX_MSG_MAP(CQyRecordSound)
+		// NOTE - the ClassWizard will add and remove mapping macros here.
+	//}}AFX_MSG_MAP
+	ON_THREAD_MESSAGE( CONST_qyWm_postComm, OnQyPostComm )
+
+END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+// CQyRecordSound message handlers
+
+
+ void  CQyRecordSound::OnQyPostComm( UINT wParam, LONG lParam )
+{
+	long				lRet				=					-1;
+	QY_WMBUF_COMM	*	pComm				=					( QY_WMBUF_COMM * )lParam;
+
+	
+	switch  (  wParam  )  {
+			case  CONST_qyWmParam_startWorking:
+				  this->OnStartRecording(  0,  0  );				  
+				  break;
+			case  CONST_qyWmParam_stopWorking:
+				  this->OnStopRecording(  0,  0  );
+				  break;
+			case  CONST_qyWmParam_endThread:
+				  this->OnEndThread(  0,  0  );
+				  break;
+			default:
+					goto  errLabel;
+	}
+	
+
+	lRet	=	CONST_qyWmRc_ok;
+
+errLabel:
+
+	return;	//  lRet;
+
+}
+
+
+

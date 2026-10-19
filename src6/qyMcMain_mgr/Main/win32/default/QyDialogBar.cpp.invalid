@@ -1,0 +1,171 @@
+// QyDialogBar.cpp : implementation file
+//
+
+#include	"stdafx.h"
+#include	"qyMcMainCommon.h"
+#include	"qyCommCommon.h"
+#include	"qyMc.h"
+#include	"QyDialogBar.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+
+ static BAR_BTN_CFG	btnCfgs[]	=	
+{
+	{	IDC_BTN0,	IDI_ICON2	},
+	{	IDC_BTN1,	IDI_ICON2	},
+	{	IDC_BTN2,	IDI_ICON2	},
+	{	IDC_BTN3,	IDI_ICON2	},
+	{	IDC_BTN4,	IDI_ICON2	},
+	{	IDC_BTN5,	IDI_ICON2	},
+	{	IDC_BTN6,	IDI_ICON2	},
+	{	IDC_BTN7,	IDI_ICON2	},
+	{	IDC_BTN8,	IDI_ICON2	},
+	{	IDC_BTN9,	IDI_ICON2	},
+};
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+// CQyDialogBar
+
+CQyDialogBar::CQyDialogBar()
+{
+	this->m_pBarCfg  =  NULL;
+}
+
+CQyDialogBar::~CQyDialogBar()
+{
+}
+
+
+BEGIN_MESSAGE_MAP(CQyDialogBar, CDialogBar)
+	//{{AFX_MSG_MAP(CQyDialogBar)
+	ON_WM_CREATE()
+	//}}AFX_MSG_MAP
+	ON_MESSAGE( QY_WM_COMM, OnQyComm )
+END_MESSAGE_MAP()
+
+
+/////////////////////////////////////////////////////////////////////////////
+// CQyDialogBar message handlers
+
+
+int CQyDialogBar::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+{
+	if  (  CDialogBar::OnCreate(  lpCreateStruct  )  ==  -1  )
+		return -1;
+	
+	// TODO: Add your specialized creation code here
+	if  (  NUM_BARBTNS	<  sizeof(  btnCfgs ) / sizeof(  btnCfgs[0]  )  )	{
+		traceLogA(  "CQyDialogBar, btnCfgs[] is too big."  );
+		return  -1;
+	}
+	
+	return 0;
+}
+
+ BOOL CQyDialogBar::Create(CWnd * pParentWnd, LPCTSTR lpszTemplateName, UINT nStyle, UINT nID)
+{
+	// Let MFC Create the control
+	if(!CDialogBar::Create(pParentWnd, lpszTemplateName, nStyle, nID))
+		return FALSE;
+
+	// Since there is no WM_INITDIALOG message we have to call
+	// our own InitDialog function ourselves after m_hWnd is valid
+	if(!OnInitDialogBar())
+		return FALSE;
+
+	return TRUE;
+}
+
+
+BOOL CQyDialogBar::Create(CWnd * pParentWnd, UINT nIDTemplate, UINT nStyle, UINT nID)
+{
+	
+	if(!Create(pParentWnd, MAKEINTRESOURCE(nIDTemplate), nStyle, nID))
+		return FALSE;
+
+	// Since there is no WM_INITDIALOG message we have to call
+	// our own InitDialog function ourselves after m_hWnd is valid
+	
+	return TRUE;
+
+	
+	
+}
+
+ BOOL CQyDialogBar::OnInitDialogBar()
+{
+	// Support for the MFC DDX model 
+	// If you do not want this do not call the base class
+	// from derived classes
+	UpdateData(FALSE);
+
+	/*
+	CFont *pFont = NULL;
+	if ( this->m_font.CreateFont( 14, 6, 0, 0, FW_NORMAL, FALSE, FALSE, 0,
+			ANSI_CHARSET, OUT_DEFAULT_PRECIS,
+			CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+			DEFAULT_PITCH | FF_DONTCARE, "·ÂËÎÌå" ) )
+	{
+		pFont = &this->m_font;
+	}
+	if ( pFont ) {
+		FARPROC proc = MakeProcInstance( ( FARPROC )SetFontProc, AfxGetInstanceHandle( ) );
+		EnumChildWindows( this->m_hWnd, ( WNDENUMPROC )proc, ( LPARAM )( ( HFONT )*pFont ) );
+		FreeProcInstance( proc );
+	}
+	*/
+	qySetDlgBarFont(  this->m_hWnd  );
+	
+#if  0
+	for  (  int  i  =  0;  i  <  sizeof(  btnCfgs  ) / sizeof(  BAR_BTN_CFG  );  i  ++  )  {
+			this->m_btn[i].SubclassDlgItem(  btnCfgs[i].uId,  this  );
+			this->m_btn[i].SetIcon(  btnCfgs[i].iIcon,  0,  16,  16  );
+	}
+#endif
+
+	//  SetDlgItemText(  IDC_HINT, "  "  );
+	
+	return TRUE;
+
+}
+
+
+ LRESULT CQyDialogBar::OnQyComm( WPARAM wParam, LPARAM lParam )
+ {
+	 LONG				lRet	=  -1;
+	 QY_WMBUF_COMM	*	pComm	=	(  QY_WMBUF_COMM  *  )lParam;
+	 
+	 if  (  pComm->uiType  !=  QY_WMPARAM_TELLDOCINFO  &&  pComm->uiType  !=  QY_WMPARAM_UPDATEBAR )  goto  errLabel;
+	 
+	 if  (  pComm->uiType  ==  QY_WMPARAM_TELLDOCINFO  )  {
+		 m_pBarCfg  =  (  BAR_CFG  *  )pComm->u.tellDocInfo.pBarCfg;	 		 
+		 if  (  m_pBarCfg  )  {
+#if  0
+			 int  i;
+			 for  (  i  =  0;  i  <  m_pBarCfg->n;  i  ++  )  {
+				 this->m_btn[i].ShowWindow(  SW_NORMAL  );
+				 this->m_btn[i].SetWindowText(  CString(  m_pBarCfg->btns[i].name  )  );
+			 }
+			 for  (  ;  i  <  NUM_BARBTNS;  i  ++  )  {
+				 this->m_btn[i].ShowWindow(  SW_HIDE  );
+			 }
+#endif
+		 }
+	 }
+	 
+	 lRet  =  QY_RC_WMOK;
+
+errLabel:
+ 
+	 return  lRet;
+	 
+}
+
+

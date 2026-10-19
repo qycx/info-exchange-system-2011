@@ -1,0 +1,45 @@
+//
+// schedulerHelp.RC2 - resources Microsoft Visual C++ does not edit directly
+//
+
+#ifdef APSTUDIO_INVOKED
+	#error this file is not editable by Microsoft Visual C++
+#endif //APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Add manually edited resources here...
+
+/////////////////////////////////////////////////////////////////////////////
+
+//
+// Data
+//
+
+
+	#ifdef  _DEBUG
+			IDR_DATA_qrt				RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\debug\\bin\\qyRegTool.exe"
+			//  IDR_DATA_qrt98				RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\debug\\bin\\qyRegTool98.exe"
+			IDR_DATA_qrt_x64			RCDATA  DISCARDABLE     "..\\..\\..\\..\\x64\\debug\\bin\\qyRegTool.exe"
+		
+			IDR_DATA_qnmCgi				RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\debug\\bin\\qnm.cgi"
+			IDR_DATA_myCapture			RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\debug\\bin\\myCapture.exe"
+			//
+			IDR_DATA_qyMessengerMsi		RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\debug\\imClientSetup\\qyMessenger.msi"
+			IDR_DATA_qyMessengerSetup	RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\debug\\imClientSetup\\setup.exe"
+	#else
+			IDR_DATA_qrt				RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\release\\bin\\qyRegTool.exe"
+			//  IDR_DATA_qrt98				RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\release\\bin\\qyRegTool98.exe"
+			IDR_DATA_qrt_x64			RCDATA  DISCARDABLE     "..\\..\\..\\..\\x64\\release\\bin\\qyRegTool.exe"
+			
+			IDR_DATA_qnmCgi				RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\release\\bin\\qnm.cgi"
+			IDR_DATA_myCapture			RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\release\\bin\\myCapture.exe"
+			//
+			IDR_DATA_qyMessengerMsi		RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\release\\imClientSetup\\qyMessenger.msi"
+			IDR_DATA_qyMessengerSetup	RCDATA  DISCARDABLE     "..\\..\\..\\..\\win32\\release\\imClientSetup\\setup.exe"
+	#endif
+
+
+
+
+

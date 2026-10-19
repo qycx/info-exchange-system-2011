@@ -1,0 +1,255 @@
+.\" $Id: event.3,v 1.2 2003/02/01 23:53:40 mjt Exp $
+.\" manpage for event library
+.TH event 3
+.SH NAME
+event \- timer and I/O event manager
+.SH SYNOPSYS
+.nf
+#include <event.h>
+
+typedef ev_cbck_fn(\fIfd\fR, \fIevent\fR, \fIctx\fR)
+typedef evr_cbck_fn(\fIec\fR, \fIfd\fR, \fIevent\fR, \fIctx\fR)
+int \fIfd\fR;
+ev_t \fIevent\fR;
+int \fImstimeout\fR;
+ev_cbck_fn *\fIcbck\fR;
+evr_cbck_fn *\fIcbckr\fR;
+ev_ctx *\fIec\fR;
+.fi
+
+.SH DESCRIPTION
+.PP
+This module implements a simple threading core for single process that
+allows a process to wait for multiple I/O and/or timer events.  Multiple
+I/O streams and timers can be monitored simultaneously.  Events are
+delivered via callback routines provided by the application.  When
+requesting an event, application provides private context that is
+passed back to the callback routine when the routine is executed.
+.PP
+Module works with relatively high resolution of time: all timeouts
+expressed in millisecounds.  A \fImstimeout\fR argument for all routines
+may be set to 0 to mean \fBnow\fR, or to a negative value to mean
+no timeout at all.
+.PP
+There are two set of routines and data structures defined in this
+module.  One is non-thread-safe, to be used in single-threading
+application.  Another is thread-safe, to be used in multi-threading
+application, with addition of one argument (\fIec\fR, of type
+\fBev_ctx\fR) that holds internal state structure.
+.PP
+Module uses one type of callback routine to deliver any event to the
+application, of type \fBev_cbck_fn\fR:
+.PP
+.nf
+  void \fBev_cbck_fn\fR(\fIfd\fR, \fIevent\fR, \fIctx\fR);
+  void \fBevr_cbck_fn\fR(\fIec\fR, \fIfd\fR, \fIevent\fR, \fIctx\fR);
+.fi
+.PP
+where \fIevent\fR is the type of event occured (see below), \fIfd\fR
+is an assotiated filedescriptor if any, \fIctx\fR is an application-supplied
+context passed by module unchanged, and \fIec\fR is internal event
+context for thread-safe version.
+.SS "Event Types"
+The following is a list of event types defined by this module.
+.IP \fBEV_READ\fR
+wait for read can be pefrormed on a given filedescriptor.  Note that in case
+of end\-of\-file condition on the filedescriptor, this event will be
+delivered but \fBread\fR(2) call will typically return 0.
+.IP \fBEV_WRITE\fR
+write can be performed on a given filedescriptor.
+.IP \fBEV_RDWR\fR
+a shorthand for EV_READ|EV_WRITE.
+.IP \fBEV_EXCPT\fR
+some exceptional situation occured with a filedescriptor.
+.IP \fBEV_ERRNO\fR
+error condition.  Global variable \fBerrno\fR will be set appropriately.
+.IP \fBEV_TIMER\fR
+timer event, typically not assotiated with any filedescriptor.
+
+.SS Routines
+
+.nf
+ev_ctx *\fBevr_alloc\fR()
+.fi
+.RS
+creates and initializes new event context for thread-safe usage.  This
+routine should be called before any other \fBevr_*\fR routine provided
+by this module.  It initializes internal structure.  There is no need
+to call this routine for non-multithreaded application.
+.RE
+
+.nf
+ev_ctx *\fBevr_free\fR(\fIec\fR)
+.fi
+.RS
+frees resources consumed by a module for internal structures.  This
+routine is optional but provided for convience.
+.RE
+
+.nf
+time_t \fBev_time\fR()
+time_t \fBevr_time\fR(const \fIec\fR)
+const struct timeval *\fBev_timeofday\fR()
+const struct timeval *\fBevr_timeofday\fR(const \fIec\fR)
+.fi
+.RS
+returns a system time stored in internal module structure, either as unix
+time_t value or as pointer to struct timeval value.  This internal
+"cached" value updated every time \fBev_wait\fR() or \fBev_updtime\fR()
+gets called.  Usually, when \fBev_updtime\fR() is not called, the value
+corresponds to time when current event was occured.
+.RE
+
+.nf
+const struct timeval *\fBev_updtime\fR()
+const struct timeval *\fBevr_updtime\fR(const \fIec\fR)
+.fi
+.RS
+queries system for current time and returns it as pointer to
+struct timeval structure.  Note that all timeouts used in this
+module are relative to current time as stored internally.
+This is done in order to save number of system calls performed.
+.RE
+
+.nf
+int \fBev_hasevents\fR()
+int \fBevr_hasevents\fR(const \fIec\fR)
+.fi
+.RS
+checke whenever there is any events configured.  Returns 0 if no
+filedescriptors was requested to be monitored and/or any timer event
+was requested, and non-0 overwise.
+.RE
+
+.nf
+int \fBev_wait\fR(\fImstimeout\fR)
+int \fBevr_wait\fR(\fIec\fR, \fImstimeout\fR)
+.fi
+.RS
+Wait for any events, process them and returns.  Routine will wait for
+any requested I/O condition and/or any timer event requested, but not
+longer than \fImstimeout\fR millisecounds.  It when call any callbacks
+and returns.  If \fImstimeout\fR is zero, routine will only process all
+pending events and will return immediately.  If \fImstimeout\fR is
+negative, routine will wait for any event until it arrives, possible
+forewer.
+
+Please note that \fImstimeout\fR and all timers currently set interpreted
+relative to time stored by this module internally.  This stored value
+updated every time \fBev_wait\fR() routine is called, \fIjust before\fR
+starting to deliver all pending events.
+
+In order to repeatedly handle any I/O events and timers, one may call
+this routine again until no more events to monitor will be left (i.e.
+when this routine, or \fBev_hasevents\fR() returns true).
+
+Returns non-negative value on success, or a negative value (and sets
+errno variable) on error (the only error condition checked now is
+failed select() call).  In case of successeful completion, return
+value will be the same as of \fBev_hasevents\fR().
+.RE
+
+.nf
+int \fBev_reqio\fR(\fIfd\fR, \fIevent\fR,\ \fIcbck\fR, \fIctx\fR)
+int \fBevr_reqio\fR(\fIec\fR, \fIfd\fR, \fIevent\fR, \fIcbckr\fR, \fIctx\fR)
+.fi
+.RS
+request that a filedescriptor \fIfd\fR should be monitored for any
+events specified in \fIevent\fR parameter.  \fIevent\fR may be any
+combination of EV_READ (wait for read-ready condition, i.e. when
+\fIfd\fR will become readable), EV_WRITE (wait for write-ready
+condition) or EV_EXCPT (wait for any exceptional condition),
+logically ORed if necessary.
+
+When one of requested types of I/O will be available, \fIcbck\fR
+callback will be called by \fBev_wait\fR() with the \fIfd\fR,
+actual event occured, and a given \fIctx\fR context.
+
+Note that actual event will be one of EV_READ, EV_WRITE, EV_EXCPT
+or EV_ERRNO, but not a combination.
+
+This routine overwrites any previously set application callback and context
+assotiated with this filedescriptor, and replace monitoring events.  If
+\fBcbck\fR is NULL, any monitoring of this \fIfd\fR will be cancelled
+instead (in this case, \fIevent\fR and \fIctx\fR arguments are ignored).
+
+Routine returns 0 on success or negative value on error (setting errno
+appropriately).  Currently, possible errno values after a call to this
+routine may be EINVAL if \fIfd\fR is out of range, or ENOENT on an
+attempt to cancel monitoring of \fIfd\fR that isn't monitored.
+.RE
+
+.nf
+ev_cbck_fn \fBev_io_cbck\fR(\fIfd\fR)
+evr_cbck_fn \fBevr_io_cbck\fR(const \fIec\fR, \fIfd\fR)
+.fi
+.RS
+returns a callback assotiated with a given \fIfd\fR or NULL if none.
+.RE
+
+.nf
+void *\fBev_io_ctx\fR(\fIfd\fR)
+void *\fBevr_io_ctx\fR(const \fIec\fR, \fIfd\fR)
+.fi
+.RS
+returns a context assotiated with a given \fIfd\fR or NULL if none.
+.RE
+
+.nf
+int \fBev_io_wakeup\fR(\fIfd\fR, \fIevent\fR)
+int \fBevr_io_wakeup\fR(\fIec\fR, \fIfd\fR, \fIevent\fR)
+.fi
+.RS
+this is a method to call a callback routine set for a given \fIfd\fR
+with registered context and with this \fIevent\fR value.
+
+Routine returns 0 if callback was called, or a negative value
+indicating that \fIfd\fR is out of range or no callback was
+assotiated with it.
+.RE
+
+.nf
+int \fBev_settimer\fR(\fImstimeout\fR, \fIcbck\fR, \fIctx\fR)
+int \fBevr_settimer\fR(\fIec\fR, \fImstimeout\fR, \fIcbckr\fR, \fIctx\fR)
+.fi
+.RS
+request a new timer to ring after \fImstimeout\fR millisecound,
+calling \fIcbck\fR callback with \fIevent\fR argument set to EV_TIMER.
+
+There may be only one timer assotiated with any given (\fIcbck\fR,\fIctx\fR)
+pair.  If there was other timer assotiated with the same pair, old timer
+will be replaced by a new one.  If \fImstimeout\fR is negative, any timer
+that was set set for given (\fIcbck\fR,\fIctx\fR) will be removed instead.
+Zero \fImstimeout\fR means that this event will be triggered immediately
+on next \fBev_wait\fR() call.
+
+When callback routine will be called, \fIfd\fR argument will always be -1
+(since time event isn't assotiated with any filedescriptor).  Timer callback
+will receive ONLY events of type EV_TIMER from this module.
+
+When a timer will ring, the event will be cleared automatically -- so timer
+events are once-only events.  If repeated timer is needed, call
+\fBev_settimer\fR() from within a callback again.
+
+Please note that \fImstimeout\fR interpreted relative to system time
+cached in internal state (as returned by \fBev_timeofday\fR()), which
+means it may not be very accurate but is sutable for most applications.
+If more accurate timer is needed, \fBev_updtime\fR() should be called
+just before \fBev_settime\fR().
+
+Routine returns 0 on success or a negative value on error, setting
+errno to: ENOMEM if there is no memory available to allocate new timer
+structure, ENOENT if an attempt was made to cancel a nonexisting timer,
+or EINVAL if \fIcbck\fR (\fIcbckr\fR) is NULL.
+.RE
+
+.SH "SEE ALSO"
+select(2), poll(2), gettimeofday(2), time(2).
+
+.SH BUGS
+None known yet.  Note that poll() mechanism is not tested heavily.
+
+.SH AUTHOR
+This software was written by Michael Tokarev, <mjt@corpit.ru>,
+with help of ideas from work by Wietse Venema.
+

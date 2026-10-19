@@ -1,0 +1,6 @@
+Sun Jul 02 00:26:36 2006
+e:\qycx3\develop3\src5\vnc-3.3.7-winsrc\winvnc\winvnc\vncmenu.cpp : quitting from WM_DESTROY
+E:\qycx3\Develop3\src5\vnc-3.3.7-winsrc\winvnc\winvnc\winvnc.cpp : shutting down server
+e:\qycx3\develop3\src5\vnc-3.3.7-winsrc\winvnc\winvnc\vncserver.cpp : shutting down server object
+e:\qycx3\develop3\src5\vnc-3.3.7-winsrc\winvnc\winvnc\vncserver.cpp : shutting down server object(4)
+myDllMain will end, iErr is -2

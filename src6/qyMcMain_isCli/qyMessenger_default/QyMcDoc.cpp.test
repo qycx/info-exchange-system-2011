@@ -1,0 +1,78 @@
+// QyMcDoc.cpp : implementation of the CQyMcDoc class
+//
+
+#include "stdafx.h"
+#include "QyMc.h"
+
+#include "QyMcDoc.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#endif
+
+
+// CQyMcDoc
+
+IMPLEMENT_DYNCREATE(CQyMcDoc, CDocument)
+
+BEGIN_MESSAGE_MAP(CQyMcDoc, CDocument)
+END_MESSAGE_MAP()
+
+
+// CQyMcDoc construction/destruction
+
+CQyMcDoc::CQyMcDoc()
+{
+	// TODO: add one-time construction code here
+
+}
+
+CQyMcDoc::~CQyMcDoc()
+{
+}
+
+BOOL CQyMcDoc::OnNewDocument()
+{
+	if (!CDocument::OnNewDocument())
+		return FALSE;
+
+	// TODO: add reinitialization code here
+	// (SDI documents will reuse this document)
+
+	return TRUE;
+}
+
+
+
+
+// CQyMcDoc serialization
+
+void CQyMcDoc::Serialize(CArchive& ar)
+{
+	if (ar.IsStoring())
+	{
+		// TODO: add storing code here
+	}
+	else
+	{
+		// TODO: add loading code here
+	}
+}
+
+
+// CQyMcDoc diagnostics
+
+#ifdef _DEBUG
+void CQyMcDoc::AssertValid() const
+{
+	CDocument::AssertValid();
+}
+
+void CQyMcDoc::Dump(CDumpContext& dc) const
+{
+	CDocument::Dump(dc);
+}
+#endif //_DEBUG
+
+
+// CQyMcDoc commands

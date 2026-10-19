@@ -1,0 +1,7 @@
+
+
+SECTIONS
+	.SharedData read write shared
+
+
+
